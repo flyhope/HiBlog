@@ -166,7 +166,9 @@ abstract class Abs {
      * 
      * @return \Api\Abs
      */
-    abstract static public function init();
+    static public function init() {
+        return new static();
+    }
     
     
     
