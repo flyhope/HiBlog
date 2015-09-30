@@ -48,5 +48,13 @@ class Oauth extends \Api\Abs{
         return $result;
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \Api\Abs::_prepareRequest()
+     */
+    protected function _prepareRequest(\Comm\Request\Single $request) {
+        $request->setHeader(['Accept: application/json']);
+    }
+    
     
 } 

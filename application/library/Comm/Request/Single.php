@@ -70,14 +70,11 @@ class Single {
     /**
      * 请求头
      *
-     * @param string $header HTTP头信息
+     * @param array $header HTTP头信息
      *
      * @return \Comm\Request\Single
      */
-    public function setHeader($header) {
-		if($this->_host) {
-			$header[] = 'Host: '.$this->_host; 
-		}
+    public function setHeader(array $header) {
         $this->_option[CURLOPT_HTTPHEADER] = $header;
         return $this;
     }

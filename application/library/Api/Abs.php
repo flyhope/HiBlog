@@ -135,6 +135,17 @@ abstract class Abs {
         $timeout || $timeout = $this->_time_out;
         $request = new \Comm\Request\Single($this->_url($path));
         $request->setUserAgent(static::$_user_agent)->setTimeout($timeout);
+        return $this->_prepareRequest($request);
+    }
+    
+    /**
+     * 准备Request请求（主要用于继承后重写编写插件）
+     * 
+     * @param \Comm\Request\Single $request
+     * 
+     * @return \Comm\Request\Single
+     */
+    protected function _prepareRequest(\Comm\Request\Single $request) {
         return $request;
     }
 
