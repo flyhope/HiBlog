@@ -97,6 +97,7 @@ abstract class Abs {
             return $request;
         } else {
             $result = $request->exec();
+            var_dump($result);
             return $this->_process($result);
         }
     }
