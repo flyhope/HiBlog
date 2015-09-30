@@ -161,6 +161,12 @@ abstract class Abs {
         return $result;
     }
     
+    /**
+     * 初始化对象
+     * 
+     * @return \Api\Abs
+     */
+    abstract static public function init();
     
     
     

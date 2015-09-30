@@ -12,6 +12,17 @@ class Oauth extends \Api\Abs{
     protected static $_url_basic = 'https://github.com/login/oauth/';
     
     /**
+     * 获取操作对象
+     * 
+     * @param unknown $test_param
+     * 
+     * @return \Api\Github\Oauth
+     */
+    static public function init($test_param = false) {
+        return new self();
+    }
+    
+    /**
      * 通过Code获取AccessToken
      * 
      * @param string $client_id

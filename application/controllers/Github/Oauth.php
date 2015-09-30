@@ -14,7 +14,7 @@ class Github_OAuthController extends Yaf_Controller_Abstract {
         
         $config = \Model\Config::showBatch(['github_client_secret', 'github_client_id']);
         
-        $api = new \Api\Github\Oauth();
+        $api = \Api\Github\Oauth::init();
         $result = $api->accessToken($config['github_client_id'], $config['github_client_secret'], $code);
         print_r($result);
         return false;
