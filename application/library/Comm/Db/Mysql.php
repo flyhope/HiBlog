@@ -4,7 +4,6 @@
  *
  * @author chengxuan <i@chengxuan.li>
  */
-
 namespace Comm\Db;
 class Mysql {
 
@@ -43,7 +42,7 @@ class Mysql {
 	 * 
 	 * @var string
 	 */
-	static public $config_path = CONF_PATH . 'database.ini';
+	static public $config_path = 'database.ini';
 	
 	protected $_read_config = array();
 	protected $_write_config = array();
@@ -70,7 +69,7 @@ class Mysql {
 	 * @return \Comm\Db\Mysql
 	 */
 	public function configure($alias) {
-		$config = new self::$config_class(self::$config_path);
+		$config = new self::$config_class(CONF_PATH . self::$config_path);
 		/* @var $config \Yaf_Config_Abstract */
 		$this->_read_config = $config[$alias]->read;
 		$this->_write_config = $config[$alias]->write;
