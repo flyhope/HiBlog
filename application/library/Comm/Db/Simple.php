@@ -68,10 +68,11 @@ class Simple {
      * 
      * @param string $table 表名
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     public function table($table) {
         $config = $this->_db->showConfig();
+        var_dump($config);exit;
         $this->_table = $config->pre . $table;
         return $this;
     }
@@ -82,7 +83,7 @@ class Simple {
      * @param array  $data       条件数据
      * @param string $comparison 比较运算符（= > < LIKE != IN）
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     public function wAnd(array $data, $comparison = '=') {
         return $this->_makeSimpleWhere($data, 'AND', $comparison);
@@ -94,7 +95,7 @@ class Simple {
      * @param array  $data       条件数据
      * @param string $comparison 比较运算符（= > < LIKE != IN）
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     public function wOr(array $data, $comparison = '=') {
         return $this->_makeSimpleWhere($data, 'OR', $comparison);
@@ -108,7 +109,7 @@ class Simple {
      * @param string $comparison 比较运算符（= > < LIKE != IN）
 
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     protected function _makeSimpleWhere(array $data, $condition, $comparison = '=') {
         $condition = strtoupper($condition);
@@ -141,7 +142,7 @@ class Simple {
      * @param mixed  $field_or_batch_arr 排序字段名或批量配置
      * @param string $sort               排序方式，枚举常量：SORT_ASC,SORT_DESC
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     public function order($field_or_batch_arr, $sort = null) {
         if(is_array($field_or_batch_arr)) {
@@ -189,7 +190,7 @@ class Simple {
      * @param int $start_or_limit 开始或限制多少
      * @param int $limit          限制多少
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     public function limit($start_or_limit, $limit = 0) {
         $start_or_limit = (int)$start_or_limit;
@@ -395,7 +396,7 @@ class Simple {
     /**
      * 清空已设置的对象信息
      * 
-     * @return Comm_Db_Simple
+     * @return Simple
      */
     public function clean() {
         $this->_where = '';
