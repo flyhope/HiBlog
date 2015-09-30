@@ -19,6 +19,9 @@ class Test_DbController extends \Yaf_Controller_Abstract {
                 $result = $db->limit(10)->fetchAll();
                 print_r($result);
                 break;
+            case 'config' :
+                print_r(\Model\Config::showAll());
+                break;
         }
         return false;
     }
