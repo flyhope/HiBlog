@@ -8,6 +8,13 @@
  */
 namespace Model;
 class Config extends Abs {
+    /**
+     * 数据表名
+     *
+     * @var string
+     */
+    protected static $_table = 'config';
+    
     
     /**
      * 获取所有配置
