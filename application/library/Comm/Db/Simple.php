@@ -55,10 +55,10 @@ class Simple {
     /**
      * 构造方法
      * 
-     * @param string $db_alias 数据库别qk
      * @param string $table    要操作的表名(可选，可后期调用table方法重新设置)
+     * @param string $db_alias 数据库别名
      */
-    public function __construct($db_alias, $table = null) {
+    public function __construct($table = null, $db_alias = 'main') {
         $this->_db = new Mysql($db_alias);
         $table && $this->table($table);
     }
@@ -71,7 +71,8 @@ class Simple {
      * @return Comm_Db_Simple
      */
     public function table($table) {
-        $this->_table = $table;
+        $config = $this->_db->showConfig();
+        $this->_table = $config->pre . $table;
         return $this;
     }
     

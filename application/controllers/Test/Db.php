@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * 数据库测试类
+ *
+ * @package Controller
+ * @author  chengxuan <chengxuan@staff.weibo.com>
+ */
+namespace Controller\Test;
+class Db extends \Yaf_Controller_Abstract {
+    
+    
+    public function indexAction() {
+        $action = \Comm\Arg::get('action', FILTER_DEFAULT, null, true);
+        switch($action) {
+            
+            //测试查询
+            case 'select' :
+                $db = new \Comm\Db\Simple('test');
+                $result = $db->limit(10)->fetchAll();
+                print_r($result);
+                break;
+        }
+    }
+    
+} 

@@ -255,6 +255,29 @@ class Mysql {
 
 		return $statement;
 	}
+	
+	/**
+	 * 获取数据库别名
+	 * 
+	 * @return string
+	 */
+	public function showAlias() {
+	    return $this->_alias;
+	}
+	
+	/**
+	 * 获取当前数据库配置
+	 * 
+	 * @return \Yaf_Config_Abstract
+	 */
+	public function showConfig() {
+	    static $result = null;
+	    if($result === null) {
+	        $config = new self::$config_class(CONF_PATH . self::$config_path);
+	        $result = $config[$this->_alias];
+	    }
+	    return $result;
+	}
 
 	/**
 	 * 根据指定的类型获取pdo实例。
