@@ -9,7 +9,7 @@
 namespace Api\Github;
 class Oauth extends \Api\Abs{
     
-    protected $_url_basic = 'https://github.com/login/oauth/';
+    protected static $_url_basic = 'https://github.com/login/oauth/';
     
     /**
      * 通过Code获取AccessToken
