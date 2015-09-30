@@ -136,7 +136,7 @@ class Mysql {
 	public function fetchAll($sql, array $data = NULL) {
 		$this->_validateSelect($sql);
 		$statement = $this->executeSql($sql, $data);
-		return $statement->fetchAll(\PDO::FETCH_CLASS);
+		return $statement->fetchAll(\PDO::FETCH_CLASS, 'ArrayObject');
 	}
 
 	/**
