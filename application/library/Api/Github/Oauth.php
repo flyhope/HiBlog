@@ -1,33 +1,41 @@
 <?php
 
 /**
- * Github OAuth授权类
+ * Github Oauth接口
  *
  * @package Api
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
 namespace Api\Github;
-class OAuth {
+class Api extends \Api\Abs{
+    
+    protected $_url_basic = 'https://github.com/login/oauth/';
     
     /**
-     * Github 接口基础地址
+     * 通过Code获取AccessToken
      * 
-     * @var string
-     */
-    static protected $_url_basic = 'https://github.com/login/oauth/';
-
-    /**
-     * 超时时间
+     * @param string $client_id
+     * @param string $client_secret
+     * @param string $code
      * 
-     * @var int
+     * @return array
      */
-    protected $_timeout = 20;
-    
-    static public function authorize($client_id, $scope, $redirect_uri = '', $state = '') {
-        $url = self::$_url_basic . 'authorize';
-        $request = new \Comm\Request\Single($url);
-        $request->setTimeout($this->_timeout)->setHeader(['User-Agent']);
-        
+    public function accessToken($client_id, $client_secret, $code) {
+        return $this->_post('access_token', array(
+            'client_id'     => $client_id,
+            'client_secret' => $client_secret,
+            'code'          => $code,
+        ));
     }
     
-}
+    /**
+     * (non-PHPdoc)
+     * @see \Api\Abs::_process()
+     */
+    protected function _process($result) {
+        $result = json_decode($result);
+        return $result;
+    }
+    
+    
+} 

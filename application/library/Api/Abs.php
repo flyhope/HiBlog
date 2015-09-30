@@ -47,6 +47,15 @@ abstract class Abs {
         $this->_multi_request = $multi_request;
     }
     
+    /**
+     * GET请求数据
+     * 
+     * @param string $path    URL路径
+     * @param array  $param   参数
+     * @param string $timeout 超时时间
+     * 
+     * @return \Comm\Request\Single|mixed
+     */
     protected function _get($path, array $param = null, $timeout = null) {
         if($param) {
             $query_string = http_build_query($param);
@@ -57,32 +66,60 @@ abstract class Abs {
         return $this->_returnRequest($request);
     }
     
-    protected function _post() {
-        
+
+    /**
+     * POST提交数据
+     * 
+     * @param string $path           URL路径
+     * @param array  $param          参数
+     * @param string $custom_request 自定义请求方式
+     * @param string $timeout        超时时间
+     * 
+     * @return \Comm\Request\Single
+     */
+    protected function _post($path, $param = null, $custom_request = null, $timeout = null) {
+        $post_param = is_array($param) ? http_build_query($param) : $param;
+        $request = $this->_fetchRequestSingle($path, $timeout);
+        $request->setPostData($post_param);
+        $custom_request && $request->setOption(CURLOPT_CUSTOMREQUEST, $custom_request);
+        return $this->_returnRequest($request);
     }
     
-    
-    protected function _returnRequest($request) {
+    /**
+     * 返回数据
+     * 
+     * @param \Comm\Request\Single $request
+     * 
+     * @return \Comm\Request\Single|mixed
+     */
+    protected function _returnRequest(\Comm\Request\Single $request) {
         if($this->_multi_request) {
             return $request;
         } else {
-            
+            $result = $request->exec();
+            return $this->_process($result);
         }
     }
     
+    /**
+     * @todo 未来支持批量
+     * @throws \Exception\Program
+     */
     public function mAdd() {
-        if($this->_multi_request) {
-            
+        if(!$this->_multi_request) {
+            throw new \Exception\Program('Api object is not multi mode.');
         }
     }
     
     
     /**
      * 批量执行
+     * 
+     * @todo 未来支持
      */
     public function mExecute() {
         if(!$this->_multi_request) {
-            
+            throw new \Exception\Program('Api object is not multi mode.');
         }
     }
     
@@ -113,8 +150,15 @@ abstract class Abs {
         return static::$_url_basic . $$path;
     }
     
-    protected function _process() {
-        
+    /**
+     * 处理请求返回值
+     * 
+     * @param string $result
+     * 
+     * @return mixed
+     */
+    protected function _process($result) {
+        return $result;
     }
     
     

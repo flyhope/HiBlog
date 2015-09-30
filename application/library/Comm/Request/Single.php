@@ -95,36 +95,19 @@ class Single {
     }
     
     /**
-     * 获取url
-     * @return	url
-     */
-    public function getUrl($url, $param = null) {
-        $akey = Comm_Config::get('app.env.app_key');
-        $url = "http://i2.api.weibo.com/{$url}.json?source={$akey}";
-
-        if ($param) {
-            $url .= '&' . (is_array($param) ? http_build_query($param) : $param);
-        }
-        return $url;
-    }
-
-    /**
-     * 设置Cookie
-     *
-     * @param string $cookie 设置COOKIE
-     *
+     * 设置CURL选项
+     * 
+     * @param int   $key
+     * @param mixed $value
+     * 
      * @return \Comm\Request\Single
      */
-    public function setCookie($cookie) {
-        if ($_COOKIE && isset($_COOKIE['SUE']) && isset($_COOKIE['SUP'])) {
-            $object = new self();
-            $sue    = str_replace('+', ' ', str_replace('%7E', '~', rawurlencode($_COOKIE['SUE'])));
-            $sup    = str_replace('+', ' ', str_replace('%7E', '~', rawurlencode($_COOKIE['SUP'])));
-            $cookie = "SUE={$sue}; SUP={$sup}";
-        }
-        $this->_option[CURLOPT_COOKIE] = $cookie;
+    public function setOption($key, $value) {
+        $this->_option[$key] = $value;
         return $this;
     }
+    
+
 
     /**
      * 设置超时时间
