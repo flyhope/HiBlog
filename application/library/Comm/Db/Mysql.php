@@ -136,7 +136,7 @@ class Mysql {
 	public function fetchAll($sql, array $data = NULL) {
 		$this->_validateSelect($sql);
 		$statement = $this->executeSql($sql, $data);
-		return $statement->fetchAll(\PDO::FETCH_CLASS, 'ArrayObject');
+		return $statement->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Mysql {
 	public function fetchRow($sql, array $data = NULL) {
 		$this->_validateSelect($sql);
 		$statement = $this->executeSql($sql, $data);
-		return $statement->fetch(\PDO::FETCH_CLASS, 'ArrayObject');
+		return $statement->fetch(\PDO::FETCH_ASSOC);
 	}
 
 	/**
