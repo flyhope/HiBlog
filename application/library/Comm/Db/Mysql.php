@@ -278,7 +278,7 @@ class Mysql {
 	        echo 123;
 	        var_dump($config);
 	        $result = $config[$this->_alias];
-	        var_dump($config);
+	        var_dump($result);
 	    }
 	    return $result;
 	}
