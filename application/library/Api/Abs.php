@@ -135,7 +135,8 @@ abstract class Abs {
         $timeout || $timeout = $this->_time_out;
         $request = new \Comm\Request\Single($this->_url($path));
         $request->setUserAgent(static::$_user_agent)->setTimeout($timeout);
-        return $this->_prepareRequest($request);
+        $this->_prepareRequest($request);
+        return $request;
     }
     
     /**
@@ -146,7 +147,6 @@ abstract class Abs {
      * @return \Comm\Request\Single
      */
     protected function _prepareRequest(\Comm\Request\Single $request) {
-        return $request;
     }
 
     
