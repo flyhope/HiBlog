@@ -6,7 +6,7 @@
  * @package Controller
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
-class Github_OauthController extends Yaf_Controller_Abstract {
+class Github_LoginController extends Yaf_Controller_Abstract {
 
     
     //Github登录
