@@ -7,7 +7,7 @@
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
 namespace Api\Github;
-class Api extends \Api\Abs{
+class Oauth extends \Api\Abs{
     
     protected $_url_basic = 'https://github.com/login/oauth/';
     

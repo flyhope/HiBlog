@@ -10,6 +10,10 @@ class Test_DbController extends \Yaf_Controller_Abstract {
     
     
     public function indexAction() {
+        
+        //生产环境禁止回调
+        return false;
+        
         $action = \Comm\Arg::get('action', FILTER_DEFAULT, null, true);
         switch($action) {
             
