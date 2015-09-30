@@ -72,7 +72,6 @@ class Simple {
      */
     public function table($table) {
         $config = $this->_db->showConfig();
-        var_dump($config);exit;
         $this->_table = $config->pre . $table;
         return $this;
     }

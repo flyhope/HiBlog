@@ -273,14 +273,9 @@ class Mysql {
 	 */
 	public function showConfig() {
 	    static $result = null;
-	    echo 333;
 	    if($result === null) {
 	        $config = new self::$config_class(CONF_PATH . self::$config_path);
-	        echo 123;
-	        var_dump($config);
-	        var_dump($this->_alias);
 	        $result = $config[$this->_alias];
-	        var_dump($result);
 	    }
 	    return $result;
 	}
