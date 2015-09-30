@@ -159,7 +159,7 @@ abstract class Abs {
      * @return string
      */
     protected function _url($path) {
-        return static::$_url_basic . $$path;
+        return static::$_url_basic . $path;
     }
     
     /**
