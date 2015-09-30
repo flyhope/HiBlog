@@ -274,6 +274,7 @@ class Mysql {
 	    static $result = null;
 	    if($result === null) {
 	        $config = new self::$config_class(CONF_PATH . self::$config_path);
+	        var_dump($config);
 	        $result = $config[$this->_alias];
 	    }
 	    return $result;
