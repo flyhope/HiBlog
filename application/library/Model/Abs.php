@@ -22,7 +22,7 @@ abstract class Abs {
      * @return \Comm\Db\Simple
      */
     static public function db() {
-        return new \Comm\Db\Simple(self::$_table);
+        return new \Comm\Db\Simple(static::$_table);
     }
     
     /**
