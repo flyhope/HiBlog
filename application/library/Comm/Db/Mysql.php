@@ -69,6 +69,7 @@ class Mysql {
 	 * @return \Comm\Db\Mysql
 	 */
 	public function configure($alias) {
+	    $this->_alias = $alias;
 		$config = new self::$config_class(CONF_PATH . self::$config_path);
 		/* @var $config \Yaf_Config_Abstract */
 		$this->_read_config = $config[$alias]->read;
@@ -277,6 +278,7 @@ class Mysql {
 	        $config = new self::$config_class(CONF_PATH . self::$config_path);
 	        echo 123;
 	        var_dump($config);
+	        var_dump($this->_alias);
 	        $result = $config[$this->_alias];
 	        var_dump($result);
 	    }
