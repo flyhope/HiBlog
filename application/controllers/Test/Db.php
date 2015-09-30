@@ -20,6 +20,7 @@ class Test_DbController extends \Yaf_Controller_Abstract {
                 print_r($result);
                 break;
         }
+        return false;
     }
     
 } 
