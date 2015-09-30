@@ -40,4 +40,4 @@ abstract class Abs {
     protected function __clone() {
         return false;
     }
-} 
+}

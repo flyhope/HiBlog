@@ -44,3 +44,4 @@ class Config extends Abs {
         return $result;
     }
 }
+
