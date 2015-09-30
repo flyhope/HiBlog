@@ -6,8 +6,7 @@
  * @package Controller
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
-namespace Controller\Test;
-class Db extends \Yaf_Controller_Abstract {
+class Test_DbController extends \Yaf_Controller_Abstract {
     
     
     public function indexAction() {
