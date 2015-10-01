@@ -83,6 +83,21 @@ class Article extends Abs {
         
         self::db()->wAnd(['id' => $data['id']])->upadte($new_data);
     }
+
+    /**
+     * 根据主键ID删除用户的一篇或者多篇文章
+     * 
+     * @param mixed  $id   ID或ID集
+     * @param string $uid  用户UID
+     * 
+     * @return \int
+     */
+    static public function destroyByUser($id, $uid = false) {
+        !$uid && $uid = \Yaf_Registry::get('current_uid');
+
+        $where = array(static::$_primary_key => $id, 'uid' => $uid);
+        return self::db()->wAnd($where)->delete(true);
+    }
     
     static public function publish() {
         

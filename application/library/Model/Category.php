@@ -39,6 +39,22 @@ class Category extends Abs {
     static public function showByUidName($uid, $name) {
         return self::db()->wAnd(['uid'=>$uid, 'name'=>$name])->fetchRow();
     }
+
+
+    /**
+     * 获取一个用户的所有分类
+     *
+     * @param int $uid
+     *
+     * @return array
+     */
+    static public function showUserAll($uid) {
+        $where = ['uid'=>$uid];
+        $order = [['sort', SORT_ASC], ['id', SORT_ASC]];
+        $result = self::db()->wAnd($where)->order($order)->fetchAll();
+        $result = \Comm\Arr::groupBy($result, 'parent_id');
+        return $result;
+    }
     
     /**
      * 创建分类
@@ -126,19 +142,20 @@ class Category extends Abs {
         return $sort;
     }
     
-    /**
-     * 获取一个用户的所有分类
-     * 
-     * @param int $uid
-     * 
-     * @return array
-     */
-    static public function showUserAll($uid) {
-        $where = ['uid'=>$uid];
-        $order = [['sort', SORT_ASC], ['id', SORT_ASC]];
-        $result = self::db()->wAnd($where)->order($order)->fetchAll();
-        $result = \Comm\Arr::groupBy($result, 'parent_id');
-        return $result;
-    }
     
+    /**
+     * 根据主键ID删除用户的一篇或者多篇文章
+     *
+     * @param mixed  $id   ID或ID集
+     * @param string $uid  用户UID
+     *
+     * @return \int
+     */
+    static public function destroyByUser($id, $uid = false) {
+        !$uid && $uid = \Yaf_Registry::get('current_uid');
+    
+        $where = array(static::$_primary_key => $id, 'uid' => $uid);
+        return self::db()->wAnd($where)->delete(true);
+    }
+ 
 } 
