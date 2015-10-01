@@ -82,6 +82,7 @@ class Category extends Abs {
             'parent_id' => $parent_id,
             'name'      => $name,
             'alias'     => $alias,
+            'sort'      => '120',
         );
         
         $db = self::db();
@@ -112,6 +113,29 @@ class Category extends Abs {
         $validate_auth && User::validateAuth($data['uid']);
         return self::db()->wAnd(['id'=>$data['id']])->upadte($new_data, true);
     }
+
+    /**
+     * 更新排序
+     * 
+     * @param array $data 排好序的分类ID（一维数组）
+     * 
+     * @param string $uid
+     * @param string $validate_auth
+     * 
+     * @return int 修改的数据条数
+     */
+    static public function updateSort(array $data, $uid = false, $validate_auth = true) {
+        $uid === false && $uid = \Yaf_Registry::get('current_uid');
+        $validate_auth && User::validateAuth($uid);
+        
+        $db = self::db();
+        $sort = 0;
+        foreach($data as $id) {
+            $db->wAnd(['id'=>$id, 'uid'=>$uid])->upadte(['sort'=>++$sort]);
+            $db->clean();
+        }
+        return $sort;
+    }
     
     /**
      * 获取一个用户的所有分类
@@ -121,7 +145,11 @@ class Category extends Abs {
      * @return array
      */
     static public function showUserAll($uid) {
-        return self::db()->wAnd(['uid'=>$uid])->fetchAll();
+        $where = ['uid'=>$uid];
+        $order = [['sort', SORT_ASC], ['id', SORT_ASC]];
+        $result = self::db()->wAnd($where)->order($order)->fetchAll();
+        $result = \Comm\Arr::groupBy($result, 'parent_id');
+        return $result;
     }
     
 } 
