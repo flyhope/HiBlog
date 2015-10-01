@@ -15,18 +15,7 @@ class User extends Abs {
      * @var string
      */
     protected static $_table = 'user';
-    
-    /**
-     * 获取一条数据
-     * 
-     * @param int $id
-     * 
-     * @return array
-     */
-    static public function show($id) {
-        return self::db()->wAnd(['id'=>$id])->fetchRow();
-    }
-    
+
     /**
      * 创建一个用户
      * 

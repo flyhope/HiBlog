@@ -84,30 +84,7 @@ class Article extends Abs {
         self::db()->wAnd(['id' => $data['id']])->upadte($new_data);
     }
     
-    static public function destroy() {
-        
-    }
-    
-    static public function destroyBatch() {
-        
-    }
-    
     static public function publish() {
-        
-    }
-    
-    /**
-     * 根据主键ID获取一篇文章
-     * 
-     * @param int $id 主键ID
-     * 
-     * @return \array
-     */
-    static public function show($id) {
-        return self::db()->wAnd(['id'=>$id])->fetchRow();
-    }
-    
-    static public function showBatch() {
         
     }
 

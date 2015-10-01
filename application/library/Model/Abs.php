@@ -16,6 +16,14 @@ abstract class Abs {
      */
     protected static $_table = '';
     
+    
+    /**
+     * 主键ID
+     * 
+     * @var string
+     */
+    protected static $_primary_key = 'id';
+    
     /**
      * 获取数据库操作对象
      * 
@@ -40,4 +48,29 @@ abstract class Abs {
     protected function __clone() {
         return false;
     }
+    
+    /**
+     * 根据主键ID获取一条或多条数据（多条传入一维数组）
+     *
+     * @param mixed $id 主键ID
+     *
+     * @return \array
+     */
+    static public function show($id) {
+        $where = array(static::$_primary_key => $id);
+        return self::db()->wAnd($where)->fetchRow();
+    }
+    
+    /**
+     * 根据主键ID删除一条或多条数据（多条传入一维数组）
+     * 
+     * @param mixed $id
+     * 
+     * @return int
+     */
+    static public function destory($id) {
+        $where = array(static::$_primary_key => $id);
+        return self::db()->wAnd($where)->delete(true);
+    }
+    
 }

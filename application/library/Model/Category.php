@@ -16,17 +16,6 @@ class Category extends Abs {
      */
     protected static $_table = 'category';
     
-    
-    /**
-     * 根据主键ID获取一条分类数据
-     * 
-     * @param int $id
-     * @return mixed
-     */
-    static public function show($id) {
-        return self::db()->wAnd(['id'=>$id])->fetchRow();
-    }
-    
     /**
      * 根据UID和分类别名获取一条数据
      * 
