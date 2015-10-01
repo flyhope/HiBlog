@@ -78,16 +78,6 @@ class Mysql {
 	}
 
 	/**
-	 * 强制使用读库
-	 *
-	 * @return Mysql
-	 */
-	public function setRead() {
-		$this->_mode = self::MODE_READ;
-		return $this;
-	}
-
-	/**
 	 * 强制使用写库
 	 * 
 	 * @return Mysql
@@ -105,6 +95,21 @@ class Mysql {
 	public function setAuto() {
 		$this->_mode = self::MODE_AUTO;
 		return $this;
+	}
+	
+	/**
+	 * 使用主库执行一个回调方法，执行完后切回原来的模式
+	 * 
+	 * @param callable $callback
+	 * 
+	 * @return mixed
+	 */
+	public function useWrite(callable $callback) {
+	    $mode = $this->_mode;
+	    $this->_mode = self::MODE_WRITE;
+	    $result = call_user_func($callback, $this);
+	    $this->_mode = $mode;
+	    return $result;
 	}
 
 	/**
@@ -166,6 +171,37 @@ class Mysql {
 		$this->_validateSelect($sql);
 		$statement = $this->executeSql($sql, $data);
 		return $statement->fetchColumn($index);
+	}
+	
+	/**
+	 * 取得一个数据
+	 * @param string $sql			SQL语句
+	 * @param array $param			变量参数
+	 * @param null/string $column	指定返回字段
+	 * @param boolean $is_master		是否强制使用主库
+	 * @return string/boolean
+	 */
+	public function fetchOne($sql, array $data = null, $index = null) {
+	    $this->_validateSelect($sql);
+	    $statement = $this->executeSql($sql, $data);
+	    
+	    if (!$index || is_numeric($index)) {
+	        return $statement ? $statement->fetchColumn((int)$index) : $statement;
+	    } else {
+	        $result = $this->fetchRow($sql, $data);
+	        return isset($result[$index]) ? $result[$index] : false;
+	    }
+	}
+	
+	/**
+	 * 取得插入的最后一条的ID
+	 * 
+	 * @return \int
+	 */
+	public function lastId() {
+	    return $this->useWrite(function(Mysql $db) {
+	        return $db->fetchOne('SELECT LAST_INSERT_ID()');
+	    });
 	}
 	
 	/**

@@ -235,7 +235,7 @@ class Simple {
      * @param array   $data           要更新的数据，一维数据，字段=>值
      * @param string  $show_row_count 是否需要返回行数（默认不返回）
      *
-     * @return mixed 若$show_row_count为true，则返加行数，否则无异常返回true，没有data或条件返回false
+     * @return \mixed 若$show_row_count为true，则返加行数，否则无异常返回true，没有data或条件返回false
      */
     public function upadte(array $data, $show_row_count = false) {
         if(!$data || !$this->_where) {
@@ -361,7 +361,7 @@ class Simple {
      * 
      * @param string $field 要获取的字段，默认是*
      * 
-     * @return array
+     * @return \array
      */
     public function fetchAll($field = '*') {
         $sql = self::fetchSql("SELECT {$field}");
@@ -373,7 +373,7 @@ class Simple {
      *
      * @param string $field 要获取的字段，默认是*
      *
-     * @return array
+     * @return \array
      */
     public function fetchCol($field = '*') {
         $sql = self::fetchSql("SELECT {$field}");
@@ -385,11 +385,20 @@ class Simple {
      *
      * @param string $field 要获取的字段，默认是*
      *
-     * @return array
+     * @return \array
      */
     public function fetchRow($field = '*') {
         $sql = self::fetchSql("SELECT {$field}");
         return $this->_db->fetchRow($sql, $this->_params);
+    }
+    
+    /**
+     * 获取最后一次插入产生的ID
+     * 
+     * @return \int
+     */
+    public function lastId() {
+        return $this->_db->lastId();
     }
     
     /**
