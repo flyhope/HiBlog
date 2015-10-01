@@ -38,10 +38,10 @@ class ErrorController extends Yaf_Controller_Abstract {
             header('Location:/github/login');
         } elseif($exception instanceof \Exception\Program) {
             //程序错误
-            var_dump($expression);
+            var_dump($exception);
         } else {
             //其它异常
-            var_dump($expression);
+            var_dump($exception);
         }
     }
     
@@ -117,7 +117,6 @@ class ErrorController extends Yaf_Controller_Abstract {
             $this->display('debug');
         } catch (Exception $exception) {
             var_dump($exception);
-            return false;
         }
     }
 }
