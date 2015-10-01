@@ -13,8 +13,60 @@ class ErrorController extends Yaf_Controller_Abstract {
      * @return boolean
      */
     public function errorAction(Exception $exception) {
-        var_dump($exception);
+        //判断当前请求是否是AJAX
+        $request = Yaf_Dispatcher::getInstance()->getRequest();
+        $is_ajsx = $request->isXmlHttpRequest();
+        
+        $is_ajsx ? $this->_ajax($exception) : $this->_html($exception);
+
         return false;
+    }
+    
+    /**
+     * 以网页形式处理异常
+     * 
+     * @param Exception $exception
+     */
+    protected function _html(Exception $exception) {
+        if($exception instanceof ErrorException) {
+            //系统错误
+            if(!\Comm\Misc::isProEnv()) {
+                $this->_debugHtml($exception);
+            }
+        } elseif($exception instanceof \Exception\Nologin) {
+            //用户未登录
+            header('Location:/github/login');
+        } elseif($exception instanceof \Exception\Program) {
+            //程序错误
+            var_dump($expression);
+        } else {
+            //其它异常
+            var_dump($expression);
+        }
+    }
+    
+    /**
+     * 以AJAX形式处理异常
+     * 
+     * @param Exception $exception
+     */
+    protected function _ajax(Exception $exception) {
+        $code = $exception->getCode();
+        $msg = $exception->getMessage();
+        $data = array();
+        
+        if($exception instanceof ErrorException) {
+            //系统错误
+        } elseif($exception instanceof \Exception\Nologin) {
+            //用户未登录
+        } elseif($exception instanceof \Exception\Program) {
+            //程序错误
+        } else {
+            //其它异常
+        }
+        
+        $data = $this->_appendDebugJson($data, $exception);
+        \Comm\Response::json($code, $msg, $data, false);
     }
     
     /**
@@ -26,7 +78,7 @@ class ErrorController extends Yaf_Controller_Abstract {
      * @return array
      */
     protected function _appendDebugJson(array $result, Exception $exception) {
-        if (ini_get('display_errors')) {
+        if (!\Comm\Misc::isProEnv()) {
             $result['_debug']['code'] = $exception->getCode();
             $result['_debug']['message'] = $exception->getMessage();
             $result['_debug']['file'] = $exception->getFile();
@@ -68,6 +120,4 @@ class ErrorController extends Yaf_Controller_Abstract {
             return false;
         }
     }
-    
-    
 }
