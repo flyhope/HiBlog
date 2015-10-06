@@ -25,13 +25,14 @@ abstract class Abs extends \Api\Abs {
      * @see \Api\Abs::_prepareRequest()
      */
     protected function _prepareRequest(\Comm\Request\Single $request) {
-        $request->setHeader("Authorization: token OAUTH-TOKEN");
+        $access_token = self::showAccessToken();
+        $request->appendHeader(["Authorization: token {$access_token}"]);
     }
     
     /**
      * 获取AccessToken
      * 
-     * @return \Comm\mixed
+     * @return \mixed
      */
     static public function showAccessToken() {
         return \Comm\Arg::session('github-access-token');

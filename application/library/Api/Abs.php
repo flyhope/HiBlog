@@ -97,7 +97,7 @@ abstract class Abs {
             return $request;
         } else {
             $result = $request->exec();
-            return $this->_process($result);
+            return $this->_process($result, $request);
         }
     }
     
@@ -164,11 +164,12 @@ abstract class Abs {
     /**
      * 处理请求返回值
      * 
-     * @param string $result
+     * @param string               $result
+     * @param \Comm\Request\Single $request
      * 
      * @return mixed
      */
-    protected function _process($result) {
+    protected function _process($result, \Comm\Request\Single $request) {
         $result = json_decode($result);
         return $result;
     }

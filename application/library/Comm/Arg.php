@@ -18,7 +18,7 @@ abstract class Arg {
      * @param string  $option        过滤选项
      * @param boolean $must_be_right 是否必需正确（如果传true，不正确抛异常）
      * 
-     * @return mixed
+     * @return \mixed
      */
     static public function get($name, $filter = FILTER_DEFAULT, $option = null, $must_be_right = false) {
         $result = filter_input(INPUT_GET, $name, $filter, $option);
@@ -34,7 +34,7 @@ abstract class Arg {
      * @param string  $option        过滤选项
      * @param boolean $must_be_right 是否必需正确（如果传true，不正确抛异常）
      *
-     * @return mixed
+     * @return \mixed
      */
     static public function post($name, $filter = FILTER_DEFAULT, $option = null, $must_be_right = false) {
         $result = filter_input(INPUT_POST, $name, $filter, $option);
@@ -50,7 +50,7 @@ abstract class Arg {
      * @param string  $option        过滤选项
      * @param boolean $must_be_right 是否必需正确（如果传true，不正确抛异常）
      *
-     * @return mixed
+     * @return \mixed
      */
     static public function server($name, $filter = FILTER_DEFAULT, $option = null, $must_be_right = false) {
         $result = filter_input(INPUT_SERVER, $name, $filter, $option);
@@ -66,7 +66,7 @@ abstract class Arg {
      * @param string  $option        过滤选项
      * @param boolean $must_be_right 是否必需正确（如果传true，不正确抛异常）
      *
-     * @return mixed
+     * @return \mixed
      */
     static public function session($name, $filter = FILTER_DEFAULT, $option = null, $must_be_right = false) {
         $result = filter_input(INPUT_SESSION, $name, $filter, $option);

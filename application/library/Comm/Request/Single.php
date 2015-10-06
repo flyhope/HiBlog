@@ -15,7 +15,14 @@ class Single {
      * @var resource
      */
     protected $_ch;
-	protected $_host = false;
+    
+    /**
+     * 设置头信息
+     * 
+     * @var array
+     */
+    protected $_headers = array();
+    
     /**
      * CURL配置
      *
@@ -46,10 +53,6 @@ class Single {
      * @return \Comm\Request\Single
      */
     public function setUrl($url) {
-		// if(stripos($url, 'i.api.card.weibo.com') !== false) {
-		// 	$url = str_replace('i.api.card.weibo.com', '10.75.5.25', $url);
-		// 	$this->_host = 'i.api.card.weibo.com';
-		// }
         $this->_option[CURLOPT_URL] = $url;
         return $this;
     }
@@ -70,12 +73,24 @@ class Single {
     /**
      * 请求头
      *
-     * @param array $header HTTP头信息
+     * @param array $headers HTTP头信息
      *
      * @return \Comm\Request\Single
      */
-    public function setHeader(array $header) {
-        $this->_option[CURLOPT_HTTPHEADER] = $header;
+    public function setHeader(array $headers) {
+        $this->_headers = $headers;
+        return $this;
+    }
+    
+    /**
+     * 追加Header信息
+     * 
+     * @param array $headers
+     * 
+     * @return \Comm\Request\Single
+     */
+    public function appendHeader(array $headers) {
+        $this->_headers = array_merge($this->_headers, $headers);
         return $this;
     }
     
@@ -130,6 +145,9 @@ class Single {
      * @return resource
      */
     public function fetchCurl() {
+        if($this->_headers) {
+            $this->_option[CURLOPT_HTTPHEADER] = $this->_headers;
+        }
         curl_setopt_array($this->_ch, $this->_option);
         return $this->_ch;
     }
@@ -154,8 +172,8 @@ class Single {
             $post = addslashes($this->_option[CURLOPT_POSTFIELDS]);
             $result .= " -d '{$post}'";
         }
-        if(isset($this->_option[CURLOPT_HTTPHEADER])) {
-            foreach($this->_option[CURLOPT_HTTPHEADER] as $header) {
+        if(isset($this->_headers)) {
+            foreach($this->_headers as $header) {
                 $header = addslashes($header);
                 $result .= " -H '{$header}'";
             }
@@ -171,8 +189,20 @@ class Single {
     public function exec() {
         $this->fetchCurl($this->_ch);
         $result = curl_exec($this->_ch);
+        
+        //执行失败抛出异常
+        if($result === false) {
+            $code = curl_errno($this->_ch);
+            $message = curl_error($this->_ch);
+            $metadata = array(
+                'info'             => curl_getinfo($this->_ch),
+                'curl_cli_command' => $this->fetchCurlCli(),
+            );
+            throw new \Exception\Request($message, $code, $metadata);
+        }
+        
+        //关闭CURL句柄
         curl_close($this->_ch);
         return $result;
     }
-
 }
