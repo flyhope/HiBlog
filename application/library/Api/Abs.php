@@ -144,7 +144,7 @@ abstract class Abs {
      * 
      * @param \Comm\Request\Single $request
      * 
-     * @return \Comm\Request\Single
+     * @return void
      */
     protected function _prepareRequest(\Comm\Request\Single $request) {
     }
@@ -169,6 +169,7 @@ abstract class Abs {
      * @return mixed
      */
     protected function _process($result) {
+        $result = json_decode($result);
         return $result;
     }
     

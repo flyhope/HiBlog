@@ -21,7 +21,7 @@ abstract class Helper_Tpl {
 	 * 加载CSS
 	 * @param string $path
 	 * @param boolean $return
-	 * @return mixed
+	 * @return \mixed
 	 */
     static public function css($path, $with_version = true, $return = false) {
         $href = $path;
@@ -44,7 +44,7 @@ abstract class Helper_Tpl {
      *
      * @param string $path  相对路径
      *
-     * @return string
+     * @return \string
      */
     static public function img($path, $with_version = true) {
         $url = $path;
@@ -59,7 +59,7 @@ abstract class Helper_Tpl {
 	 * 加载JS
 	 * @param string $path
 	 * @param boolean $return
-	 * @return mixed
+	 * @return \mixed
 	 */
     static public function js($path, $with_version = true, $return = false) {
         $src = $path;
@@ -79,7 +79,7 @@ abstract class Helper_Tpl {
 
     /**
 	 * 获取当前CSS版本号
-	 * @return string
+	 * @return \string
 	 */
     static public function cssVer() {
         static $ver = '';
@@ -92,7 +92,7 @@ abstract class Helper_Tpl {
 
     /**
 	 * 获取JS版本号
-	 * @return string
+	 * @return \string
 	 */
     static public function jsVer() {
         static $ver = '';

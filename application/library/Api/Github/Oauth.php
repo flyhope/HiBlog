@@ -9,6 +9,7 @@
 namespace Api\Github;
 class Oauth extends \Api\Abs{
     
+    //OAuth授权接口地址
     protected static $_url_basic = 'https://github.com/login/oauth/';
     
     /**
@@ -29,6 +30,8 @@ class Oauth extends \Api\Abs{
      * @param string $client_secret
      * @param string $code
      * 
+     * @example object(stdClass)#14 (3) { ["access_token"]=> string(40) "xxx" ["token_type"]=> string(6) "bearer" ["scope"]=> string(11) "public_repo" }
+     * 
      * @return array
      */
     public function accessToken($client_id, $client_secret, $code) {
@@ -37,15 +40,6 @@ class Oauth extends \Api\Abs{
             'client_secret' => $client_secret,
             'code'          => $code,
         ));
-    }
-    
-    /**
-     * (non-PHPdoc)
-     * @see \Api\Abs::_process()
-     */
-    protected function _process($result) {
-        $result = json_decode($result);
-        return $result;
     }
     
     /**
