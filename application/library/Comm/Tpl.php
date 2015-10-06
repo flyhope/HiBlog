@@ -4,7 +4,8 @@
  * 
  * @author chengxuan <i@chengxuan.li>
  */
-abstract class Helper_Tpl {
+namespace Comm;
+abstract class Tpl {
 
     /**
 	 * 获取模板对象
@@ -13,7 +14,7 @@ abstract class Helper_Tpl {
 	 */
     static public function getView($tpl_path = '') {
         $tpl_path || $tpl_path = TPL_PATH;
-        $view = new Yaf_View_Simple($tpl_path);
+        $view = new \Yaf_View_Simple($tpl_path);
         return $view;
     }
 
@@ -97,7 +98,7 @@ abstract class Helper_Tpl {
     static public function jsVer() {
         static $ver = '';
         if (!$ver) {
-            $conf = new \Yaf_Config_Ini(CONF_PATH . 'cdn');
+            $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
             $ver = $conf->version->js;
         }
         return $ver;
@@ -112,7 +113,7 @@ abstract class Helper_Tpl {
      * @return \mixed
      */
     static public function jsLib($lib_name, $return = false) {
-        $conf = new \Yaf_Config_Ini(CONF_PATH . 'cdn');
+        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
         $url = $conf->lib[$lib_name];
         return $url ? self::js($url, false, $return) : '';
     }
@@ -125,9 +126,21 @@ abstract class Helper_Tpl {
      *
      * @return \mixed
      */
-    static public function csLib($lib_name, $return = false) {
-        $conf = new \Yaf_Config_Ini(CONF_PATH . 'cdn');
+    static public function cssLib($lib_name, $return = false) {
+        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
         $url = $conf->lib[$lib_name];
         return $url ? self::css($url, false, $return) : '';
+    }
+    
+    /**
+     * 拼相对路径URL
+     * 
+     * @param string $path
+     * @return string
+     */
+    static public function path($path) {
+        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
+        
+        return $conf->setting->relative . $path;
     }
 }
