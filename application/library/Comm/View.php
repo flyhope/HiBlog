@@ -194,6 +194,9 @@ class View implements \Yaf_View_Interface {
             \ob_start();
         }
         
+        
+        var_dump("{$this->_template_dir}/{$tpl}.phtml");
+        
         var_dump($this->_template_dir);
         var_dump($tihs->_template_dir);
         
