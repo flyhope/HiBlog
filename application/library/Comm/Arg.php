@@ -69,7 +69,13 @@ abstract class Arg {
      * @return \mixed
      */
     static public function session($name, $filter = FILTER_DEFAULT, $option = null, $must_be_right = false) {
-        $result = filter_input(INPUT_SESSION, $name, $filter, $option);
+        $data = isset($_SESSION[$name]) ? $_SESSION[$name] : null;
+        if($data === null) {
+            $result = null;
+        } else {
+            $result = filter_var($name, $filter, $option);
+        }
+        
         $must_be_right && self::_checkRight($result, $name, $filter);
         return $result;
     }
