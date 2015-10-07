@@ -136,7 +136,7 @@ class View implements \Yaf_View_Interface {
     protected function _process($tpl) {
         $this->_display_html = '';
         \extract($this->_vars);
-        include "{$this->_template_dir}/{$tpl}.phtml";
+        include "{$this->_template_dir}/{$tpl}";
         $display_html = $this->_display_html;
         $this->_clear();
         return $display_html;
