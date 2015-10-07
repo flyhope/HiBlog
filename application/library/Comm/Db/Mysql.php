@@ -42,7 +42,7 @@ class Mysql {
 	 * 
 	 * @var string
 	 */
-	static public $config_path = 'database.ini';
+	static public $config_path = 'env.ini';
 	
 	protected $_read_config = array();
 	protected $_write_config = array();
@@ -57,7 +57,7 @@ class Mysql {
 	 * 
 	 * @param string $alias 配置文件别名
 	 */
-	public function __construct($alias = 'main') {
+	public function __construct($alias = 'database_main') {
 		$this->configure($alias);
 	}
 	
