@@ -308,7 +308,7 @@ class View implements \Yaf_View_Interface {
     static public function jsVer() {
         static $ver = '';
         if (!$ver) {
-            $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
+            $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
             $ver = $conf->version->js;
         }
         return $ver;
@@ -323,7 +323,7 @@ class View implements \Yaf_View_Interface {
      * @return \mixed
      */
     static public function jsLib($lib_name, $return = false) {
-        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
+        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
         $url = $conf->lib[$lib_name];
         return $url ? self::js($url, false, $return) : '';
     }
@@ -337,7 +337,7 @@ class View implements \Yaf_View_Interface {
      * @return \mixed
      */
     static public function cssLib($lib_name, $return = false) {
-        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
+        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
         $url = $conf->lib[$lib_name];
         return $url ? self::css($url, false, $return) : '';
     }
@@ -349,7 +349,7 @@ class View implements \Yaf_View_Interface {
      * @return string
      */
     static public function path($path) {
-        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env');
+        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
     
         return $conf->setting->relative . $path;
     }
