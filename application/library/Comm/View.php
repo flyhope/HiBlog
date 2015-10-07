@@ -7,7 +7,7 @@
  * @author  chengxuan <i@chengxuan.li>
  */
 namespace Comm;
-class View extends \Yaf_View_Interface {
+class View implements \Yaf_View_Interface {
     
     /**
      * 模板目录
