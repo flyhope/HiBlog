@@ -22,4 +22,13 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
             )
         );
     }
+    
+    /**
+     * 初始化视图
+     * 
+     * @param Yaf_Dispatcher $dispatcher
+     */
+    public function _initView(Yaf_Dispatcher $dispatcher) {
+        $dispatcher->setView(new \Comm\View());
+    }
 }
