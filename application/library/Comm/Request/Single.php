@@ -65,7 +65,12 @@ class Single {
      * @return  \Comm\Request\Single
      */
     public function setPostData($post_param, $build_query=true) {
-        $build_query && is_array($post_param) && $post_param = http_build_query($post_param);
+        if($build_query && is_array($post_param)) {
+            $post_param = array_filter($post_param, function($value) {
+                return $value !== null;
+            });
+            $post_param = http_build_query($post_param);
+        }
         $this->_option[CURLOPT_POSTFIELDS] = $post_param;
         return $this;
     }

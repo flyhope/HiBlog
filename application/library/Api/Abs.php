@@ -54,7 +54,7 @@ abstract class Abs {
      * @param array  $param   参数
      * @param string $timeout 超时时间
      * 
-     * @return \Comm\Request\Single|mixed
+     * @return \Comm\Request\Single|\mixed
      */
     protected function _get($path, array $param = null, $timeout = null) {
         if($param) {
