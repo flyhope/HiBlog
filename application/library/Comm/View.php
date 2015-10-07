@@ -134,11 +134,12 @@ class View extends \Yaf_View_Interface {
      * @return void;
      */
     protected function _process($tpl) {
-        $_display_html = '';
+        $this->_display_html = '';
         \extract($this->_vars);
         include "{$this->_template_dir}/{$tpl}.phtml";
-        
-        return $_display_html;
+        $display_html = $this->_display_html;
+        $this->_clear();
+        return $display_html;
     }
     
     /**
@@ -190,6 +191,19 @@ class View extends \Yaf_View_Interface {
             $this->_display_html = \ob_get_contents();
             \ob_clean();
         }
+    }
+    
+    /**
+     * 清理相关变量
+     * 
+     * @return void
+     */
+    protected function _clear() {
+        $this->_block_content = array();
+        $this->_block_name = '';
+        $this->_block_tpl = '';
+        $this->_display_html = '';
+        $this->_vars = array();
     }
     
 
