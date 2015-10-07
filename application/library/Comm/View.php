@@ -59,6 +59,15 @@ class View implements \Yaf_View_Interface {
     protected $_display_html = '';
     
     /**
+     * 构造方法
+     * 
+     * @return void
+     */
+    public function __construct() {
+        $this->setScriptPath(TPL_PATH);
+    }
+    
+    /**
      * The setScriptPath purpose
      *
      * @param string $template_dir 模板目录的绝对路径，默认的Yaf_Dispatcher会设置此目录为application.directory  . "/views".
