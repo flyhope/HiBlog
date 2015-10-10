@@ -1,5 +1,23 @@
 <?php $this; /* @var $this \Comm\View */  ?>
-<?php $this->_block('main'); ?>
-TEST
-<?php $this->_blockEnd(); ?>
-<?php $this->_blockLoad('_block/manage'); ?>
+<?php $this->_block('title') ?>
+Githublog
+<?php $this->_blockEnd() ?>
+<?php $this->_block('header') ?>
+<?php \Comm\View::css('/static/css/manage.css') ?>
+<?php $this->_blockEnd() ?>
+<?php $this->_block('body') ?>
+<div class="container-fluid">
+    <header>
+    	<div class="inner row">
+    		<h1 class="col-md-10">GithuBlog</h1>
+    		<div class="col-md-2">
+		      <a href="https://github.com/flyhope" class="button"><small>GITHUB</small> <?=_('授权登录')?></a>
+		  </div>
+    	</div>
+    	<div class="inner row">
+    	<h2 class="col-md-4"><?=_('换一种方式记录点滴') ?></h2>
+    	</div>
+    </header>
+</div>
+<?php $this->_blockEnd() ?>
+<?php $this->_blockLoad('_block/main') ?>

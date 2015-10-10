@@ -295,7 +295,7 @@ class View implements \Yaf_View_Interface {
     static public function cssVer() {
         static $ver = '';
         if (!$ver) {
-            $conf = new \Yaf_Config_Ini(CONF_PATH . 'cdn');
+            $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
             $ver = $conf->version->css;
         }
         return $ver;
