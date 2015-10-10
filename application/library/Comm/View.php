@@ -277,9 +277,9 @@ class View implements \Yaf_View_Interface {
         if($with_version) {
             $ver = self::jsVer();
             $src .= (strpos($src, '?') === false ? '?' : '&') . "version={$ver}";
-            $result = "<script type=\"text/javascript\" src=\"{$src}\"></script>";
         }
-    
+        $result = "<script type=\"text/javascript\" src=\"{$src}\"></script>";
+        
         if ($return) {
             return $result;
         } else {

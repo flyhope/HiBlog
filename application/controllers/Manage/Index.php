@@ -21,7 +21,7 @@ class Manage_IndexController extends AbsController {
 //             return $this->redirect(\Comm\Tpl::path('manage/main'));
         } else {
             //未登录，展示介绍页
-            
+            $this->viewDisplay();
         }
         
         

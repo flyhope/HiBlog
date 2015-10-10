@@ -29,6 +29,8 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
      * @param Yaf_Dispatcher $dispatcher
      */
     public function _initView(Yaf_Dispatcher $dispatcher) {
-        $dispatcher->setView(new \Comm\View());
+        //手动沉浸模板
+        $dispatcher->disableView();
+        $dispatcher->autoRender(false);
     }
 }

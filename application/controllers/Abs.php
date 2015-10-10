@@ -32,6 +32,20 @@ abstract class AbsController extends Yaf_Controller_Abstract {
         if($this->_need_login && !$uid) {
             throw new \Exception\Nologin('no login');
         }
+
+
+    }
+    
+    /**
+     * 渲染模板
+     * 
+     * @param array $assign
+     */
+    public function viewDisplay(array $assign = array()) {
+        $view = new \Comm\View();
+        $tpl_name = $this->getRequest()->getControllerName();
+        $tpl_path = strtolower(str_replace('_', '/', $tpl_name)) . '.phtml';
+        $view->display($tpl_path, $assign);
     }
     
 } 
