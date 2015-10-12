@@ -244,15 +244,15 @@ class Simple {
         
         $sql = "UPDATE `{$this->_table}` SET ";
         foreach($data as $key => $value) {
-            $sql .= "`{$key}` = :{$key},";
+            $sql .= "`{$key}` = '" . addslashes($value) . "',";
         }
         $sql  = rtrim($sql, ',');
         $sql .= " WHERE {$this->_where}";
         $this->_limit && $sql .= " LIMIT {$this->_limit}";
         if($show_row_count) {
-            return $this->_db->exec($sql, $data);
+            return $this->_db->exec($sql, $this->_params);
         } else {
-            $this->_db->executeSql($sql, $data);
+            $this->_db->executeSql($sql, $this->_params);
             return true;
         }
     }

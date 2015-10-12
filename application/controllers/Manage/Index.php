@@ -16,9 +16,10 @@ class Manage_IndexController extends AbsController {
     protected $_need_login = false;
     
     public function indexAction() {
-        if(Yaf_Registry::get('current_uid')) {
+        $login = \Comm\Arg::get('login', FILTER_VALIDATE_BOOLEAN);
+        if(Yaf_Registry::get('current_uid') && !$login) {
             //已登录，跳至管理页
-            return $this->redirect(\Comm\View::path('manage/main'));
+            return $this->redirect(\Comm\View::path('manage/basic'));
         } else {
             //未登录，展示介绍页
             $this->viewDisplay();

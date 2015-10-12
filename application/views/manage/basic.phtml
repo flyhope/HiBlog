@@ -1,0 +1,59 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+<form class="form-horizontal" method="post" >
+
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for=""><?= _('博客名称'); ?></label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" id="" placeholder="<?= _('用于展示于标题位置'); ?>" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for=""><?= _('博客描述'); ?></label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" id="" placeholder="<?= _('用简洁的文字描述博客'); ?>" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for=""><?= _('分页设置'); ?></label>
+		<div class="col-sm-5">
+            <select id="" class="form-control">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for=""><?= _('评论设置'); ?></label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" id="" placeholder="<?= _('请填入多说的评论名称'); ?>" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for=""><?= _('时区设置'); ?></label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" id="" placeholder="<?= _('设置展示给用户的时区'); ?>" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for=""><?= _('域名设置'); ?></label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" id="" placeholder="<?= _('如果有独立域名，CNAME指向博客地址，并在此填入地址'); ?>" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-1 col-sm-11">
+			<button type="submit" class="btn btn-default"><?= _('保存') ?></button>
+		</div>
+	</div>
+</form>
+<?php $this->_blockEnd(); ?>
+<?php $this->_blockLoad('_block/manage') ?>

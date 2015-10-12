@@ -32,7 +32,7 @@ class User extends Abs {
             'github_access_token' => $github_access_token,
             'metadata'            => \Comm\Json::encode($metadata),
         );
-        self::db()->insert($data);
+        self::db()->insert($data, true);
         return $id;
     }
     

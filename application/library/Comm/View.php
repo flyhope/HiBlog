@@ -154,11 +154,14 @@ class View implements \Yaf_View_Interface {
     /**
      * 预定义一个区块
      * 
-     * @param string $name
+     * @param string $name    名称
+     * @param string $default 如果不存在时输出的默认值
      */
-    protected function _blockConfig($name) {
+    protected function _blockConfig($name, $default = '') {
         if(isset($this->_block_content[$name])) {
             echo $this->_block_content[$name];
+        } elseif($default) {
+            echo $default;
         }
     }
     
