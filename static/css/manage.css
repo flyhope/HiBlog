@@ -18,8 +18,7 @@ a {
 }
 
 header {
-	padding-top: 40px;
-	padding-bottom: 40px;
+	padding: 40px;
 	background: #2e7bcf url(../img/manage/header-bg.jpg) 0 0 repeat-x;
 	border-bottom: solid 1px #275da1;
 }
@@ -34,11 +33,6 @@ header h1 {
 	line-height: 1;
 	color: #fff;
 	letter-spacing: -1px;
-	
-	@media (min-width: @screen-sm-min) {
-		font-size: 72px;
-	}
-	
 }
 
 header h2 {
@@ -52,17 +46,7 @@ header h2 {
 	letter-spacing: 0;
 }
 
-.inner {
-	position: relative;
-	width: 940px;
-	margin: 0 auto;
-	padding: 0 15px;
-}
-
 header a.button {
-	position: absolute;
-	top: 0;
-	right: 0;
 	background: transparent url(../img/manage/github-button.png) 0 0 no-repeat;
 	width: 202px;
 	height: 80px;
@@ -71,9 +55,16 @@ header a.button {
 	font-size: 23px;
 	line-height: 1.2;
 	color: #fff;
+	display:block;
+	float:right;
 }
 
 header a.button small {
 	display: block;
 	font-size: 14px;
+}
+
+header .inner {
+	max-width:1000px;
+	margin: 0 auto;
 }
