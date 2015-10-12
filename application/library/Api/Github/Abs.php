@@ -46,5 +46,4 @@ abstract class Abs extends \Api\Abs {
         $result = json_decode($result);
         return $result;
     }
-    
 }

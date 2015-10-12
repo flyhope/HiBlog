@@ -21,7 +21,19 @@ class Github_OAuthController extends AbsController {
         $config = \Model\Config::showBatch(['github_client_secret', 'github_client_id']);
         
         $api = \Api\Github\Oauth::init();
-        $result = $api->accessToken($config['github_client_id'], $config['github_client_secret'], $code);
+        $oauth = $api->accessToken($config['github_client_id'], $config['github_client_secret'], $code);
+        
+        if($oauth->access_token) {
+            $_SESSION['github-access-token'] = $oauth->access_token;
+        }
+        
+        //获取用户UID
+        $github_user = new \Api\Github\Users();
+        $user = $github_user->user();
+        
+        var_dump($user);
+        exit;
+        
 
         /**
          * @todo 获取用户信息后写入SESSION

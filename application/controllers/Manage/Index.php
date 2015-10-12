@@ -17,8 +17,8 @@ class Manage_IndexController extends AbsController {
     
     public function indexAction() {
         if(Yaf_Registry::get('current_uid')) {
-//             //已登录，跳至管理页
-//             return $this->redirect(\Comm\Tpl::path('manage/main'));
+            //已登录，跳至管理页
+            return $this->redirect(\Comm\View::path('manage/main'));
         } else {
             //未登录，展示介绍页
             $this->viewDisplay();
