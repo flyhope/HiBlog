@@ -73,7 +73,7 @@ abstract class Arg {
         if($data === null) {
             $result = null;
         } else {
-            $result = filter_var($name, $filter, $option);
+            $result = filter_var($data, $filter, $option);
         }
         
         $must_be_right && self::_checkRight($result, $name, $filter);

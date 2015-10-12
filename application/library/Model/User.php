@@ -39,11 +39,13 @@ class User extends Abs {
     /**
      * 更新一个用户信息
      * 
-     * @param int   $id   UID
-     * @param array $data 数据
+     * @param  int   $id   UID
+     * @param  array $data 数据
+     * 
+     * @return \int
      */
     static public function update($id, array $data) {
-        self::db()->wAnd(['id'=>$id])->upadte($data);
+        return self::db()->wAnd(['id'=>$id])->upadte($data, true);
     }
     
     /**
@@ -59,8 +61,30 @@ class User extends Abs {
         }
     }
     
+    /**
+     * 更新最后一次登录状态
+     * 
+     * @param int    $uid                 GITHUB的UID
+     * @param string $github_access_token GITHUB的AccessToken
+     * 
+     * @return int
+     */
     static public function updateLogin($uid, $github_access_token) {
-        
+        $result = false;
+        if($github_access_token) {
+            $user = self::show($uid);
+            if($user) {
+                $result = self::update($uid, [
+                    'github_access_token' => $github_access_token,
+                    'login_time'          => date('Y-m-d H:i:s'),
+                ]);
+            }
+            
+            if(!$user || empty($result)) {
+                $result = self::create($uid, $github_access_token);
+            }
+        }
+        return $result;
     }    
     
     

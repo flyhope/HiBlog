@@ -23,9 +23,5 @@ class Manage_IndexController extends AbsController {
             //未登录，展示介绍页
             $this->viewDisplay();
         }
-        
-        
     }
-    
-    
 }

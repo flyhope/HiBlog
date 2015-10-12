@@ -23,26 +23,23 @@ class Github_OAuthController extends AbsController {
         $api = \Api\Github\Oauth::init();
         $oauth = $api->accessToken($config['github_client_id'], $config['github_client_secret'], $code);
         
-        if($oauth->access_token) {
+        $access_token = empty($oauth->access_token) ? '' : $oauth->access_token;
+        if($access_token) {
             $_SESSION['github-access-token'] = $oauth->access_token;
         }
         
-        //获取用户UID
+        //获取用户信息
         $github_user = new \Api\Github\Users();
         $user = $github_user->user();
-        
-        var_dump($user);
-        exit;
-        
-
-        /**
-         * @todo 获取用户信息后写入SESSION
-         */
-        $_SESSION['uid'] = $uid;
-        
-        return false;
-        
-        
+        if(!empty($user->id)) {
+            //更新用户数据
+            \Model\User::updateLogin($user->id, $access_token);
+            $_SESSION['uid'] = $user->id;
+            
+            return $this->redirect('/manage/main');
+        } else {
+            throw new \Exception\Msg('请授权Github账号后再进行操作。');
+        }
     }
     
 }
