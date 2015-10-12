@@ -43,7 +43,7 @@ abstract class Abs {
      * 
      * @param boolean $multi_request 是否采用批量请求
      */
-    protected function __construct($multi_request = false) {
+    public function __construct($multi_request = false) {
         $this->_multi_request = $multi_request;
     }
     

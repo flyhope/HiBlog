@@ -74,6 +74,7 @@ class Mysql {
 		/* @var $config \Yaf_Config_Abstract */
 		$this->_read_config = $config[$alias]->read;
 		$this->_write_config = $config[$alias]->write;
+		
 		return $this;
 	}
 

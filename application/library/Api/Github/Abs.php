@@ -42,7 +42,7 @@ abstract class Abs extends \Api\Abs {
      * (non-PHPdoc)
      * @see \Api\Abs::_process()
      */
-    protected function _process($result) {
+    protected function _process($result, \Comm\Request\Single $request) {
         $result = json_decode($result);
         return $result;
     }

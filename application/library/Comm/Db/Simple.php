@@ -58,7 +58,7 @@ class Simple {
      * @param string $table    要操作的表名(可选，可后期调用table方法重新设置)
      * @param string $db_alias 数据库别名
      */
-    public function __construct($table = null, $db_alias = 'main') {
+    public function __construct($table = null, $db_alias = 'database_main') {
         $this->_db = new Mysql($db_alias);
         $table && $this->table($table);
     }
