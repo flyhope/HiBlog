@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php $this->_blockConfig('title', 'Githublog') ?></title>
     <?php $this->cssLib('bootstrap')?>
+    <?php $this->css($this->path('static/lib/jquery-ui-bootstrap/jquery-ui-1.10.0.custom.css')) ?>
     <?php $this->css($this->path('static/css/basic.css')) ?>
     <!--[if lt IE 9]>
       <?php $this->jsLib('html5shiv')?>
@@ -19,6 +20,8 @@
 
     <?php $this->jsLib('jquery')?>
     <?php $this->jsLib('bootstrap_js')?>
+    <?php $this->jsLib('jquery_ui')?>
+    <?php $this->js($this->js($this->path('static/js/basic.js')))?>
     <?php $this->_blockConfig('body_end')?>
   </body>
 </html>
