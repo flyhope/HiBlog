@@ -46,12 +46,27 @@
 			showAlertDialog(msg, title, callback, btn_string, btn_string_cancel);
 		},
 		
-		"ajaxProcessError" : function() {
-			$.browser.version();
+		//AJAX回调处理，默认有错误自动弹出
+		"ajaxCallback" : function(rv, success_callback) {
+	        try{
+	            var data = $.parseJSON(rv);
+	        } catch(e) {
+	            $.alert(rv);
+	        }
+	        
+	        if(data.code != 100000) {
+	            $.alert(data.msg);
+	        } else if(typeof success_callback !== false) {
+	        	success_callback(data);
+	        }
+	        
 		},
 		
-		//AJAX默认回调
+		//AJAX默认回调，成功刷页，失败弹错
 		"ajaxCallbackDefault" : function(response) {
+			$.ajaxCallback(response, function() {
+	            location.reload();
+		    });
 		}
 	});
 })(jQuery);
