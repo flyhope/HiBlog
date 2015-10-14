@@ -13,8 +13,11 @@
 
 return array(
     //管理首页
-    'manage/index.css' => ['//css-dev/basic.css', '//css-dev/manage/index.css'],
-    
+    'manage/index.css' => ['basic', 'manage/index'],
+		
+	//管理首页
+	'core/basic.js' => ['core/basic'],
+	'manage/index.js' => ['core/form', 'manage/index'],
     
     
 );

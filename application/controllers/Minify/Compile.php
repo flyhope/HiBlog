@@ -11,7 +11,7 @@ class Minify_CompileController extends AbsController {
     public function indexAction() {
         include APP_PATH . '/library/Thirdpart/Minify/bootstrap.php';
         
-        $group_conf = new Yaf_Config_Simple(include CONF_PATH . 'minify-groups.php');
+        $group_conf = \Model\Minify::loadGroupConfig();
         $sources = array();
         foreach($group_conf as $path => $files) {
             $this->_showSource($path, $files);
@@ -36,7 +36,12 @@ class Minify_CompileController extends AbsController {
         
         $sources = array();
         foreach($files as $value) {
-        	$content = file_get_contents(str_replace('//', ROOT_PATH . 'static/', $value));
+        	$source_path = str_replace('//', ROOT_PATH . 'static/', $value);
+        	if(!is_file($source_path)) {
+        		echo "[Not Found] {$source_path}<br />\r\n";
+        		continue;
+        	}
+        	$content = file_get_contents($source_path);
             $sources[] = new Minify_Source(array(
                 'id' => $value,
                 'content' => $content,

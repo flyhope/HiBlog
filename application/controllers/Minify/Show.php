@@ -16,7 +16,6 @@ class Minify_ShowController extends AbsController {
         $min_configPaths = array(
             'base'   => CONF_PATH . '/minify-config.php',
             'test'   => CONF_PATH . '/minify-config-test.php',
-            'groups' => CONF_PATH . '/minify-groups.php',
         );
         
         // check for custom config paths
@@ -89,7 +88,7 @@ class Minify_ShowController extends AbsController {
         // need groups config?
         if (null !== $env->get('g')) {
             // we need groups config
-            $min_serveOptions['minApp']['groups'] = (require $min_configPaths['groups']);
+            $min_serveOptions['minApp']['groups'] = \Model\Minify::loadGroupConfig();
         }
         
         // cache defaults
