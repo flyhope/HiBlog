@@ -235,13 +235,18 @@ class View implements \Yaf_View_Interface {
      * 加载CSS
      * @param string $path
      * @param boolean $return
+     * @param boolean $absolutely
      * @return \mixed
      */
-    static public function css($path, $with_version = true, $return = false) {
-        $href = $path;
+    static public function css($path, $with_version = true, $return = false, $absolutely = false) {
+        $href = $absolutely ? $path : self::path('static/css/' . $path);
+        if(!\Comm\Misc::isProEnv()) {
+        	$href .= (strpos($href, '?') === false ? '?' : '&') . "debug=1"; 
+        }
+        
         if($with_version) {
             $ver = self::cssVer();
-            $href .= (strpos($href, '?') === false ? '?' : '&') . "version={$ver}";
+            $href .= "&version={$ver}";
         }
     
         $result = "<link href=\"{$href}\" type=\"text/css\" rel=\"stylesheet\" />";
@@ -273,13 +278,19 @@ class View implements \Yaf_View_Interface {
      * 加载JS
      * @param string $path
      * @param boolean $return
+     * @param boolean $absolutely
      * @return \mixed
      */
-    static public function js($path, $with_version = true, $return = false) {
-        $src = $path;
+    static public function js($path, $with_version = true, $return = false, $absolutely = false) {
+        $src = $absolutely ? $path : self::path('static/js/' . $path);
+        
+        if(!\Comm\Misc::isProEnv()) {
+        	$href .= (strpos($href, '?') === false ? '?' : '&') . "debug=1";
+        }
+        
         if($with_version) {
             $ver = self::jsVer();
-            $src .= (strpos($src, '?') === false ? '?' : '&') . "version={$ver}";
+            $src .= "&version={$ver}";
         }
         $result = "<script type=\"text/javascript\" src=\"{$src}\"></script>";
         
@@ -328,7 +339,7 @@ class View implements \Yaf_View_Interface {
     static public function jsLib($lib_name, $return = false) {
         $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
         $url = $conf->lib[$lib_name];
-        return $url ? self::js($url, false, $return) : '';
+        return $url ? self::js($url, false, $return, true) : '';
     }
     
     /**
@@ -342,7 +353,7 @@ class View implements \Yaf_View_Interface {
     static public function cssLib($lib_name, $return = false) {
         $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
         $url = $conf->lib[$lib_name];
-        return $url ? self::css($url, false, $return) : '';
+        return $url ? self::css($url, false, $return, true) : '';
     }
     
     /**
