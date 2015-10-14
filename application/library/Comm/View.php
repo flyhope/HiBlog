@@ -285,7 +285,7 @@ class View implements \Yaf_View_Interface {
         $src = $absolutely ? $path : self::path('static/js/' . $path);
         
         if(!\Comm\Misc::isProEnv()) {
-        	$href .= (strpos($href, '?') === false ? '?' : '&') . "debug=1";
+        	$src .= (strpos($src, '?') === false ? '?' : '&') . "debug=1";
         }
         
         if($with_version) {

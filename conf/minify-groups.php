@@ -12,7 +12,7 @@
  **/
 
 return array(
-    //管理首页
+    //管理页
     'core/basic.css'   => ['core/basic'],
     'manage/index.css' => ['basic', 'manage/index'],
 		
