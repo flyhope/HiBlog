@@ -11,7 +11,7 @@
 		if(!callback) {
 			callback = function() {
 				$(this).dialog("close");
-			}
+			};
 		}
 		if(!btn_string && btn_string !== false) {
 			btn_string = "确定";
@@ -44,9 +44,18 @@
 		//确认弹层
 		"confirm" : function(msg, title, callback, btn_string, btn_string_cancel) {
 			showAlertDialog(msg, title, callback, btn_string, btn_string_cancel);
+		},
+		
+		"ajaxProcessError" : function() {
+			$.browser.version();
+		},
+		
+		//AJAX默认回调
+		"ajaxCallbackDefault" : function(response) {
 		}
-	})
+	});
 })(jQuery);
+
 
 
 

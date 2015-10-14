@@ -15,7 +15,7 @@ abstract class Misc {
      * @return boolean
      */
     static public function isProEnv() {
-        return ini_get('display_errors');
+        return !ini_get('display_errors');
     }
     
 } 
