@@ -14,7 +14,7 @@
 return array(
     //管理页
     'core/basic.css'   => ['core/basic'],
-    'manage/index.css' => ['basic', 'manage/index'],
+    'manage/index.css' => ['core/basic', 'manage/index'],
 		
 	//管理首页
 	'core/basic.js' => ['core/basic'],

@@ -28,7 +28,7 @@ header h2 {
 }
 
 header a.button {
-	background: transparent url(../img/manage/github-button.png) 0 0 no-repeat;
+	background: transparent url(../../img/manage/github-button.png) 0 0 no-repeat;
 	width: 202px;
 	height: 80px;
 	padding-top: 20px;

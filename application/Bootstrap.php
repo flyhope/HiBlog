@@ -33,4 +33,15 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
         $dispatcher->disableView();
         $dispatcher->autoRender(false);
     }
+    
+    /**
+     * 兼容 Windows
+     * 
+     * @param Yaf_Dispatcher $dispatcher
+     */
+    public function _initWindows(Yaf_Dispatcher $dispatcher) {
+    	if(stripos(\Comm\Arg::server('SERVER_SOFTWARE'), 'IIS') !== false) {
+    		$dispatcher->registerPlugin(new \IisPlugin());
+    	}
+    }
 }

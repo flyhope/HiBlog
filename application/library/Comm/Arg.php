@@ -53,7 +53,16 @@ abstract class Arg {
      * @return \mixed
      */
     static public function server($name, $filter = FILTER_DEFAULT, $option = null, $must_be_right = false) {
-        $result = filter_input(INPUT_SERVER, $name, $filter, $option);
+//         $result = filter_input(INPUT_SERVER, $name, $filter, $option);
+    	$data = isset($_SERVER[$name]) ? $_SERVER[$name] : null;
+    	if($data === null) {
+    		$result = null;
+    	} else {
+    		$result = filter_var($data, $filter, $option);
+    	}
+    	
+    	$must_be_right && self::_checkRight($result, $name, $filter);
+    	return $result;
         $must_be_right && self::_checkRight($result, $name, $filter);
         return $result;
     }

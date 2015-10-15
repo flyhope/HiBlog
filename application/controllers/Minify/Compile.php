@@ -7,7 +7,7 @@
  * @author  chengxuan <i@chengxuan.li>
  */
 class Minify_CompileController extends AbsController {
-    
+	
     public function indexAction() {
         include APP_PATH . '/library/Thirdpart/Minify/bootstrap.php';
         

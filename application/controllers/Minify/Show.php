@@ -8,6 +8,13 @@
  */
 class Minify_ShowController extends AbsController {
     
+	/**
+	 * 不需要登录就可以访问
+	 *
+	 * @var Boolean
+	 */
+	protected $_need_login = false;
+	
     public function indexAction() {
         
         include APP_PATH . '/library/Thirdpart/Minify/bootstrap.php';
