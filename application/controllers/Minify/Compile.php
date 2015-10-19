@@ -36,7 +36,7 @@ class Minify_CompileController extends AbsController {
         
         $sources = array();
         foreach($files as $value) {
-        	$source_path = str_replace('//', ROOT_PATH . 'static/', $value);
+        	$source_path = str_replace('//', ROOT_PATH , $value);
         	if(!is_file($source_path)) {
         		echo "[Not Found] {$source_path}<br />\r\n";
         		continue;

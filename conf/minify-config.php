@@ -77,7 +77,7 @@ $min_allowDebugFlag = !\Comm\Misc::isProEnv();
  * If /min/ is directly inside your document root, just uncomment the 
  * second line. The third line might work on some Apache servers.
  */
-$min_documentRoot = realpath(ROOT_PATH . 'static');
+$min_documentRoot = realpath(ROOT_PATH);
 //$min_documentRoot = dirname(dirname(__DIR__));
 //$min_documentRoot = substr(__FILE__, 0, -15);
 //$min_documentRoot = $_SERVER['SUBDOMAIN_DOCUMENT_ROOT'];
@@ -140,7 +140,7 @@ $min_serveOptions['minApp']['allowDirs'] = array('//js', '//css', '//dev-js', '/
  * Set to true to disable the "f" GET parameter for specifying files.
  * Only the "g" parameter will be considered.
  */
-$min_serveOptions['minApp']['groupsOnly'] = false;
+$min_serveOptions['minApp']['groupsOnly'] = true;
 
 
 /**
