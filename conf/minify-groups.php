@@ -12,13 +12,13 @@
  **/
 
 return array(
-    //管理页
-    'core/basic.css'   => ['core/basic'],
-    'manage/index.css' => ['core/basic', 'manage/index'],
+    //CSS
+    'core/basic.css'   => ['core/basic'],	//基础数据
+    'manage/index.css' => ['core/basic', 'manage/index'], //管理首页
 		
-	//管理首页
-	'core/basic.js' => ['core/basic'],
-	'manage/index.js' => ['core/form', 'manage/index'],
+	//JS
+	'core/basic.js' => ['core/basic'],	//基础数据
+	'manage/index.js' => ['core/form', 'manage/index'],	//管理首页
     
     
 );

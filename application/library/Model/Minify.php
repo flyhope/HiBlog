@@ -20,7 +20,7 @@ class Minify extends Abs {
 		foreach($config as $path => $files) {
 			$extension = pathinfo($path, PATHINFO_EXTENSION);
 			foreach($files as $key => $file) {
-				$file = "//static/dev-{$extension}/{$file}.{$extension}";
+				$file = '//' . \Comm\View::path("static/dev-{$extension}/{$file}.{$extension}");
 				$config[$path][$key] = $file;
 			}
 		}
