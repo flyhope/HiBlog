@@ -12,6 +12,7 @@
 			try {
 				var data = $.parseJSON(rv);
 				if (data.code != 100000) {
+					//失败
 					if (typeof fail_cb !== "undefined") {
 						auto_alert_error = fail_cb(data);
 					}
@@ -20,8 +21,16 @@
 						$.alert(data.msg);
 					}
 	
-				} else if (typeof success_cb !== false) {
-					success_cb(data);
+				} else {
+					//成功
+					if (typeof success_cb !== "undefined") {
+						success_cb(data);
+					} else {
+						$.alert("操作成功", false, function() {
+							location.reload();
+						});
+					}
+					
 				}
 				
 			} catch (e) {

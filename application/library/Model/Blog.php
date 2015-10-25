@@ -53,12 +53,17 @@ class Blog extends Abs {
     /**
      * 保存数据
      * 
-     * @param int   $uid  用户UID
      * @param array $data 博客配置
+     * @param int   $uid  用户UID（不传则使用当前登录用户UID）
      * 
      * @return \int
      */
-    static public function save($uid, $data) {
+    static public function save($data, $uid = false) {
+    	$uid || $uid = \Yaf_Registry::get('current_uid');
+    	if(!$uid) {
+    	    throw new \Exception\Nologin();
+    	}
+    	
         $db_data = self::show($uid);
         if(!$db_data) {
             $result = self::create($uid, $data);
@@ -72,11 +77,12 @@ class Blog extends Abs {
     /**
      * 获取一条数据
      * 
-     * @param int   $uid  用户UID
+     * @param int   $uid  用户UID，默认为当前登录用户UID
      * 
      * @return array
      */
-    static public function show($uid) {
+    static public function show($uid = false) {
+        !$uid && $uid = \Yaf_Registry::get('current_uid');
         $result = parent::show($uid);
         isset($result['data']) && $result['data'] = self::decodeData($result['data']);
         return $result;

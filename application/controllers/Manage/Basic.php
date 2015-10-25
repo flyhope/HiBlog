@@ -9,6 +9,8 @@
 class Manage_BasicController extends AbsController {
 
     public function indexAction() {
-        $this->viewDisplay();
+        $blog = Model\Blog::show();
+        $basic = new \Entity\Tarr(isset($blog['data']) ? $blog['data'] : array());
+        $this->viewDisplay(['basic' => $basic]);
     }
 } 

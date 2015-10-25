@@ -118,6 +118,7 @@ class View implements \Yaf_View_Interface {
     */
     public function display($tpl, $tpl_vars = null) {
         $this->_return = false;
+        $tpl_vars && $this->assign($tpl_vars);
         $this->_process($tpl);
         return true;
     }
@@ -132,6 +133,7 @@ class View implements \Yaf_View_Interface {
     */
     public function render($tpl, $tpl_vars = null) {
         $this->_return = true;
+        $tpl_vars && $this->assign($tpl_vars);
         return $this->_process($tpl);
     }
     
