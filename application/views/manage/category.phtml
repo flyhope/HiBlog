@@ -17,7 +17,7 @@
 			<tbody>
     			<?php foreach($categorys as $value) : ?>
     			<tr>
-    				<td><input type="checkbox" name="category-batch[]" value="<?= $value['id'] ?>" /></td>
+    				<td><input type="checkbox" name="ids[]" value="<?= $value['id'] ?>" /></td>
 					<td><?= $value['id'] ?></td>
 					<td><?= $value['name'] ?></td>
 					<td><?= $value['alias'] ?></td>
@@ -27,7 +27,7 @@
 		</table>
 	</div>
 	<div class="panel-footer">
-		<a class="btn btn-default" href="#" role="button">批量删除</a>
+		<input type="submit" class="btn btn-default" value="批量删除" />
 		<a class="btn btn-default" href="javascript:$.alert('该功能开发中。')" role="button">更新排序</a>
 	</div>
 </div>

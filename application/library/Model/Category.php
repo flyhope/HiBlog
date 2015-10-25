@@ -177,10 +177,10 @@ class Category extends Abs {
      *
      * @return \int
      */
-    static public function destroyByUser($id, $uid = false) {
-        !$uid && $uid = \Yaf_Registry::get('current_uid');
+    static public function destroyByUserBatch($ids, $uid = false) {
+        $uid || $uid = \Yaf_Registry::get('current_uid');
     
-        $where = array(static::$_primary_key => $id, 'uid' => $uid);
+        $where = array(static::$_primary_key => $ids, 'uid' => $uid);
         return self::db()->wAnd($where)->delete(true);
     }
  
