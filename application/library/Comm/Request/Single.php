@@ -41,6 +41,11 @@ class Single {
     public function __construct($url=null, array $post_data=null) {
         $this->_ch = curl_init();
         $this->_option[CURLOPT_RETURNTRANSFER] = true;
+        
+        //跳过证书验证
+        $this->_option[CURLOPT_SSL_VERIFYPEER] = true;
+        $this->_option[CURLOPT_SSL_VERIFYHOST] = true;
+        
         $url !== null && $this->setUrl($url);
         $post_data !== null && $this->setPostData($post_data);
     }
@@ -164,23 +169,23 @@ class Single {
      */
     public function fetchCurlCli() {
         $url = addslashes($this->_option[CURLOPT_URL]);
-        $result = "curl '{$url}'";
+        $result = "curl \"{$url}\"";
         if(isset($this->_option[CURLOPT_COOKIE])) {
             $cookie = addslashes($this->_option[CURLOPT_COOKIE]);
-            $result .= " -b '{$cookie}'";
+            $result .= " -b \"{$cookie}\"";
         }
         if(isset($this->_option[CURLOPT_USERAGENT])) {
             $user_agent = addslashes($this->_option[CURLOPT_USERAGENT]);
-            $result .= " -A '{$user_agent}'";
+            $result .= " -A \"{$user_agent}\"";
         }
         if(isset($this->_option[CURLOPT_POSTFIELDS])) {
             $post = addslashes($this->_option[CURLOPT_POSTFIELDS]);
-            $result .= " -d '{$post}'";
+            $result .= " -d \"{$post}\"";
         }
         if(isset($this->_headers)) {
             foreach($this->_headers as $header) {
                 $header = addslashes($header);
-                $result .= " -H '{$header}'";
+                $result .= " -H \"{$header}\"";
             }
         }
         return $result;

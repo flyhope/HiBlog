@@ -36,7 +36,7 @@ class Github_OAuthController extends AbsController {
             \Model\User::updateLogin($user->id, $access_token);
             $_SESSION['uid'] = $user->id;
             
-            return $this->redirect('/manage/main');
+            return $this->redirect('/manage/basic');
         } else {
             throw new \Exception\Msg('请授权Github账号后再进行操作。');
         }

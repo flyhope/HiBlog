@@ -24,6 +24,7 @@ abstract class Abs extends \Exception {
      */
     public function __construct($message, $code = 0, array $metadata = [], \Exception $previous = NULL) {
         parent::__construct($message, $code, $previous);
+        $this->_metadata = $metadata;
     }
     
     /**
