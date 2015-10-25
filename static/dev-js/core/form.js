@@ -11,23 +11,24 @@
 			var auto_alert_error = true;
 			try {
 				var data = $.parseJSON(rv);
+				if (data.code != 100000) {
+					if (typeof fail_cb !== "undefined") {
+						auto_alert_error = fail_cb(data);
+					}
+	
+					if (auto_alert_error) {
+						$.alert(data.msg);
+					}
+	
+				} else if (typeof success_cb !== false) {
+					success_cb(data);
+				}
+				
 			} catch (e) {
+				console.log("aaa");
 				$.alert(rv);
 			}
 
-			if (data.code != 100000) {
-
-				if (typeof fail_cb !== false) {
-					auto_alert_error = fail_cb(data);
-				}
-
-				if (auto_alert_error) {
-					$.alert(data.msg);
-				}
-
-			} else if (typeof success_cb !== false) {
-				success_cb(data);
-			}
 
 		},
 
@@ -57,17 +58,21 @@
 		 */
 		"ajaxSubmit" : function(success_cb, fail_cb) {
 			var form_jq = $(this);
-			var method = form_jq.attr("method");
-			var action = form_jq.attr("action");
-			var data = form_jq.serialize();
-			
-			$.ajax(action, {
-				"cache" : false,
-				"data" : data,
-				"success" : function(o) {
-					$.ajaxCallback(success_cb, fail_cb);
-				}
+			form_jq.submit(function(){
+				var method = form_jq.attr("method");
+				var action = form_jq.attr("action");
+				var data = form_jq.serialize();
+				
+				$.ajax(action, {
+					"cache" : false,
+					"data" : data,
+					"type" : method,
+					"success" : function(o) {
+						$.ajaxCallback(o, success_cb, fail_cb);
+					}
+				});
 			});
 		}
 	});
 })(jQuery);
+

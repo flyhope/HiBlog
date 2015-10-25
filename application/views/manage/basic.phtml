@@ -1,7 +1,6 @@
 <?php $this; /* @var $this \Comm\View */  ?>
 <?php $this->_block('content'); ?>
-<form class="form-horizontal" method="post" >
-
+<form id="form-manage-basic" action="<?= $this->path('aj/manage/basicsave') ?>" class="form-horizontal" method="post" onsubmit="return false">
 	<div class="form-group">
 		<label class="col-sm-1 control-label" for="input-name"><?= _('博客名称'); ?></label>
 		<div class="col-sm-11">
@@ -61,4 +60,7 @@
 	</div>
 </form>
 <?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->js('manage/basic.js'); ?>
+<?php $this->_blockEnd()?>
 <?php $this->_blockLoad('_block/manage') ?>
