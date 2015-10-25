@@ -81,6 +81,31 @@
 					}
 				});
 			});
+		},
+		
+		/**
+		 * 绑定表单全选事件（绑在表单上或者外层容器中）
+		 * @param {Object} select_control 总全选元素
+		 * @param {Object} child_nodes    控制的子元素
+		 */
+		"selectAll" : function(select_control, child_nodes) {
+			var box = $(this);
+			var child_obj = box.find(":checkbox").filter(child_nodes);
+			var control_obj = box.find(select_control);
+			
+			box.delegate(select_control, "click", function(){
+				child_obj.prop("checked", $(this).prop("checked"));
+			});
+			box.delegate(child_nodes, "click", function(){
+				var child_all_size = $(child_nodes).size();
+				var child_checked_size = $(child_nodes).filter(":checked").size();
+				if(child_all_size === child_checked_size) {
+					control_obj.prop("checked", true);
+				} else {
+					control_obj.prop("checked", false);
+				}
+			});
+			
 		}
 	});
 })(jQuery);

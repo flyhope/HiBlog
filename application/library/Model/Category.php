@@ -10,6 +10,13 @@ namespace Model;
 class Category extends Abs {
     
     /**
+     * 分类最多个数
+     * 
+     * @var int
+     */
+    const COUNT_MAX = 100;
+    
+    /**
      * 数据表名
      * 
      * @var string
@@ -39,20 +46,32 @@ class Category extends Abs {
     static public function showByUidName($uid, $name) {
         return self::db()->wAnd(['uid'=>$uid, 'name'=>$name])->fetchRow();
     }
+    
+    /**
+     * 统计一个用户的分类数量
+     * 
+     * @param int $uid
+     * 
+     * @return int
+     */
+    static public function countByUid($uid) {
+        return self::db()->wAnd(['uid'=>$uid])->fetchOne('COUNT(*)');
+    }
 
 
     /**
      * 获取一个用户的所有分类
      *
-     * @param int $uid
+     * @param int $uid 用户UID，不传则获取当前用户数据
      *
      * @return array
      */
-    static public function showUserAll($uid) {
+    static public function showUserAll($uid = false) {
+        $uid || $uid = \Yaf_Registry::get('current_uid');
+        
         $where = ['uid'=>$uid];
         $order = [['sort', SORT_ASC], ['id', SORT_ASC]];
         $result = self::db()->wAnd($where)->order($order)->fetchAll();
-        $result = \Comm\Arr::groupBy($result, 'parent_id');
         return $result;
     }
     
@@ -60,31 +79,38 @@ class Category extends Abs {
      * 创建分类
      * 
      * @param int    $uid
-     * @param int    $parent_id
      * @param string $name
      * @param string $alias
      * @param int    $uid
      * 
      * @return \int
      */
-    static public function create($parent_id, $name, $alias, $uid = false) {
+    static public function create($name, $alias, $uid = false) {
         $uid === false && $uid = \Yaf_Registry::get('current_uid');
         if(!$uid) {
             throw new \Exception\Msg('系统异常，无法获取分类创建人');
         }
         
+        if(!$name || !$alias) {
+            throw new \Exception\Msg('分类名称和别名必填');
+        }
+        
+        if(self::countByUid($uid) >= self::COUNT_MAX) {
+            throw new \Exception\Msg('超出最大分类个数限制');
+        }
+        
         $data = self::showByUidAlias($uid, $alias);
-        if(!$data) {
+        if($data) {
             throw new \Exception\Msg('分类别名已存在');
         }
+        
         $data = self::showByUidName($uid, $name);
-        if(!$data) {
+        if($data) {
             throw new \Exception\Msg('分类名称已存在');
         }        
         
         $data = array(
             'uid'       => $uid,
-            'parent_id' => $parent_id,
             'name'      => $name,
             'alias'     => $alias,
             'sort'      => '120',

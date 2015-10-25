@@ -193,12 +193,14 @@ class View implements \Yaf_View_Interface {
      * 加载一个区块模板
      * 
      * @param string $tpl
+     * @param array  $vars 变量
      */
-    protected function _blockLoad($tpl) {
+    protected function _blockLoad($tpl, array $vars = array()) {
         if($this->_return) {
             \ob_start();
         }
         
+        $vars && \extract($vars);
         include "{$this->_template_dir}/{$tpl}.phtml";
         
         if($this->_return) {

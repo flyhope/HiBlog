@@ -110,6 +110,7 @@ class Mysql {
 	    $this->_mode = self::MODE_WRITE;
 	    $result = call_user_func($callback, $this);
 	    $this->_mode = $mode;
+	    
 	    return $result;
 	}
 
@@ -185,7 +186,6 @@ class Mysql {
 	public function fetchOne($sql, array $data = null, $index = null) {
 	    $this->_validateSelect($sql);
 	    $statement = $this->executeSql($sql, $data);
-	    
 	    if (!$index || is_numeric($index)) {
 	        return $statement ? $statement->fetchColumn((int)$index) : $statement;
 	    } else {
@@ -389,8 +389,12 @@ class Mysql {
 	 * @param string $sql
 	 * @return ENUM
 	 */
-	static protected function _detectSqlType($sql) {
-		return self::_extractSqlVerb($sql) === 'select' ? self::MODE_READ : self::MODE_WRITE;
+	protected function _detectSqlType($sql) {
+	    $result = $this->_mode;
+	    if($result === self::MODE_AUTO) {
+	        $result = self::_extractSqlVerb($sql) === 'select' ? self::MODE_READ : self::MODE_WRITE;
+	    }
+		return $result;
 	}
 }
 

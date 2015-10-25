@@ -153,6 +153,7 @@ class Simple {
                 $order .= ',';
             }
             $order = rtrim($order, ',');
+            $this->_order = $order;
         } else {
             $sort_str = self::_fetchSortStr($sort);
             $this->_order = "$field_or_batch_arr";
@@ -391,6 +392,20 @@ class Simple {
         $sql = self::fetchSql("SELECT {$field}");
         return $this->_db->fetchRow($sql, $this->_params);
     }
+    
+    /**
+     * 获取一条数据
+     * 
+     * @param string $field
+     * @param mixed  $index
+     * 
+     * @return boolean|mixed
+     */
+    public function fetchOne($field = '*', $index = null) {
+        $sql = self::fetchSql("SELECT {$field}");
+        return $this->_db->fetchOne($sql, $this->_params, $index);
+    }
+    
     
     /**
      * 获取最后一次插入产生的ID

@@ -18,7 +18,8 @@ return array(
 		
 	//JS
 	'core/basic.js' => ['core/basic'],	//基础数据
-	'manage/basic.js' => ['core/form', 'manage/basic'],	//管理首页
+	'manage/basic.js'      => ['core/form', 'manage/basic'],	//管理首页
+	'manage/category.js'   => ['core/form', 'manage/category'],	//分类管理页
     
     
 );
