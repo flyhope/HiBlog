@@ -1,0 +1,14 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+
+            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+
+<?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->jsLib('ckeditor_js'); ?>
+<?php $this->js('manage/article.js'); ?>
+
+<?php $this->_blockEnd()?>
+<?php $this->_blockLoad('_block/manage', ['nav'=>'article']) ?>

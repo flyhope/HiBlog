@@ -7,5 +7,6 @@
 class Manage_ArticleController extends AbsController {
 
     public function indexAction() {
+        $this->viewDisplay();
     }
 }

@@ -42,9 +42,9 @@ class Single {
         $this->_ch = curl_init();
         $this->_option[CURLOPT_RETURNTRANSFER] = true;
         
-        //跳过证书验证
-        $this->_option[CURLOPT_SSL_VERIFYPEER] = true;
-        $this->_option[CURLOPT_SSL_VERIFYHOST] = true;
+//         //跳过证书验证
+//         $this->_option[CURLOPT_SSL_VERIFYPEER] = true;
+//         $this->_option[CURLOPT_SSL_VERIFYHOST] = true;
         
         $url !== null && $this->setUrl($url);
         $post_data !== null && $this->setPostData($post_data);
