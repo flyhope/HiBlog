@@ -62,6 +62,9 @@ class Article extends Abs {
             throw new \Exception\Msg('文章发表失败');
         }
         
+        //计数器+1
+        \Model\Counter\Article::incr($category_id);
+        
         return $id;
     }
 

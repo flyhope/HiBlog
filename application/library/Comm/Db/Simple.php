@@ -75,6 +75,15 @@ class Simple {
         $this->_table = $config->pre . $table;
         return $this;
     }
+
+    /**
+     * 获取当前操作的数据表
+     * 
+     * @return \Comm\Db\string
+     */
+    public function showTable() {
+        return $this->_table;
+    }
     
     /**
      * 追加And条件
@@ -438,4 +447,5 @@ class Simple {
     static public function repeatParams(array $data) {
         return rtrim(str_repeat('?,', count($data)), ',');
     }
+    
 }

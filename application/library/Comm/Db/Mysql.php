@@ -120,7 +120,8 @@ class Mysql {
 	 * 如果在insert或者replace语句后需要获取 last insert id 请使用last_insert_id()方法
 	 *
 	 * @param string $sql	sql语句。不能为select语句
-	 * @param array $data
+	 * 
+	 * @param \int
 	 */
 	public function exec($sql, array $data = NULL) {
 		$verb = self::_extractSqlVerb($sql);
