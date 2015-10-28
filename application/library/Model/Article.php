@@ -80,7 +80,7 @@ class Article extends Abs {
             throw new \Exception\Msg('原始数据异常');
         }
         $validate_auth && User::validateAuth($data['uid']);
-        
+        $new_data['state'] = -1;
         self::db()->wAnd(['id' => $data['id']])->upadte($new_data);
     }
 

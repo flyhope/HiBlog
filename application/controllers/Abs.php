@@ -39,12 +39,17 @@ abstract class AbsController extends Yaf_Controller_Abstract {
     /**
      * 渲染模板
      * 
-     * @param array $assign
+     * @param array  $assign   模板变量
+     * @param string $tpl_path 模板路径（不填则是当前Controller）
      */
-    public function viewDisplay(array $assign = array()) {
+    public function viewDisplay(array $assign = array(), $tpl_path = null) {
         $view = new \Comm\View();
         $tpl_name = $this->getRequest()->getControllerName();
-        $tpl_path = strtolower(str_replace('_', '/', $tpl_name)) . '.phtml';
+        if($tpl_path) {
+            $tpl_path .= '.phtml';
+        } else {
+            $tpl_path = strtolower(str_replace('_', '/', $tpl_name)) . '.phtml';
+        }
         $view->display($tpl_path, $assign);
     }
     

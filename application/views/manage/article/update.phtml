@@ -1,0 +1,45 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+
+<form id="form-manage-article-create" action="<?= $form_action ?>" class="form-horizontal" method="post" onsubmit="return false">
+
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for="input-title"><?= _('标题'); ?></label>
+		<div class="col-sm-11">
+			<input type="text" class="form-control" id="input-title" name="title" placeholder="<?= _('文章标题'); ?>"  />
+		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label class="col-sm-1 control-label" for="input_category_id"><?= _('分类'); ?></label>
+		<div class="col-sm-5">
+            <select class="form-control" id="input_category_id" name="category_id">
+                <?php foreach($categorys as $value) : ?>
+                <option value="<?= $value['id'] ?>"><?= $value['name'] ?> (<?= $value['alias'] ?>)</option>
+                <?php endforeach; ?>
+            </select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+	<label class="col-sm-1 control-label" for="input_category_id"><?= _('内容'); ?></label>
+    	<div class="col-sm-11">
+            <textarea name="" id="input_content" rows="10" cols="80"></textarea>
+        </div>
+    </div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-1 col-sm-11">
+			<input type="submit" class="btn btn-info" value="<?= _('发布') ?>" />
+		</div>
+	</div>
+    
+</form>
+<?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->jsLib('ckeditor_js'); ?>
+<?php $this->js('manage/article/update.js'); ?>
+
+<?php $this->_blockEnd()?>
+<?php $this->_blockLoad('_block/manage', ['nav'=>'article']) ?>

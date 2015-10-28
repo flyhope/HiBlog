@@ -34,11 +34,9 @@
 				}
 				
 			} catch (e) {
-				console.log("aaa");
+				console.log(e);
 				$.alert(rv);
 			}
-
-
 		},
 
 		/**
