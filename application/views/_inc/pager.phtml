@@ -1,0 +1,26 @@
+<?php $pager; /* @var $pager \Comm\Pager */  ?>
+<?php if($pager->count) : ?>
+<nav<?php if(!empty($nav_node_type)) : ?> node-type="<?= $nav_node_type ?>" <?php endif; ?>>
+	<ul class="pagination" node-type="pager">
+        <?php if($pager->current_page > 1) : ?>
+		<li>
+	       <a href="javascript:void(0)" aria-label="Previous" node-page="1">
+	           <span aria-hidden="true">&laquo;</span>
+	       </a>
+		</li>
+		<?php endif; ?>
+		<li><a href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<?php if($pager->current_page != $pager->count) : ?>
+		<li>
+		  <a href="javascript:void(0)" aria-label="Next" node-page="<?= $pager->count ?>">
+		      <span aria-hidden="true">&raquo;</span>
+		  </a>
+		</li>
+		<?php endif; ?>
+	</ul>
+</nav>
+<?php endif; ?>
