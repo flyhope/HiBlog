@@ -62,14 +62,17 @@ class Category extends Abs {
     /**
      * 获取一个用户的所有分类
      *
-     * @param int $uid 用户UID，不传则获取当前用户数据
+     * @param int $uid            用户UID，不传则获取当前用户数据
+     * @param int $append_default 是否自动追加默认的项
      *
      * @return array
      */
-    static public function showUserAll($uid = false) {
+    static public function showUserAll($uid = false, $append_default = true) {
         $uid || $uid = \Yaf_Registry::get('current_uid');
         
-        $where = ['uid'=>$uid];
+        $uid_params = ($append_default ?  [$uid, 0] : $uid);
+        
+        $where = ['uid'=>$uid_params];
         $order = [['sort', SORT_ASC], ['id', SORT_ASC]];
         $result = self::db()->wAnd($where)->order($order)->fetchAll();
         return $result;

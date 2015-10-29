@@ -39,13 +39,13 @@ abstract class Abs extends \Model\Abs {
         
         $sql_params = $key;
         $sql_params['offset'] = $offset;
-        $sql = "INSERT INTO {$table} SET ";
+        $sql = "INSERT INTO {$table} SET total_number = 1, ";
         foreach(static::$_field_keys as $field) {
             $sql .= "{$field} = :{$field},";
         }
         $sql = rtrim($sql, ',');
-        $sql .= " ON DUPLICATE KEY UPDATE SET {$field_value} = {$field_value} + :offset";
-        
+        $sql .= " ON DUPLICATE KEY UPDATE {$field_value} = {$field_value} + :offset";
+
         $mysql = new \Comm\Db\Mysql();
         return $mysql->exec($sql, $sql_params);
     }
@@ -59,12 +59,12 @@ abstract class Abs extends \Model\Abs {
      * @return \int
      */
     public static function decrement(array $key, $offset = 1) {
-        $table = \Comm\Db\Simple::t(static::$_table);
+        $table = self::db()->showTable();
         $field_value = static::$_fiels_value;
         
         $sql_params = $key;
         $sql_params['offset'] = $offset;
-        $sql = "INSERT INTO {$table} SET ";
+        $sql = "INSERT INTO {$table} SET total_number = 0, ";
         foreach(static::$_field_keys as $field) {
             $sql .= "{$field} = 0,";
         }

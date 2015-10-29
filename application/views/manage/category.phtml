@@ -17,7 +17,7 @@
 			<tbody>
     			<?php foreach($categorys as $value) : ?>
     			<tr>
-    				<td><input type="checkbox" name="ids[]" value="<?= $value['id'] ?>" /></td>
+    				<td><?php if($value['uid'] == Yaf_Registry::get('current_uid')) : ?><input type="checkbox" name="ids[]" value="<?= $value['id'] ?>" /><?php endif; ?></td>
 					<td><?= $value['id'] ?></td>
 					<td><?= $value['name'] ?></td>
 					<td><?= $value['alias'] ?></td>

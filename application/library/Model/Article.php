@@ -64,6 +64,7 @@ class Article extends Abs {
         
         //计数器+1
         \Model\Counter\Article::incr($category_id);
+        \Model\Counter\Article::incr(0);
         
         return $id;
     }
@@ -136,6 +137,7 @@ class Article extends Abs {
             $result = self::showUserListNext($offset, $limit, $next_since_id, $uid);
         }
         
+        $result['total_number'] = Counter\Article::get(0, $uid);
         return $result;        
     }
 

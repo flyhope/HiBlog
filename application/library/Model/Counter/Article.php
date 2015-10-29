@@ -8,6 +8,15 @@
  */
 namespace Model\Counter;
 class Article extends Abs {
+    
+    /**
+     * 要操作的数据表名
+     * 
+     * @var string
+     */
+    protected static $_table = 'counter_article'; 
+    
+    
     /**
      * 计数器唯一键字段
      *
@@ -25,6 +34,7 @@ class Article extends Abs {
      * @return \int
      */
     public static function incr($category_id, $uid = null, $offset = 1) {
+        return parent::increment(self::_showKey($uid, $category_id), $offset);
     }
     
     /**
