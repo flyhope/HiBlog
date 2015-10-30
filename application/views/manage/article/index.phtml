@@ -1,0 +1,11 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+
+<?php $pager = new \Comm\Pager(1000, 1, 10, 1); ?>
+<?php $this->_include('_inc/pager', ['pager' => $pager]); ?>
+
+<?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->js('manage/article/index.js'); ?>
+<?php $this->_blockEnd()?>
+<?php $this->_blockLoad('_block/manage', ['nav'=>'article']) ?>

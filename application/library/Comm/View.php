@@ -210,6 +210,17 @@ class View implements \Yaf_View_Interface {
     }
     
     /**
+     * 加载一个已存在的模板
+     * 
+     * @param string $tpl  模板
+     * @param array  $vars 变量
+     */
+    protected function _include($tpl, array $vars = array()) {
+        $vars && \extract($vars);
+        include "{$this->_template_dir}/{$tpl}.phtml";
+    }
+    
+    /**
      * 清理相关变量
      * 
      * @return void

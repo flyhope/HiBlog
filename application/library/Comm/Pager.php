@@ -35,7 +35,7 @@ class Pager {
      * 
      * @var int
      */
-    public $current_page;
+    public $current_page = 1;
     
     /**
      * 当前请求时最后一个ID
@@ -61,7 +61,7 @@ class Pager {
      * @param int $next_since_id 当前请求最后一个ID
      * @param int $prev_since_id 当前请求第一个ID
      */
-    public function __constract($total, $page, $count, $current_page, $last_current_page, $next_since_id, $prev_since_id) {
+    public function __construct($total, $page, $count, $current_page, $last_current_page = 0, $next_since_id = 0, $prev_since_id = 0) {
         $this->total = $total;
         $this->page = $page;
         $this->count = $count;
@@ -69,6 +69,7 @@ class Pager {
         $this->next_since_id = $next_since_id;
         $this->prev_since_id = $prev_since_id;
     }
+    
     
     public function getFlip($show_max = 10) {
         
