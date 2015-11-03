@@ -70,9 +70,4 @@ class Pager {
         $this->prev_since_id = $prev_since_id;
     }
     
-    
-    public function getFlip($show_max = 10) {
-        
-    }
-    
 }
