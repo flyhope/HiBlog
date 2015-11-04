@@ -17,20 +17,26 @@ class Manage_Article_IndexController extends AbsController {
 
     
     public function indexAction() {
-        $current_page = Comm\Arg::get('current_page', FILTER_VALIDATE_INT, ['min_range' => 0]);
-        ($page = Comm\Arg::get('page', FILTER_VALIDATE_INT, ['min_range' => 1])) || ($page = 1);
-        $next_since_id = Comm\Arg::get('next_since_id', FILTER_VALIDATE_INT, ['min_range' => 0]);
-        $prev_since_id = Comm\Arg::get('prev_since_id', FILTER_VALIDATE_INT, ['min_range' => 0]);
-
+        $last_page = Comm\Arg::get('last_page', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 0;
+        $page = Comm\Arg::get('p', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 1;
+        $uid = Yaf_Registry::get('current_uid');
+        
+        //获取总数
+        $total = Model\Counter\Article::get(0, $uid);
+        
         //获取用户的博客配置中的分页设置
         $blog = Model\Blog::show();
         empty($blog['data']['page_count']) || $this->_limit = $blog['data']['page_count'];
         
+        //获取分页参数
+        $pager = new \Comm\Pager($this->_limit);
         
-        $result = Model\Article::showUserList($current_page, $page, $this->_limit, $next_since_id, $prev_since_id);
+        //获取数据
+        $result = Model\Article::showUserList($pager);
 
         $this->viewDisplay(array(
             'result' => $result,
+            'pager'  => $pager,
         ));
     }
     

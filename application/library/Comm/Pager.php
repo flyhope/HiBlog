@@ -31,13 +31,6 @@ class Pager {
     public $count = 10;
     
     /**
-     * 当前请求时是第几页
-     * 
-     * @var int
-     */
-    public $current_page = 1;
-    
-    /**
      * 当前请求时最后一个ID
      * 
      * @var int
@@ -52,22 +45,65 @@ class Pager {
     public $prev_since_id;
     
     /**
+     * 上一次请求的页面
+     * 
+     * @var int
+     */
+    public $last_page;
+    
+    /**
      * 构造方法
      * 
      * @param int $total         总数
      * @param int $page          第几页
      * @param int $count         每页多少项
-     * @param int $current_page  当前请求时是第几页
+     * @param int $last_page     上一次请页的页面
      * @param int $next_since_id 当前请求最后一个ID
      * @param int $prev_since_id 当前请求第一个ID
      */
-    public function __construct($total, $page, $count, $current_page, $last_current_page = 0, $next_since_id = 0, $prev_since_id = 0) {
+    public function __construct($total, $count = 20, $page = false, $last_page = false, $next_since_id = false, $prev_since_id = false) {
         $this->total = $total;
         $this->page = $page;
+        $this->last_page = $last_page;
         $this->count = $count;
-        $this->current_page = $current_page;
         $this->next_since_id = $next_since_id;
         $this->prev_since_id = $prev_since_id;
+        
+        
+        if($this->page === false) {
+            $this->page = Arg::get('p', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 0;
+        }
+        if($this->next_since_id === false) {
+            $this->next_since_id = Arg::get('next_since_id', FILTER_VALIDATE_INT) ?: 0;
+        }
+        if($this->prev_since_id === false) {
+            $this->next_since_id = Arg::get('prev_since_id', FILTER_VALIDATE_INT) ?: 0;
+        }
+        if(!$this->last_page === false) {
+            $this->last_page = Arg::get('last_page', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 0;
+        }
+    }
+    
+    /**
+     * 获取基础URL
+     * 
+     * @return string
+     */
+    public function showBaseHref() {
+        $result = $_GET;
+        if(isset($result['last_page'])) {
+            unset($result['last_page']);
+        }
+        if(isset($result['next_since_id'])) {
+            unset($result['next_since_id']);
+        }
+        if(isset($result['prev_since_id'])) {
+            unset($result['prev_since_id']);
+        }
+        if(isset($result['p'])) {
+            unset($result['p']);
+        }
+        return '?' . http_build_query($result);
     }
     
 }

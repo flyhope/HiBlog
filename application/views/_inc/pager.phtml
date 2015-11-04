@@ -1,18 +1,18 @@
 <?php $pager; /* @var $pager \Comm\Pager */  ?>
 <?php if($pager->count) : ?>
-<div class="panel panel-default" node-type="pager" prev_since_id="<?= $pager->prev_since_id ?>" next_since_id="<?= $pager->next_since_id ?>">
+<div class="panel panel-default" node-type="pager" last-page="<?= $pager->page ?>" prev-since-id="<?= $pager->prev_since_id ?>" next-since-id="<?= $pager->next_since_id ?>" base-href="<?= urlencode($pager->showBaseHref()) ?>">
 	<div class="panel-body text-center">
 		<form class="form-inline">
-            <?php if($pager->current_page > 1) : ?>
-			<a href="javascript:void(0)" class="btn btn-default" role="button" action-type="pager-go" number="<?= $pager->current_page - 1 ?>"><?= _('上一页'); ?></a>
+            <?php if($pager->page > 1) : ?>
+			<a href="javascript:void(0)" class="btn btn-default" role="button" action-type="pager-go" number="<?= $pager->page - 1 ?>"><?= _('上一页'); ?></a>
 			<?php endif; ?>
 			<select class="form-control" name="pager-selector">
 			    <?php for($i=1; $i <= $pager->total; ++$i) : ?>
-				<option value="<?= $i ?>" <?php if($i == $pager->current_page) : ?> selected="selected" <?php endif; ?>><?php printf(_('第%u页'), $i); ?></option>
+				<option value="<?= $i ?>" <?php if($i == $pager->page) : ?> selected="selected" <?php endif; ?>><?php printf(_('第%u页'), $i); ?></option>
 				<?php endfor; ?>
 			</select>
-            <?php if($pager->current_page < $pager->total) : ?>
-			<a href="javascript:void(0)" class="btn btn-default" role="button" action-type="pager-go" number="<?= $pager->current_page + 1 ?>"><?= _('下一页'); ?></a>
+            <?php if($pager->page < $pager->total) : ?>
+			<a href="javascript:void(0)" class="btn btn-default" role="button" action-type="pager-go" number="<?= $pager->page + 1 ?>"><?= _('下一页'); ?></a>
 			<?php endif; ?>
 		</form>
 	</div>

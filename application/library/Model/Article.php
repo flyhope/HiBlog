@@ -110,7 +110,7 @@ class Article extends Abs {
     /**
      * 获取用户发表的文章
      * 
-     * @param int $current_page  当前第几页
+     * @param int $last_page     当前上次第几页
      * @param int $page          要翻到第几页
      * @param int $limit         每页多少项
      * @param int $next_since_id 来源页最后一个ID
@@ -119,25 +119,29 @@ class Article extends Abs {
      * 
      * @return \array
      */
-    static public function showUserList($current_page, $page, $limit, $next_since_id, $prev_since_id, $uid = false) {
-        if(!$current_page || !$next_since_id || !$prev_since_id || $page == 1) {
+    static public function showUserList(\Comm\Pager $pager, $uid = false) {
+        $last_page = $pager->last_page;
+        $next_since_id = $pager->next_since_id;
+        $prev_since_id = $pager->prev_since_id;
+        $page = $pager->page;
+        $limit = $pager->count;
+        if(!$last_page || !$next_since_id || !$prev_since_id || $page == 1) {
             //没有偏移翻页参数，或者前往第一页直接按PAGE、COUNT取
             $offset = ($page - 1) * $limit;
             $result = self::showUserListNext($offset, $limit, false, $uid);
-        } elseif($page == $current_page) {
+        } elseif($page == $last_page) {
             //刷新当页
             $result = self::showUserListNext(0, $limit, $prev_since_id, $uid);
-        } elseif($page < $current_page) {
+        } elseif($page < $last_page) {
             //前翻
-            $offset = ($current_page - $page - 1) * $limit;
+            $offset = ($last_page - $page - 1) * $limit;
             $result = self::showUserListPrev($offset, $limit, $prev_since_id, $uid);
         } else {
             //后翻
-            $offset = ($page - $current_page - 1) * $limit;
+            $offset = ($page - $last_page - 1) * $limit;
             $result = self::showUserListNext($offset, $limit, $next_since_id, $uid);
         }
-        
-        $result['total_number'] = Counter\Article::get(0, $uid);
+
         return $result;        
     }
 
