@@ -121,8 +121,11 @@ class Article extends Abs {
      */
     static public function showUserList(\Comm\Pager $pager, $uid = false) {
         $last_page = $pager->last_page;
-        $next_since_id = $pager->next_since_id;
-        $prev_since_id = $pager->prev_since_id;
+        /**
+         * 本期不考虑since_id翻页
+         */
+        $next_since_id = 0;
+        $prev_since_id = 0;
         $page = $pager->page;
         $limit = $pager->count;
         if(!$last_page || !$next_since_id || !$prev_since_id || $page == 1) {
@@ -164,7 +167,7 @@ class Article extends Abs {
         }
         
         $db->order('id', SORT_DESC)->limit($offset, $limit);
-        $result = $db->fetchAll();
+        $result = $db->fetchAll('id,category_id,title,state,create_time,publish_time');
         
         return self::_formatResult($result);
     }

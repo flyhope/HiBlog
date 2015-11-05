@@ -52,6 +52,13 @@ class Pager {
     public $last_page;
     
     /**
+     * 最多可选择页数
+     * 
+     * @var int
+     */
+    public $page_total = 1;
+    
+    /**
      * 构造方法
      * 
      * @param int $total         总数
@@ -69,9 +76,8 @@ class Pager {
         $this->next_since_id = $next_since_id;
         $this->prev_since_id = $prev_since_id;
         
-        
         if($this->page === false) {
-            $this->page = Arg::get('p', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 0;
+            $this->page = Arg::get('p', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 1;
         }
         if($this->next_since_id === false) {
             $this->next_since_id = Arg::get('next_since_id', FILTER_VALIDATE_INT) ?: 0;
@@ -82,6 +88,8 @@ class Pager {
         if(!$this->last_page === false) {
             $this->last_page = Arg::get('last_page', FILTER_VALIDATE_INT, ['min_range' => 1]) ?: 0;
         }
+        
+        $this->page_total = ceil($this->total / $this->count);
     }
     
     /**

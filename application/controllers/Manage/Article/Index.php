@@ -13,7 +13,7 @@ class Manage_Article_IndexController extends AbsController {
      * 
      * @var int
      */
-    protected $_limit = 20;
+    protected $_limit = 5;
 
     
     public function indexAction() {
@@ -29,13 +29,13 @@ class Manage_Article_IndexController extends AbsController {
         empty($blog['data']['page_count']) || $this->_limit = $blog['data']['page_count'];
         
         //获取分页参数
-        $pager = new \Comm\Pager($this->_limit);
+        $pager = new \Comm\Pager($total, $this->_limit);
         
         //获取数据
-        $result = Model\Article::showUserList($pager);
-
+        $articles = Model\Article::showUserList($pager);
+        
         $this->viewDisplay(array(
-            'result' => $result,
+            'articles' => $articles,
             'pager'  => $pager,
         ));
     }

@@ -289,7 +289,10 @@ class Mysql {
 			} else {
 				$error = strval($error);
 			}
-			throw new \Exception\Database($error);
+			throw new \Exception\Database($error, $statement->errorCode(), [
+			    'SQL' => $sql,
+			    'data' => $data,
+			]);
 		}
 
 		return $statement;
