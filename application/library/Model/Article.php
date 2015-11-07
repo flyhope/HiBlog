@@ -16,6 +16,17 @@ class Article extends Abs {
      */
     protected static $_table = 'article';
     
+    /**
+     * 发布状态
+     * 
+     * @var array
+     */
+    protected static $_state_alias = array(
+        -1 => '未更新',
+        0  => '未发布',
+        1  => '已发布',
+    );
+    
     //uid, category_id, title, content, state, create_time, publish_time
     
     /**
@@ -110,12 +121,8 @@ class Article extends Abs {
     /**
      * 获取用户发表的文章
      * 
-     * @param int $last_page     当前上次第几页
-     * @param int $page          要翻到第几页
-     * @param int $limit         每页多少项
-     * @param int $next_since_id 来源页最后一个ID
-     * @param int $prev_since_id 来源页第一个ID
-     * @param int $uid           UID（没有取当前用户UID）
+     * @param \Comm\Pager $pager        分页对对象
+     * @param int         $uid          当前用户UID
      * 
      * @return \array
      */
@@ -144,6 +151,7 @@ class Article extends Abs {
             $offset = ($page - $last_page - 1) * $limit;
             $result = self::showUserListNext($offset, $limit, $next_since_id, $uid);
         }
+        
 
         return $result;        
     }
@@ -198,6 +206,22 @@ class Article extends Abs {
     }
     
     /**
+     * 获取状态别名
+     * 
+     * @param int $state 状态码
+     * 
+     * @return \string
+     */
+    static public function showStateName($state) {
+        if(isset(self::$_state_alias[$state])) {
+            $result = self::$_state_alias[$state];
+        } else {
+            $result = '';
+        }
+        return $result;
+    }
+    
+    /**
      * 格式化列表数据
      * 
      * @param array $data
@@ -216,5 +240,4 @@ class Article extends Abs {
         }
         return $result;
     }
-    
 }

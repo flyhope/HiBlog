@@ -34,9 +34,14 @@ class Manage_Article_IndexController extends AbsController {
         //获取数据
         $articles = Model\Article::showUserList($pager);
         
+        //获取分类内容
+        $categorys = Model\Category::showUserAll();
+        $categorys = Comm\Arr::hashmap($categorys, 'id');
+        
         $this->viewDisplay(array(
-            'articles' => $articles,
-            'pager'  => $pager,
+            'articles'  => $articles,
+            'categorys' => $categorys,
+            'pager'     => $pager,
         ));
     }
     
