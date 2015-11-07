@@ -21,7 +21,7 @@ class Respositories extends Abs {
      * @return \array
      */
     public function userRepos($visibility = null, $affiliation = null, $type = null, $sort = null, $direction = null) {
-        return $this->_post('user/repos', array(
+        return $this->_get('user/repos', array(
             'visibility'  => $visibility,
             'affiliation' => $affiliation,
             'type'        => $type,
@@ -42,6 +42,15 @@ class Respositories extends Abs {
         $url = 'repos/%s/%s/branches';
         $url = sprintf($url, $owner, $repo);
         return $this->_get($url);
+    }
+    
+    /**
+     * 初始化对象
+     *
+     * @return \Api\Github\Respositories
+     */
+    static public function init() {
+        return parent::init();
     }
     
     
