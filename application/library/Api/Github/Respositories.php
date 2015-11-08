@@ -45,6 +45,20 @@ class Respositories extends Abs {
     }
     
     /**
+     * 获取一个Repos信息
+     * 
+     * @param string $owner
+     * @param string $repo
+     * 
+     * @return \array
+     */
+    public function getRepos($owner, $repo) {
+        $url = 'repos/%s/%s';
+        $url = sprintf($url, $owner, $repo);
+        return $this->_get($url);
+    }
+    
+    /**
      * 初始化对象
      *
      * @return \Api\Github\Respositories

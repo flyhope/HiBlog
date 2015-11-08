@@ -10,21 +10,25 @@ Githublog
 	<header>
 		<div class="row inner">
 			<div class="col-md-4">
-				<h1>GithuBlog</h1>
-				<h2><?=_('换一种方式记录点滴') ?></h2>
+				<h1><?= _('极博客') ?></h1>
+				<h2><?= _('换一种方式记录点滴') ?></h2>
 			</div>
 			<div class="col-md-1 col-md-offset-5">
-				<a href="<?= $this->path('github/login') ?>" class="button"><small>GITHUB</small> <?=_('授权登录')?></a>
+				<a href="<?= $this->path('user/github/login') ?>" class="button"><small>GITHUB</small> <?=_('授权登录')?></a>
 			</div>
 		</div>
 	</header>
 
 
 	<div class="jumbotron">
-		<h3>开源</h3>
-		<p>通过Github实现开源</p>
-		<h3>免费</h3>
-		<p>使用Github作为载体，流量无限量，空间不可估量！</p>
+		<div class="inner">
+    		<h3>开源</h3>
+    		<p>通过Github实现开源，没有后门，可进行二次开发！</p>
+    		<h3>免费</h3>
+    		<p>使用Github作为载体，流量无限量，空间不可估量！妈妈再也不用担心我的空间要花钱了！</p>
+    		<h3>个性</h3>
+    		<p>模板全部开放，可任意放置HTML、CSS、JS！</p>
+		</div>
 	</div>
 </div>
 <?php $this->_blockEnd() ?>

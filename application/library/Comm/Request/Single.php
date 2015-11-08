@@ -198,19 +198,32 @@ class Single {
 
     /**
      * 执行CURL请求
+     * 
+     * @param string $response_header 引用返回响应头信息
      *
      * @return string
      */
-    public function exec() {
+    public function exec(& $response_header = null) {
+        $numargs = func_num_args();
+        $numargs = 1;
+        if($numargs) {
+            curl_setopt($this->_ch, CURLOPT_HEADER, true);
+        }
+        
         $this->fetchCurl($this->_ch);
         $result = curl_exec($this->_ch);
+        
+        $curl_info = curl_getinfo($this->_ch);
+        if($numargs && !empty($curl_info['http_code'])) {
+            list($response_header, $result) = explode("\r\n\r\n", $result);
+        }
         
         //执行失败抛出异常
         if($result === false) {
             $code = curl_errno($this->_ch);
             $message = curl_error($this->_ch);
             $metadata = array(
-                'info'             => curl_getinfo($this->_ch),
+                'info'             => $curl_info,
                 'curl_cli_command' => $this->fetchCurlCli(),
             );
             throw new \Exception\Request($message, $code, $metadata);

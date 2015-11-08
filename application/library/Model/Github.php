@@ -21,6 +21,33 @@ class Github extends Abs {
         return $result;
     }
     
+    /**
+     * 获到用户GitHub默认的博客Repo
+     * 
+     * @return \stdClass
+     */
+    static public function showDefaultBlogRepo() {
+        $github_user = new \Api\Github\Users();
+        
+        $user = $github_user->user();
+        if(!empty($user->login)) {
+            $github_respositories = new \Api\Github\Respositories();
+            $repo = $github_respositories->getRepos($user->login, self::showDefaultBlogRepoName($user->login));
+        }
+        return $repo;
+    }
+    
+    /**
+     * 获取默认博客的名称 
+     * 
+     * @param string $user_login
+     * 
+     * @return \string
+     */
+    static public function showDefaultBlogRepoName($user_login) {
+        return "{$user_login}.github.io";
+    }
+    
     
     
     

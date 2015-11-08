@@ -44,7 +44,7 @@ header a.button small {
 	font-size: 14px;
 }
 
-header .inner {
+header .inner, .jumbotron .inner {
 	max-width:1000px;
 	margin: 0 auto;
 }

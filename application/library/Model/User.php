@@ -26,7 +26,7 @@ class User extends Abs {
      * @return int
      */
     static public function create($id, $github_access_token, array $metadata = array()) {
-        !$metadata && $metadata = new \stdClass();
+        $metadata || $metadata = new \stdClass();
         $data = array(
             'id' => $id,
             'github_access_token' => $github_access_token,
@@ -66,22 +66,27 @@ class User extends Abs {
      * 
      * @param int    $uid                 GITHUB的UID
      * @param string $github_access_token GITHUB的AccessToken
+     * @param array  $metadata            同步更新元数据
      * 
      * @return int
      */
-    static public function updateLogin($uid, $github_access_token) {
+    static public function updateLogin($uid, $github_access_token, array $metadata = null) {
         $result = false;
-        if($github_access_token) {
-            $user = self::show($uid);
-            if($user) {
-                $result = self::update($uid, [
-                    'github_access_token' => $github_access_token,
-                    'login_time'          => date('Y-m-d H:i:s'),
-                ]);
+        if($github_access_token || $metadata) {
+            $update_data = array('login_time' => date('Y-m-d H:i:s'));
+            if($github_access_token) {
+                $update_data['github_access_token'] = $github_access_token;
+            }
+            if($metadata) {
+                $update_data['metadata'] = $update_data;
             }
             
-            if(!$user || empty($result)) {
-                $result = self::create($uid, $github_access_token);
+            $user = self::show($uid);
+            if(!$user) {
+                $result = self::create($uid, $github_access_token, $metadata);
+            }
+            if($user || empty($result)) {
+                $result = self::update($uid, $update_data);
             }
         }
         return $result;
