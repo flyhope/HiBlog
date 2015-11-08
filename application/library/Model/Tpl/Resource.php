@@ -23,7 +23,7 @@ class Resource extends \Model\Abs {
      * @return array
      */
     static public function showByName($tpl_id, $name) {
-        $where = ['tpl_id' => $tpl_id, 'name' => $name];
+        $where = ['tpl_id' => $tpl_id, 'resource_name' => $name];
         return self::db()->wAnd($where)->fetchRow();
     }
 

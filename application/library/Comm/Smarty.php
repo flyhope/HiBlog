@@ -45,12 +45,13 @@ class Smarty implements \Yaf_View_Interface {
      * @return void
      */
     protected function __construct() {
-        include ROOT_PATH . 'library/Thirdpart/Smarty/libs/Smarty.class.php';
+        \Yaf_Loader::import(APP_PATH . 'library/Thirdpart/Smarty/libs/Smarty.class.php');
+        
         $this->_smarty = new \Smarty();
         $this->_smarty->setTemplateDir('');
         $this->_smarty->setCompileDir(TMP_PATH . 'smarty-compile/');
         $this->_smarty->setCacheDir(TMP_PATH . 'smarty-cache/');
-        $this->_smarty->setPluginsDir(ROOT_PATH . 'library/SmartyPlugins/');
+        $this->_smarty->setPluginsDir(APP_PATH . 'library/Smarty/Plugins/');
         $this->_smarty->left_delimiter = '<!--{';
         $this->_smarty->right_delimiter = '}-->';
         

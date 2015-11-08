@@ -1,11 +1,10 @@
 <?php
-use Model;
 /**
  * Smarty资源流（tpl）
  *
  * @author chengxuan <i@chengxuan.li>
  */
-class Smarty_Tpl_Mysql extends Smarty_Resource_Custom {
+class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
     
     /**
      * 模板ID
