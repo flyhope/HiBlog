@@ -63,3 +63,41 @@ PRIMARY KEY (  `uid` ,  `category_id` )
 INSERT INTO `gb_category` (`id`, `uid`, `name`, `alias`, `sort`) VALUES
 (1, 0, '默认分类', 'default', 0);
 
+
+--
+-- 表的结构 `gb_tpl_main`
+--
+
+CREATE TABLE IF NOT EXISTS `gb_tpl_main` (
+  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '模板ID',
+  `name` varchar(16) NOT NULL COMMENT '模板名称',
+  `user_id` int(10) UNSIGNED NOT NULL COMMENT '模板作者',
+  `pic` varchar(128) NOT NULL DEFAULT '' COMMENT '模板截图',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='模板表';
+
+--
+-- 转存表中的数据 `gb_tpl_main`
+--
+
+INSERT INTO `gb_tpl_main` (`id`, `name`, `user_id`, `pic`, `create_time`) VALUES
+(1, '默认模板', 0, '', '2015-11-08 05:16:48');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `gb_tpl_resource`
+--
+
+CREATE TABLE IF NOT EXISTS `gb_tpl_resource` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tpl_id` mediumint(8) UNSIGNED NOT NULL COMMENT '模板ID',
+  `resource_name` varchar(32) NOT NULL COMMENT '资源名称',
+  `content` text NOT NULL COMMENT '模板内容',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unq_tpl_id_resource_name` (`tpl_id`,`resource_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客模板资源';
+
