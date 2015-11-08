@@ -6,7 +6,7 @@
  * @package Controller
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
-class Github_OAuthController extends AbsController {
+class User_Github_OAuthController extends AbsController {
     
     /**
      * 登录回调页不需要用户登录就可以访问
@@ -22,7 +22,6 @@ class Github_OAuthController extends AbsController {
         
         $api = \Api\Github\Oauth::init();
         $oauth = $api->accessToken($config['github_client_id'], $config['github_client_secret'], $code);
-        
         $access_token = empty($oauth->access_token) ? '' : $oauth->access_token;
         if($access_token) {
             $_SESSION['github-access-token'] = $oauth->access_token;

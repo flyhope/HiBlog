@@ -6,7 +6,7 @@
  * @package Controller
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
-class Github_LoginController extends AbsController {
+class User_Github_LoginController extends AbsController {
 
     /**
      * 允许未登录访问

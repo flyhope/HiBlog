@@ -1,12 +1,12 @@
 <?php
 
 /**
- * 管理入口
+ * 首页入口
  *
  * @package Controller
  * @author  chengxuan <chengxuan@staff.weibo.com>
  */
-class Manage_IndexController extends AbsController {
+class IndexController extends AbsController {
     
     /**
      * 允许未登录访问

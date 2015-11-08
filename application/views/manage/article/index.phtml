@@ -1,9 +1,13 @@
 <?php $this; /* @var $this \Comm\View */  ?>
 <?php $this->_block('content'); ?>
+
+<div class="panel panel-info">
+	<div class="panel-body">
+		<a href="<?= $this->path('manage/article/create') ?>" class="btn btn-info" role="button"><?= _('发表文章')?></a>
+	</div>
+</div>
+
 <?php if(!empty($articles['result'])) : ?>
-
-
-
 <form id="form-manage-category-result" action="<?= $this->path('aj/manage/category/destroy') ?>" class="form-inline" method="post" onsubmit="return false">
 <div class="panel panel-default">
 	<table class="table table-hover table-bordered">

@@ -35,7 +35,7 @@ class ErrorController extends Yaf_Controller_Abstract {
             }
         } elseif($exception instanceof \Exception\Nologin) {
             //用户未登录
-            header('Location:/github/login');
+            header('Location:' . Comm\View::path('user/github/login'));
         } elseif($exception instanceof \Exception\Program) {
             //程序错误
             var_dump($exception);
