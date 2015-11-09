@@ -29,10 +29,10 @@ class Github extends Abs {
     static public function showDefaultBlogRepo() {
         $github_user = new \Api\Github\Users();
         
-        $user = $github_user->user();
-        if(!empty($user->login)) {
+        $user = \Model\User::show(\Yaf_Registry::get('current_uid'));
+        if(!empty($user['metadata']['login'])) {
             $github_respositories = new \Api\Github\Respositories();
-            $repo = $github_respositories->getRepos($user->login, self::showDefaultBlogRepoName($user->login));
+            $repo = $github_respositories->getRepos($user['metadata']['login'], self::showDefaultBlogRepoName($user['metadata']['login']));
         }
         return $repo;
     }

@@ -78,7 +78,7 @@ class User extends Abs {
                 $update_data['github_access_token'] = $github_access_token;
             }
             if($metadata) {
-                $update_data['metadata'] = $update_data;
+                $update_data['metadata'] = \Comm\Json::encode($metadata);
             }
             
             $user = self::show($uid);

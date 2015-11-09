@@ -32,7 +32,13 @@ class User_Github_OAuthController extends AbsController {
         $user = $github_user->user();
         if(!empty($user->id)) {
             //更新用户数据
-            \Model\User::updateLogin($user->id, $access_token);
+            $metadata = array(
+                'login'      => $user->login,
+                'avatar_url' => $user->avatar_url,
+                'name'       => $user->name,
+            );
+            
+            \Model\User::updateLogin($user->id, $access_token, $metadata);
             $_SESSION['uid'] = $user->id;
             
             return $this->redirect('/manage/basic');

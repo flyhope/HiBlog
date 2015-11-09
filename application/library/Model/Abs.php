@@ -58,7 +58,11 @@ abstract class Abs {
      */
     static public function show($id) {
         $where = array(static::$_primary_key => $id);
-        return self::db()->wAnd($where)->fetchRow();
+        $result = self::db()->wAnd($where)->fetchRow();
+        if(!empty($result['metadata'])) {
+            $result['metadata'] = \json_decode($result['metadata'], true);
+        }
+        return $result;
     }
     
     /**

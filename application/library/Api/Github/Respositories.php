@@ -10,6 +10,16 @@ namespace Api\Github;
 class Respositories extends Abs {
     
     /**
+     * 默认提交者
+     * 
+     * @var array
+     */
+    protected $_default_committer = array(
+        'name'  => 'GithuBlog',
+        'email' => 'githublog@chengxuan.li',
+    );
+    
+    /**
      * 获取当前用户的资源库
      * 
      * @param string $visibility  可见性（all, public, or private. Default: all）
@@ -56,6 +66,33 @@ class Respositories extends Abs {
         $url = 'repos/%s/%s';
         $url = sprintf($url, $owner, $repo);
         return $this->_get($url);
+    }
+    
+    /**
+     * 更新一个文件内容
+     * 
+     * @param string $owner     所有者
+     * @param string $repo      资源库
+     * @param string $path      路径
+     * @param string $content   文件内容
+     * @param string $message   注释
+     * @param string $branche   分支
+     * @param array  $committer 作者信息
+     * 
+     * @return \stdClass
+     */
+    public function update($owner, $repo, $path, $content, $message, $branche = null, array $committer = null) {
+        $committer || $committer = $this->_default_committer;
+        $url = sprintf('repos/%s/%s/contents/%s', $owner, $repo, $path);
+        $param = array(
+            'path'      => $path,
+            'content'   => base64_encode($content),
+            'message'   => $message,
+            'committer' => $committer,
+            'sha'       => sha1($content),
+        );
+        return $this->_post($url, $param, 'PUT');
+        
     }
     
     /**
