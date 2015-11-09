@@ -101,3 +101,16 @@ CREATE TABLE IF NOT EXISTS `gb_tpl_resource` (
   UNIQUE KEY `unq_tpl_id_resource_name` (`tpl_id`,`resource_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='博客模板资源';
 
+
+--
+-- 表的结构 `gb_counter_article`
+--
+
+CREATE TABLE `gb_counter_article` (
+  `uid` int(10) UNSIGNED NOT NULL COMMENT '用户ID',
+  `category_id` int(10) UNSIGNED NOT NULL COMMENT '分类ID',
+  `total_number` mediumint(8) UNSIGNED NOT NULL DEFAULT '0' COMMENT '计数'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章计数器';
+ALTER TABLE `gb_counter_article`
+  ADD PRIMARY KEY (`uid`,`category_id`);
+
