@@ -2406,4 +2406,3 @@ class Smarty_Internal_Templateparser
         } while ($yymajor != self::YYNOCODE && $this->yyidx >= 0);
     }
 }
-
