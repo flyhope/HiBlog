@@ -17,6 +17,18 @@ class User extends Abs {
     protected static $_table = 'user';
 
     /**
+     * 根据用户UID获取一条数据
+     * 
+     * @param int $id 用户UID，不传则为当前登录用户
+     * 
+     * @return \array
+     */
+    static public function show($id = false) {
+        $id || $id = \Yaf_Registry::get('current_uid');
+        return parent::show($id);
+    }
+    
+    /**
      * 创建一个用户
      * 
      * @param int    $id                  UID

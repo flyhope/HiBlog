@@ -16,8 +16,12 @@ $(function() {
 			"cache" : false,
 			"data" : data,
 			"type" : method,
-			"success" : $.ajaxCallbackDefault
+			"success" : function(response) {
+				$.ajaxCallback(response, function(o) {
+					location.href = o.data.href;
+				});
+			}
 		});
 	});
 	
-})
+});

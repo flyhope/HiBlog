@@ -67,8 +67,8 @@ class Blog extends Abs {
         $db_data = self::show($uid);
         if(!$db_data) {
             $result = self::create($uid, $data);
-        }
-        if($db_data || empty($result)) {
+        } else {
+            $data = array_merge($db_data['data'], $data);
             $result = self::update($uid, $data);
         }
         return $result;

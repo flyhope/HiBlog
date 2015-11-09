@@ -40,11 +40,17 @@ class Github extends Abs {
     /**
      * 获取默认博客的名称 
      * 
-     * @param string $user_login
+     * @param string $user_login 默认为当前用户
      * 
      * @return \string
      */
-    static public function showDefaultBlogRepoName($user_login) {
+    static public function showDefaultBlogRepoName($user_login = false) {
+        if(!$user_login) {
+            $user = \Model\User::show(\Yaf_Registry::get('current_uid'));
+            if(!empty($user['metadata']['login'])) {
+                $user_login = $user['metadata']['login'];
+            }
+        }
         return "{$user_login}.github.io";
     }
     

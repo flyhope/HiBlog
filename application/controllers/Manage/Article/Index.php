@@ -13,7 +13,7 @@ class Manage_Article_IndexController extends AbsController {
      * 
      * @var int
      */
-    protected $_limit = 5;
+    protected $_limit = 10;
 
     
     public function indexAction() {
@@ -38,10 +38,14 @@ class Manage_Article_IndexController extends AbsController {
         $categorys = Model\Category::showUserAll();
         $categorys = Comm\Arr::hashmap($categorys, 'id');
         
+        //获取用户博客基本地址
+        $blog_url = 'http://' . \Model\Github::showDefaultBlogRepoName();
+        
         $this->viewDisplay(array(
             'articles'  => $articles,
             'categorys' => $categorys,
             'pager'     => $pager,
+            'blog_url'  => $blog_url,
         ));
     }
     

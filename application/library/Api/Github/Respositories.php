@@ -57,8 +57,8 @@ class Respositories extends Abs {
     /**
      * 获取一个Repos信息
      * 
-     * @param string $owner
-     * @param string $repo
+     * @param string $owner 作者
+     * @param string $repo  资源库
      * 
      * @return \array
      */
@@ -69,7 +69,22 @@ class Respositories extends Abs {
     }
     
     /**
-     * 更新一个文件内容
+     * 获取一个文件内容
+     * 
+     * @param string $owner 作者
+     * @param string $repo  资源库
+     * @param string $path  路径
+     * 
+     * @return \array
+     */
+    public function getContent($owner, $repo, $path) {
+        $url = 'repos/%s/%s/contents/%s';
+        $url = sprintf($url, $owner, $repo, $path);
+        return $this->_get($url);
+    }
+    
+    /**
+     * 替换一个文件内容（存在更新，不存在创建）
      * 
      * @param string $owner     所有者
      * @param string $repo      资源库
@@ -81,7 +96,15 @@ class Respositories extends Abs {
      * 
      * @return \stdClass
      */
-    public function update($owner, $repo, $path, $content, $message, $branche = null, array $committer = null) {
+    public function replace($owner, $repo, $path, $content, $message, $branche = null, array $committer = null) {
+        $sha = '';
+        try {
+            $content_data = self::getContent($owner, $repo, $path);
+            empty($content_data->sha) || $sha = $content_data->sha;
+        } catch(\Exception $e) {
+            
+        }
+        
         $committer || $committer = $this->_default_committer;
         $url = sprintf('repos/%s/%s/contents/%s', $owner, $repo, $path);
         $param = array(
@@ -89,7 +112,7 @@ class Respositories extends Abs {
             'content'   => base64_encode($content),
             'message'   => $message,
             'committer' => $committer,
-            'sha'       => sha1($content),
+            'sha'       => $sha,
         );
         return $this->_post($url, $param, 'PUT');
         

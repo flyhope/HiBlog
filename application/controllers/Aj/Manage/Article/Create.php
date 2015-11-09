@@ -13,7 +13,7 @@ class Aj_Manage_Article_createController extends Aj_AbsController {
 		
 		Model\Article::create($category_id, $title, $content);
 		
-		Comm\Response::json(100000, '发表成功', null, false);
+		Comm\Response::json(100000, '发表成功', ['href' => Comm\View::path('manage/article/index')], false);
 	}
 	
 }
