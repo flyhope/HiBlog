@@ -59,23 +59,28 @@ class Article extends Abs {
             throw new \Exception\Msg('标题和内容不能为空');
         }
         
-        
-        $db = self::db();
-        $db->insert(array(
+        $data = array(
             'category_id' => $category_id,
             'title'       => $title,
             'content'     => $content,
             'state'       => 0,
             'uid'         => $uid,
-        ));
+        );
+        $db = self::db();
+        $db->insert($data);
         $id = $db->lastId();
         if(!$id) {
             throw new \Exception\Msg('文章发表失败');
         }
         
         //计数器+1
-        \Model\Counter\Article::incr($category_id);
-        \Model\Counter\Article::incr(0);
+        Counter\Article::incr($category_id);
+        Counter\Article::incr(0);
+        
+        //发布至Github中
+        $data['id'] = $id;
+        $user = User::show($uid);
+        Publish::article($data, $user);
         
         return $id;
     }
@@ -95,7 +100,12 @@ class Article extends Abs {
             throw new \Exception\Msg('原始数据异常');
         }
         $validate_auth && User::validateAuth($data['uid']);
-        $new_data['state'] = -1;
+        
+        //不是发布更新数据，更新状态为未发布
+        if(empty($new_data['publish_time'])) {
+            $new_data['state'] = -1;
+        }
+       
         self::db()->wAnd(['id' => $data['id']])->upadte($new_data);
     }
 
@@ -112,10 +122,6 @@ class Article extends Abs {
 
         $where = array(static::$_primary_key => $id, 'uid' => $uid);
         return self::db()->wAnd($where)->delete(true);
-    }
-    
-    static public function publish() {
-        
     }
 
     /**
