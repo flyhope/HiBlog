@@ -1,4 +1,4 @@
-(function($){function showAlertDialog(msg,title,callback,btn_string,btn_string_cancel){var dialog_html='<div id="dialog-alert"><p></p></div>';var dialog_config={buttons:{}};if(typeof title==="undefined"){title="提示";}
+(function($){function showAlertDialog(msg,title,callback,btn_string,btn_string_cancel){var dialog_html='<div id="dialog-alert"><p></p></div>';var dialog_config={buttons:{}};if(typeof title==="undefined"||!title){title="";}
 if(!callback){callback=function(){$(this).dialog("close");};}
 if(!btn_string&&btn_string!==false){btn_string="确定";}
 if(!btn_string_cancel&&btn_string_cancel!==false){btn_string_cancel="取消";}
