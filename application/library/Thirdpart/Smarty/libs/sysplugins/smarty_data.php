@@ -44,7 +44,7 @@ class Smarty_Data extends Smarty_Internal_Data
      * @param Smarty|Smarty_Internal_Template $smarty  global smarty instance
      * @param string                          $name    optional data block name
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function __construct($_parent = null, $smarty = null, $name = null)
     {
@@ -60,7 +60,7 @@ class Smarty_Data extends Smarty_Internal_Data
                 $this->tpl_vars[$_key] = new Smarty_Variable($_val);
             }
         } elseif ($_parent != null) {
-            throw new SmartyException("Wrong type for template variables");
+            throw new Smarty_SmartyException("Wrong type for template variables");
         }
     }
 }

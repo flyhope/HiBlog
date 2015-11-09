@@ -38,7 +38,7 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
      * @param object $compiler  compiler object
      * @param array  $parameter array with compilation parameter
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string compiled code
      */
     public function compile($args, $compiler, $parameter)
@@ -100,7 +100,7 @@ class Smarty_Internal_Compile_Private_Print_Expression extends Smarty_Internal_C
                             $output = $result;
                         } else {
                             // not found, throw exception
-                            throw new SmartyException("Unable to load filter '{$name}'");
+                            throw new Smarty_SmartyException("Unable to load filter '{$name}'");
                         }
                     }
                 }

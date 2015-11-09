@@ -800,7 +800,7 @@ class Smarty extends Smarty_Internal_TemplateBase
      * @param  bool   $no_output_filter not used - left for BC
      *
      * @throws Exception
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string rendered template output
      */
     public function fetch($template = null, $cache_id = null, $compile_id = null, $parent = null, $display = false, $merge_tpl_vars = true, $no_output_filter = false)
@@ -921,7 +921,7 @@ class Smarty extends Smarty_Internal_TemplateBase
      * @param  string|Smarty_Security $security_class if a string is used, it must be class-name
      *
      * @return Smarty                 current Smarty instance for chaining
-     * @throws SmartyException        when an invalid class name is provided
+     * @throws Smarty_SmartyException        when an invalid class name is provided
      */
     public function enableSecurity($security_class = null)
     {
@@ -930,15 +930,15 @@ class Smarty extends Smarty_Internal_TemplateBase
 
             return $this;
         } elseif (is_object($security_class)) {
-            throw new SmartyException("Class '" . get_class($security_class) . "' must extend Smarty_Security.");
+            throw new Smarty_SmartyException("Class '" . get_class($security_class) . "' must extend Smarty_Security.");
         }
         if ($security_class == null) {
             $security_class = $this->security_class;
         }
         if (!class_exists($security_class)) {
-            throw new SmartyException("Security class '$security_class' is not defined");
+            throw new Smarty_SmartyException("Security class '$security_class' is not defined");
         } elseif ($security_class !== 'Smarty_Security' && !is_subclass_of($security_class, 'Smarty_Security')) {
-            throw new SmartyException("Class '$security_class' must extend Smarty_Security.");
+            throw new Smarty_SmartyException("Class '$security_class' must extend Smarty_Security.");
         } else {
             $this->security_policy = new $security_class($this);
         }
@@ -982,7 +982,7 @@ class Smarty extends Smarty_Internal_TemplateBase
      * @param  string       $key          of the array element to assign the template dir to
      *
      * @return Smarty          current Smarty instance for chaining
-     * @throws SmartyException when the given template directory is not valid
+     * @throws Smarty_SmartyException when the given template directory is not valid
      */
     public function addTemplateDir($template_dir, $key = null)
     {
@@ -1307,12 +1307,12 @@ class Smarty extends Smarty_Internal_TemplateBase
      * @param  string $tpl_name
      *
      * @return Smarty          current Smarty instance for chaining
-     * @throws SmartyException if file is not readable
+     * @throws Smarty_SmartyException if file is not readable
      */
     public function setDebugTemplate($tpl_name)
     {
         if (!is_readable($tpl_name)) {
-            throw new SmartyException("Unknown file '{$tpl_name}'");
+            throw new Smarty_SmartyException("Unknown file '{$tpl_name}'");
         }
         $this->debug_tpl = $tpl_name;
 
@@ -1381,7 +1381,7 @@ class Smarty extends Smarty_Internal_TemplateBase
      * @param  string $plugin_name class plugin name to load
      * @param  bool   $check       check if already loaded
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string |boolean filepath of loaded file or false
      */
     public function loadPlugin($plugin_name, $check = true)
@@ -1395,7 +1395,7 @@ class Smarty extends Smarty_Internal_TemplateBase
         // class name must have three parts to be valid plugin
         // count($_name_parts) < 3 === !isset($_name_parts[2])
         if (!isset($_name_parts[2]) || strtolower($_name_parts[0]) !== 'smarty') {
-            throw new SmartyException("plugin {$plugin_name} is not a valid name format");
+            throw new Smarty_SmartyException("plugin {$plugin_name} is not a valid name format");
         }
         // if type is "internal", get plugin from sysplugins
         if (strtolower($_name_parts[1]) == 'internal') {

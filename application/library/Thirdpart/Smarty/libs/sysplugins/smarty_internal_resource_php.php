@@ -39,14 +39,14 @@ class Smarty_Internal_Resource_Php extends Smarty_Internal_Resource_File
      * @param  Smarty_Template_Source $source source object
      *
      * @return string                 template source
-     * @throws SmartyException        if source cannot be loaded
+     * @throws Smarty_SmartyException        if source cannot be loaded
      */
     public function getContent(Smarty_Template_Source $source)
     {
         if ($source->timestamp) {
             return '';
         }
-        throw new SmartyException("Unable to read template {$source->type} '{$source->name}'");
+        throw new Smarty_SmartyException("Unable to read template {$source->type} '{$source->name}'");
     }
 
     /**
@@ -56,12 +56,12 @@ class Smarty_Internal_Resource_Php extends Smarty_Internal_Resource_File
      * @param  Smarty_Internal_Template $_template template object
      *
      * @return void
-     * @throws SmartyException          if template cannot be loaded or allow_php_templates is disabled
+     * @throws Smarty_SmartyException          if template cannot be loaded or allow_php_templates is disabled
      */
     public function renderUncompiled(Smarty_Template_Source $source, Smarty_Internal_Template $_template)
     {
         if (!$source->smarty->allow_php_templates) {
-            throw new SmartyException("PHP templates are disabled");
+            throw new Smarty_SmartyException("PHP templates are disabled");
         }
         if (!$source->exists) {
             if ($_template->parent instanceof Smarty_Internal_Template) {
@@ -69,7 +69,7 @@ class Smarty_Internal_Resource_Php extends Smarty_Internal_Resource_File
             } else {
                 $parent_resource = '';
             }
-            throw new SmartyException("Unable to load template {$source->type} '{$source->name}'{$parent_resource}");
+            throw new Smarty_SmartyException("Unable to load template {$source->type} '{$source->name}'{$parent_resource}");
         }
 
         // prepare variables

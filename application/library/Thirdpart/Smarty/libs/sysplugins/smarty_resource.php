@@ -89,7 +89,7 @@ abstract class Smarty_Resource
      * @param  Smarty_Template_Source $source source object
      *
      * @return string                 template source
-     * @throws SmartyException        if source cannot be loaded
+     * @throws Smarty_SmartyException        if source cannot be loaded
      */
     abstract public function getContent(Smarty_Template_Source $source);
 
@@ -147,7 +147,7 @@ abstract class Smarty_Resource
      * @param  Smarty $smarty smarty object
      * @param  string $type   name of the resource
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return Smarty_Resource Resource Handler
      */
     public static function load(Smarty $smarty, $type)
@@ -207,7 +207,7 @@ abstract class Smarty_Resource
         // TODO: try default_(template|config)_handler
 
         // give up
-        throw new SmartyException("Unknown resource type '{$type}'");
+        throw new Smarty_SmartyException("Unknown resource type '{$type}'");
     }
 
     /**

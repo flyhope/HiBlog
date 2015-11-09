@@ -94,7 +94,7 @@ class Smarty_CacheResource_Pdo extends Smarty_CacheResource_Custom
     {
 
         if (is_null($table)) {
-            throw new SmartyException("Table name for caching can't be null");
+            throw new Smarty_SmartyException("Table name for caching can't be null");
         }
 
         $this->pdo = $pdo;

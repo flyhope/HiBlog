@@ -22,7 +22,7 @@ class Smarty_Internal_Write_File
      * @param  string $_contents file content
      * @param  Smarty $smarty    smarty instance
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return boolean true
      */
     public function writeFile($_filepath, $_contents, Smarty $smarty)
@@ -43,7 +43,7 @@ class Smarty_Internal_Write_File
         $_tmp_file = $_dirpath . DS . str_replace(array('.', ','), '_', uniqid('wrt', true));
         if (!file_put_contents($_tmp_file, $_contents)) {
             error_reporting($_error_reporting);
-            throw new SmartyException("unable to write file {$_tmp_file}");
+            throw new Smarty_SmartyException("unable to write file {$_tmp_file}");
        }
 
         /*
@@ -74,7 +74,7 @@ class Smarty_Internal_Write_File
         }
         if (!$success) {
             error_reporting($_error_reporting);
-            throw new SmartyException("unable to write file {$_filepath}");
+            throw new Smarty_SmartyException("unable to write file {$_filepath}");
         }
         if ($smarty->_file_perms !== null) {
             // set file permissions

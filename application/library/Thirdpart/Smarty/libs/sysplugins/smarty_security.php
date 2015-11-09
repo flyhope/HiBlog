@@ -457,7 +457,7 @@ class Smarty_Security
             return true;
         }
 
-        throw new SmartyException("stream '{$stream_name}' not allowed by security setting");
+        throw new Smarty_SmartyException("stream '{$stream_name}' not allowed by security setting");
     }
 
     /**
@@ -466,7 +466,7 @@ class Smarty_Security
      * @param  string $filepath
      *
      * @return boolean         true if directory is trusted
-     * @throws SmartyException if directory is not trusted
+     * @throws Smarty_SmartyException if directory is not trusted
      */
     public function isTrustedResourceDir($filepath)
     {
@@ -537,7 +537,7 @@ class Smarty_Security
         }
 
         // give up
-        throw new SmartyException("directory '{$_filepath}' not allowed by security setting");
+        throw new Smarty_SmartyException("directory '{$_filepath}' not allowed by security setting");
     }
 
     /**
@@ -549,7 +549,7 @@ class Smarty_Security
      * @param  string $uri
      *
      * @return boolean         true if URI is trusted
-     * @throws SmartyException if URI is not trusted
+     * @throws Smarty_SmartyException if URI is not trusted
      * @uses $trusted_uri for list of patterns to match against $uri
      */
     public function isTrustedUri($uri)
@@ -564,7 +564,7 @@ class Smarty_Security
             }
         }
 
-        throw new SmartyException("URI '{$uri}' not allowed by security setting");
+        throw new Smarty_SmartyException("URI '{$uri}' not allowed by security setting");
     }
 
     /**
@@ -573,12 +573,12 @@ class Smarty_Security
      * @param  string $filepath
      *
      * @return boolean         true if directory is trusted
-     * @throws SmartyException if PHP directory is not trusted
+     * @throws Smarty_SmartyException if PHP directory is not trusted
      */
     public function isTrustedPHPDir($filepath)
     {
         if (empty($this->trusted_dir)) {
-            throw new SmartyException("directory '{$filepath}' not allowed by security setting (no trusted_dir specified)");
+            throw new Smarty_SmartyException("directory '{$filepath}' not allowed by security setting (no trusted_dir specified)");
         }
 
         // check if index is outdated
@@ -613,7 +613,7 @@ class Smarty_Security
             $directory = substr($directory, 0, $pos);
         }
 
-        throw new SmartyException("directory '{$_filepath}' not allowed by security setting");
+        throw new Smarty_SmartyException("directory '{$_filepath}' not allowed by security setting");
     }
 
     /**
@@ -621,12 +621,12 @@ class Smarty_Security
      *
      * @param $template
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function startTemplate($template)
     {
         if ($this->max_template_nesting > 0 && $this->_current_template_nesting ++ >= $this->max_template_nesting) {
-            throw new SmartyException("maximum template nesting level of '{$this->max_template_nesting}' exceeded when calling '{$template->template_resource}'");
+            throw new Smarty_SmartyException("maximum template nesting level of '{$this->max_template_nesting}' exceeded when calling '{$template->template_resource}'");
         }
     }
 

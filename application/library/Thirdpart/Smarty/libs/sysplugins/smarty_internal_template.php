@@ -134,7 +134,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      * fetches rendered template
      *
      * @throws Exception
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string rendered template output
      */
     public function fetch()
@@ -158,7 +158,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      * @param  bool $display          true: display, false: fetch null: subtemplate
      *
      * @throws Exception
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string rendered template output
      */
     public function render($merge_tpl_vars = false, $no_output_filter = true, $display = null)
@@ -216,7 +216,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
             } else {
                 $parent_resource = '';
             }
-            throw new SmartyException("Unable to load template {$this->source->type} '{$this->source->name}'{$parent_resource}");
+            throw new Smarty_SmartyException("Unable to load template {$this->source->type} '{$this->source->name}'{$parent_resource}");
         }
         // disable caching for evaluated code
         if ($this->source->recompiled) {
@@ -359,7 +359,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
         try {
             ob_start();
             if (empty($this->properties['unifunc']) || !is_callable($this->properties['unifunc'])) {
-                throw new SmartyException("Invalid compiled template for '{$this->template_resource}'");
+                throw new Smarty_SmartyException("Invalid compiled template for '{$this->template_resource}'");
             }
             if (isset($this->smarty->security_policy)) {
                 $this->smarty->security_policy->startTemplate($this);
@@ -392,7 +392,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      * It does compare the timestamps of template source and the compiled templates and checks the force compile
      * configuration
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return boolean true if the template must be compiled
      */
     public function mustCompile()
@@ -403,7 +403,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
             } else {
                 $parent_resource = '';
             }
-            throw new SmartyException("Unable to load template {$this->source->type} '{$this->source->name}'{$parent_resource}");
+            throw new Smarty_SmartyException("Unable to load template {$this->source->type} '{$this->source->name}'{$parent_resource}");
         }
         if ($this->mustCompile === null) {
             $this->mustCompile = (!$this->source->uncompiled && ($this->smarty->force_compile || $this->source->recompiled || $this->compiled->timestamp === false ||
@@ -578,7 +578,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
                 return;
             }
         }
-        throw new SmartyException("Unable to find template function '{$name}'");
+        throw new Smarty_SmartyException("Unable to find template function '{$name}'");
     }
 
     /**
@@ -760,7 +760,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      */
     public function capture_error()
     {
-        throw new SmartyException("Not matching {capture} open/close in \"{$this->template_resource}\"");
+        throw new Smarty_SmartyException("Not matching {capture} open/close in \"{$this->template_resource}\"");
     }
 
     /**
@@ -780,7 +780,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
     /**
      * Load source resource
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function loadSource()
     {
@@ -836,7 +836,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      * @param array  $args argument array
      *
      * @return mixed
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function __call($name, $args)
     {
@@ -854,7 +854,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      * @param string $property_name property name
      * @param mixed  $value         value
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function __set($property_name, $value)
     {
@@ -872,7 +872,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
                     return;
                 }
         }
-        throw new SmartyException("invalid template property '$property_name'.");
+        throw new Smarty_SmartyException("invalid template property '$property_name'.");
     }
 
     /**
@@ -881,7 +881,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
      * @param string $property_name property name
      *
      * @return mixed|Smarty_Template_Cached
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function __get($property_name)
     {
@@ -907,7 +907,7 @@ class Smarty_Internal_Template extends Smarty_Internal_TemplateBase
                     return $this->smarty->$property_name;
                 }
         }
-        throw new SmartyException("template property '$property_name' does not exist.");
+        throw new Smarty_SmartyException("template property '$property_name' does not exist.");
     }
 
     /**

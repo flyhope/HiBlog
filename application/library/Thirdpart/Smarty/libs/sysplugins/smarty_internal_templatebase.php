@@ -126,15 +126,15 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      *
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or
      *                                      Smarty_Internal_Template) instance for chaining
-     * @throws SmartyException              when the plugin tag is invalid
+     * @throws Smarty_SmartyException              when the plugin tag is invalid
      */
     public function registerPlugin($type, $tag, $callback, $cacheable = true, $cache_attr = null)
     {
         $smarty = isset($this->smarty) ? $this->smarty : $this;
         if (isset($smarty->registered_plugins[$type][$tag])) {
-            throw new SmartyException("Plugin tag \"{$tag}\" already registered");
+            throw new Smarty_SmartyException("Plugin tag \"{$tag}\" already registered");
         } elseif (!is_callable($callback)) {
-            throw new SmartyException("Plugin \"{$tag}\" not callable");
+            throw new Smarty_SmartyException("Plugin \"{$tag}\" not callable");
         } else {
             $smarty->registered_plugins[$type][$tag] = array($callback, (bool) $cacheable, (array) $cache_attr);
         }
@@ -241,7 +241,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      * @param  boolean $smarty_args   smarty argument format, else traditional
      * @param  array   $block_methods list of block-methods
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or
      *                                      Smarty_Internal_Template) instance for chaining
      */
@@ -251,7 +251,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
         if (!empty($allowed)) {
             foreach ((array) $allowed as $method) {
                 if (!is_callable(array($object_impl, $method)) && !property_exists($object_impl, $method)) {
-                    throw new SmartyException("Undefined method or property '$method' in registered object");
+                    throw new Smarty_SmartyException("Undefined method or property '$method' in registered object");
                 }
             }
         }
@@ -259,7 +259,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
         if (!empty($block_methods)) {
             foreach ((array) $block_methods as $method) {
                 if (!is_callable(array($object_impl, $method))) {
-                    throw new SmartyException("Undefined method '$method' in registered object");
+                    throw new Smarty_SmartyException("Undefined method '$method' in registered object");
                 }
             }
         }
@@ -277,16 +277,16 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      * @param  string $name object name
      *
      * @return object
-     * @throws SmartyException if no such object is found
+     * @throws Smarty_SmartyException if no such object is found
      */
     public function getRegisteredObject($name)
     {
         $smarty = isset($this->smarty) ? $this->smarty : $this;
         if (!isset($smarty->registered_objects[$name])) {
-            throw new SmartyException("'$name' is not a registered object");
+            throw new Smarty_SmartyException("'$name' is not a registered object");
         }
         if (!is_object($smarty->registered_objects[$name][0])) {
-            throw new SmartyException("registered '$name' is not an object");
+            throw new Smarty_SmartyException("registered '$name' is not an object");
         }
 
         return $smarty->registered_objects[$name][0];
@@ -316,7 +316,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      * @param         $class_name
      * @param  string $class_impl the referenced PHP class to register
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or
      *                                      Smarty_Internal_Template) instance for chaining
      */
@@ -324,7 +324,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
     {
         // test if exists
         if (!class_exists($class_impl)) {
-            throw new SmartyException("Undefined class '$class_impl' in register template class");
+            throw new Smarty_SmartyException("Undefined class '$class_impl' in register template class");
         }
         // register the class
         $smarty = isset($this->smarty) ? $this->smarty : $this;
@@ -340,7 +340,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      *
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or
      *                                      Smarty_Internal_Template) instance for chaining
-     * @throws SmartyException              if $callback is not callable
+     * @throws Smarty_SmartyException              if $callback is not callable
      */
     public function registerDefaultPluginHandler($callback)
     {
@@ -348,7 +348,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
         if (is_callable($callback)) {
             $smarty->default_plugin_handler_func = $callback;
         } else {
-            throw new SmartyException("Default plugin handler '$callback' not callable");
+            throw new Smarty_SmartyException("Default plugin handler '$callback' not callable");
         }
 
         return $this;
@@ -361,7 +361,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      *
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or
      *                                      Smarty_Internal_Template) instance for chaining
-     * @throws SmartyException              if $callback is not callable
+     * @throws Smarty_SmartyException              if $callback is not callable
      */
     public function registerDefaultTemplateHandler($callback)
     {
@@ -376,7 +376,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      *
      * @return Smarty_Internal_Templatebase current Smarty_Internal_Templatebase (or Smarty or
      *                                      Smarty_Internal_Template) instance for chaining
-     * @throws SmartyException              if $callback is not callable
+     * @throws Smarty_SmartyException              if $callback is not callable
      */
     public function registerDefaultConfigHandler($callback)
     {
@@ -446,7 +446,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      * @param  string $type filter type
      * @param  string $name filter name
      *
-     * @throws SmartyException if filter could not be loaded
+     * @throws Smarty_SmartyException if filter could not be loaded
      */
     public function loadFilter($type, $name)
     {
@@ -463,7 +463,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
                 return true;
             }
         }
-        throw new SmartyException("{$type}filter \"{$name}\" not callable");
+        throw new Smarty_SmartyException("{$type}filter \"{$name}\" not callable");
     }
 
     /**
@@ -504,7 +504,7 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
      * @param string $name unknown method-name
      * @param array  $args argument array
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public function __call($name, $args)
     {
@@ -549,9 +549,9 @@ abstract class Smarty_Internal_TemplateBase extends Smarty_Internal_Data
                     return $smarty->$property_name = $args[0];
                 }
             }
-            throw new SmartyException("property '$property_name' does not exist.");
+            throw new Smarty_SmartyException("property '$property_name' does not exist.");
         }
-        throw new SmartyException("Call of unknown method '$name'.");
+        throw new Smarty_SmartyException("Call of unknown method '$name'.");
     }
 }
 

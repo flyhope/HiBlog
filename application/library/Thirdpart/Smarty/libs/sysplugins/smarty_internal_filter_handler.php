@@ -27,7 +27,7 @@ class Smarty_Internal_Filter_Handler
      * @param  string                   $content  the content which shall be processed by the filters
      * @param  Smarty_Internal_Template $template template object
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string                   the filtered content
      */
     public static function runFilter($type, $content, Smarty_Internal_Template $template)
@@ -47,7 +47,7 @@ class Smarty_Internal_Filter_Handler
                     }
                 } else {
                     // nothing found, throw exception
-                    throw new SmartyException("Unable to load filter {$plugin_name}");
+                    throw new Smarty_SmartyException("Unable to load filter {$plugin_name}");
                 }
             }
         }

@@ -24,7 +24,7 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
      * @param  Smarty_Internal_Template $_template template object
      *
      * @return string fully qualified filepath
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     protected function buildFilepath(Smarty_Template_Source $source, Smarty_Internal_Template $_template = null)
     {
@@ -38,7 +38,7 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
         // go relative to a given template?
         if (!empty($fileMatch['rel']) && $_template && $_template->parent instanceof Smarty_Internal_Template) {
             if ($_template->parent->source->type != 'file' && $_template->parent->source->type != 'extends' && !$_template->parent->allow_relative_path) {
-                throw new SmartyException("Template '{$file}' cannot be relative to template of resource type '{$_template->parent->source->type}'");
+                throw new Smarty_SmartyException("Template '{$file}' cannot be relative to template of resource type '{$_template->parent->source->type}'");
             }
             $path = dirname($_template->parent->source->filepath) . DS . $file;
             // normalize path
@@ -189,7 +189,7 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
      * @param  Smarty_Template_Source $source source object
      *
      * @return string                 template source
-     * @throws SmartyException        if source cannot be loaded
+     * @throws Smarty_SmartyException        if source cannot be loaded
      */
     public function getContent(Smarty_Template_Source $source)
     {
@@ -197,9 +197,9 @@ class Smarty_Internal_Resource_File extends Smarty_Resource
             return file_get_contents($source->filepath);
         }
         if ($source instanceof Smarty_Config_Source) {
-            throw new SmartyException("Unable to read config {$source->type} '{$source->name}'");
+            throw new Smarty_SmartyException("Unable to read config {$source->type} '{$source->name}'");
         }
-        throw new SmartyException("Unable to read template {$source->type} '{$source->name}'");
+        throw new Smarty_SmartyException("Unable to read template {$source->type} '{$source->name}'");
     }
 
     /**

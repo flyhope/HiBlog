@@ -109,7 +109,7 @@ function smarty_modifiercompiler_escape($params, $compiler)
                 return 'strtr(' . $params[0] . ', array("\\\\" => "\\\\\\\\", "\'" => "\\\\\'", "\"" => "\\\\\"", "\\r" => "\\\\r", "\\n" => "\\\n", "</" => "<\/" ))';
         }
     }
-    catch (SmartyException $e) {
+    catch (Smarty_SmartyException $e) {
         // pass through to regular plugin fallback
     }
 

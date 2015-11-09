@@ -32,7 +32,7 @@ class Smarty_Resource_Extendsall extends Smarty_Internal_Resource_Extends
                 $sources[$s->uid] = $s;
                 $uid .= $s->filepath;
             }
-            catch (SmartyException $e) {
+            catch (Smarty_SmartyException $e) {
             }
         }
 

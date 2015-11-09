@@ -69,7 +69,7 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
      * @param  Smarty_Template_Source $source source object
      *
      * @return string                 template source
-     * @throws SmartyException        if source cannot be loaded
+     * @throws Smarty_SmartyException        if source cannot be loaded
      */
     public function getContent(Smarty_Template_Source $source)
     {
@@ -78,7 +78,7 @@ abstract class Smarty_Resource_Custom extends Smarty_Resource
             return $content;
         }
 
-        throw new SmartyException("Unable to read template {$source->type} '{$source->name}'");
+        throw new Smarty_SmartyException("Unable to read template {$source->type} '{$source->name}'");
     }
 
     /**

@@ -154,7 +154,7 @@ class Smarty_Internal_Config_File_Compiler
      *
      * @param string $args individual error message or null
      *
-     * @throws SmartyCompilerException
+     * @throws Smarty_SmartyCompilerException
      */
     public function trigger_config_file_error($args = null)
     {
@@ -185,6 +185,6 @@ class Smarty_Internal_Config_File_Compiler
             // output parser error message
             $error_text .= ' - Unexpected "' . $this->lex->value . '", expected one of: ' . implode(' , ', $expect);
         }
-        throw new SmartyCompilerException($error_text);
+        throw new Smarty_SmartyCompilerException($error_text);
     }
 }

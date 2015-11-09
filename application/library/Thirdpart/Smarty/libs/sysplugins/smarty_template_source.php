@@ -165,7 +165,7 @@ class Smarty_Template_Source
      * @param  string                   $template_resource resource identifier
      *
      * @return Smarty_Template_Source Source Object
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      */
     public static function load(Smarty_Internal_Template $_template = null, Smarty $smarty = null, $template_resource = null)
     {
@@ -174,7 +174,7 @@ class Smarty_Template_Source
             $template_resource = $_template->template_resource;
         }
         if (empty($template_resource)) {
-            throw new SmartyException('Missing template name');
+            throw new Smarty_SmartyException('Missing template name');
         }
         // parse resource_name, load resource handler, identify unique resource name
         list($name, $type) = Smarty_Resource::parseResourceName($template_resource, $smarty->default_resource_type);
@@ -239,7 +239,7 @@ class Smarty_Template_Source
      * @param  string $property_name valid: timestamp, exists, content, template
      * @param  mixed  $value         new value (is not checked)
      *
-     * @throws SmartyException if $property_name is not valid
+     * @throws Smarty_SmartyException if $property_name is not valid
      */
     public function __set($property_name, $value)
     {
@@ -254,7 +254,7 @@ class Smarty_Template_Source
                 break;
 
             default:
-                throw new SmartyException("source property '$property_name' does not exist.");
+                throw new Smarty_SmartyException("source property '$property_name' does not exist.");
         }
     }
 
@@ -264,7 +264,7 @@ class Smarty_Template_Source
      * @param  string $property_name valid: timestamp, exists, content
      *
      * @return mixed
-     * @throws SmartyException if $property_name is not valid
+     * @throws Smarty_SmartyException if $property_name is not valid
      */
     public function __get($property_name)
     {
@@ -279,7 +279,7 @@ class Smarty_Template_Source
                 return $this->content = $this->handler->getContent($this);
 
             default:
-                throw new SmartyException("source property '$property_name' does not exist.");
+                throw new Smarty_SmartyException("source property '$property_name' does not exist.");
         }
     }
 }

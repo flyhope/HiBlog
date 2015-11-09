@@ -5,7 +5,7 @@
  *
  * @package Smarty
  */
-class SmartyCompilerException extends SmartyException
+class SmartyCompilerException extends Smarty_SmartyException
 {
     public function __toString()
     {

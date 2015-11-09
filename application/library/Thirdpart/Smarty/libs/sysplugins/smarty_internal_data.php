@@ -379,7 +379,7 @@ class Smarty_Internal_Data
      *
      * @param  string $variable the stream of the variable
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return mixed  the value of the stream variable
      */
     public function getStreamVariable($variable)
@@ -396,7 +396,7 @@ class Smarty_Internal_Data
         }
         $smarty = isset($this->smarty) ? $this->smarty : $this;
         if ($smarty->error_unassigned) {
-            throw new SmartyException('Undefined stream variable "' . $variable . '"');
+            throw new Smarty_SmartyException('Undefined stream variable "' . $variable . '"');
         } else {
             return null;
         }

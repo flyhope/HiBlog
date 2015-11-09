@@ -446,8 +446,8 @@ abstract class Smarty_Internal_TemplateCompilerBase
      * @param  array  $args      array with tag attributes
      * @param  array  $parameter array with compilation parameter
      *
-     * @throws SmartyCompilerException
-     * @throws SmartyException
+     * @throws Smarty_SmartyCompilerException
+     * @throws Smarty_SmartyException
      * @return string compiled code
      */
     public function compileTag($tag, $args, $parameter = array())
@@ -466,8 +466,8 @@ abstract class Smarty_Internal_TemplateCompilerBase
      * @param  array  $args      array with tag attributes
      * @param  array  $parameter array with compilation parameter
      *
-     * @throws SmartyCompilerException
-     * @throws SmartyException
+     * @throws Smarty_SmartyCompilerException
+     * @throws Smarty_SmartyException
      * @return string compiled code
      */
     private function compileTag2($tag, $args, $parameter)
@@ -586,7 +586,7 @@ abstract class Smarty_Internal_TemplateCompilerBase
                                 return $plugin_object->compile($args, $this);
                             }
                         }
-                        throw new SmartyException("Plugin \"{$tag}\" not callable");
+                        throw new Smarty_SmartyException("Plugin \"{$tag}\" not callable");
                     } else {
                         if ($function = $this->getPlugin($tag, $plugin_type)) {
                             if (!isset($this->smarty->security_policy) || $this->smarty->security_policy->isTrustedTag($tag, $this)) {
@@ -681,7 +681,7 @@ abstract class Smarty_Internal_TemplateCompilerBase
                             return $plugin_object->compile($args, $this);
                         }
                     }
-                    throw new SmartyException("Plugin \"{$tag}\" not callable");
+                    throw new Smarty_SmartyException("Plugin \"{$tag}\" not callable");
                 }
             }
             $this->trigger_template_error("unknown tag \"" . $tag . "\"", $this->lex->taglineno);
@@ -984,7 +984,7 @@ abstract class Smarty_Internal_TemplateCompilerBase
      * @param  string $args individual error message or null
      * @param  string $line line-number
      *
-     * @throws SmartyCompilerException when an unexpected token is found
+     * @throws Smarty_SmartyCompilerException when an unexpected token is found
      */
     public function trigger_template_error($args = null, $line = null)
     {
@@ -1016,7 +1016,7 @@ abstract class Smarty_Internal_TemplateCompilerBase
                 $error_text .= ', expected one of: ' . implode(' , ', $expect);
             }
         }
-        $e = new SmartyCompilerException($error_text);
+        $e = new Smarty_SmartyCompilerException($error_text);
         $e->line = $line;
         $e->source = trim(preg_replace('![\t\r\n]+!', ' ', $match[$line - 1]));
         $e->desc = $args;

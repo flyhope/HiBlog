@@ -44,13 +44,13 @@ class Smarty_Internal_Compile_Include_Php extends Smarty_Internal_CompileBase
      * @param  array  $args     array with attributes from parser
      * @param  object $compiler compiler object
      *
-     * @throws SmartyException
+     * @throws Smarty_SmartyException
      * @return string compiled code
      */
     public function compile($args, $compiler)
     {
         if (!($compiler->smarty instanceof SmartyBC)) {
-            throw new SmartyException("{include_php} is deprecated, use SmartyBC class to enable");
+            throw new Smarty_SmartyException("{include_php} is deprecated, use SmartyBC class to enable");
         }
         // check and get attributes
         $_attr = $this->getAttributes($compiler, $args);

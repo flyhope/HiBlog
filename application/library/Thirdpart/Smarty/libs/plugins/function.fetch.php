@@ -19,7 +19,7 @@
  * @param array                    $params   parameters
  * @param Smarty_Internal_Template $template template object
  *
- * @throws SmartyException
+ * @throws Smarty_SmartyException
  * @return string|null if the assign parameter is passed, Smarty assigns the result to a template variable
  */
 function smarty_function_fetch($params, $template)
@@ -209,7 +209,7 @@ function smarty_function_fetch($params, $template)
     } else {
         $content = @file_get_contents($params['file']);
         if ($content === false) {
-            throw new SmartyException("{fetch} cannot read resource '" . $params['file'] . "'");
+            throw new Smarty_SmartyException("{fetch} cannot read resource '" . $params['file'] . "'");
         }
     }
 
