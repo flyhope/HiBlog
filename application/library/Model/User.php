@@ -66,14 +66,30 @@ class User extends Abs {
     /**
      * 验证权限
      * 
-     * @param int $uid
+     * @param int $uid          要检查的UID
+     * @param int $validate_uid 当前用户UID
      * 
      * @throws \Exception\Msg
      */
-    static public function validateAuth($uid) {
-        if(!$uid || $uid != \Yaf_Registry::get('current_uid')) {
+    static public function validateAuth($uid, $validate_uid = false) {
+        $validate_uid || $validate_uid = \Yaf_Registry::get('current_uid');
+        if(!$uid || $uid != $validate_uid) {
             throw new \Exception\Msg('权限不足', 100403);
         }
+    }
+    
+    /**
+     * 判断用户是否登录
+     * @throws \Exception\Nologin
+     * 
+     * @return \int
+     */
+    static public function validateLogin() {
+        $uid = \Yaf_Registry::get('current_uid');
+        if(!$uid) {
+            throw new \Exception\Nologin();
+        }
+        return $uid;
     }
     
     /**

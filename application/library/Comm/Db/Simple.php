@@ -268,6 +268,33 @@ class Simple {
     }
     
     /**
+     * INSERT写入数据，主键冲突时更新
+     * 
+     * @param array  $data           写入的数据内容
+     * @param string $show_row_count 影响行数
+     * 
+     * @return boolean
+     */
+    public function iodu(array $data, $show_row_count = false) {
+        $sql = "INSERT INTO `{$this->_table}` SET ";
+        $sql_value = '';
+        foreach($data as $key => $value) {
+            $sql_value .= "`{$key}` = :{$key},";
+        }
+        $sql_value = rtrim($sql_value, ',');
+        $sql .= $sql_value;
+        $sql .= ' ON DUPLICATE KEY UPDATE ';
+        $sql .= $sql_value;
+        
+        if($show_row_count) {
+            return $this->_db->exec($sql, $data);
+        } else {
+            $this->_db->executeSql($sql, $data);
+            return true;
+        }
+    }
+    
+    /**
      * 删除数据 
      * 
      * @example $obj->wAnd(['id'=>1])->delete();

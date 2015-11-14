@@ -57,11 +57,16 @@ abstract class Abs {
      * @return \array
      */
     static public function show($id) {
-        $where = array(static::$_primary_key => $id);
-        $result = self::db()->wAnd($where)->fetchRow();
-        if(!empty($result['metadata'])) {
-            $result['metadata'] = \json_decode($result['metadata'], true);
-        }
+        $key = sprintf('%s_%s', static::$_table, $id);
+        $result = \Comm\Sdata::getValue($key, function() use ($id) {
+            $where = array(static::$_primary_key => $id);
+            $result = self::db()->wAnd($where)->fetchRow();
+            if(!empty($result['metadata'])) {
+                $result['metadata'] = \json_decode($result['metadata'], true);
+            }
+            return $result;
+        });
+
         return $result;
     }
     
