@@ -62,19 +62,21 @@ class Category extends Abs {
     /**
      * 获取一个用户的所有分类
      *
-     * @param int $uid            用户UID，不传则获取当前用户数据
-     * @param int $append_default 是否自动追加默认的项
+     * @param int    $uid            用户UID，不传则获取当前用户数据
+     * @param int    $append_default 是否自动追加默认的项
+     * @param string $use_master     是否强制使用主库（默认否）
      *
      * @return array
      */
-    static public function showUserAll($uid = false, $append_default = true) {
+    static public function showUserAll($uid = false, $append_default = true, $use_master = false) {
         $uid || $uid = \Yaf_Registry::get('current_uid');
         
         $uid_params = ($append_default ?  [$uid, 0] : $uid);
         
         $where = ['uid'=>$uid_params];
         $order = [['sort', SORT_ASC], ['id', SORT_ASC]];
-        $result = self::db()->wAnd($where)->order($order)->fetchAll();
+        $db = self::db()->wAnd($where)->order($order);
+        $result = $db->fetchAll('*', $use_master);
         return $result;
     }
     
@@ -127,6 +129,8 @@ class Category extends Abs {
             throw new \Exception\Msg('创建分类失败');
         }
         
+        Publish::categoryMain(true);
+        
         return $id;
     }
     
@@ -145,7 +149,9 @@ class Category extends Abs {
             throw new \Exception\Program('分类原始数据异常');
         }
         $validate_auth && User::validateAuth($data['uid']);
-        return self::db()->wAnd(['id'=>$data['id']])->upadte($new_data, true);
+        $result = self::db()->wAnd(['id'=>$data['id']])->upadte($new_data, true);
+        Publish::categoryMain(true);
+        return $result;
     }
 
     /**
@@ -168,12 +174,16 @@ class Category extends Abs {
             $db->wAnd(['id'=>$id, 'uid'=>$uid])->upadte(['sort'=>++$sort]);
             $db->clean();
         }
+        
+        //发布至Github
+        Publish::categoryMain(true);
+        
         return $sort;
     }
     
     
     /**
-     * 根据主键ID删除用户的一篇或者多篇文章
+     * 根据主键ID删除用户的一个或多个分类
      *
      * @param mixed  $id   ID或ID集
      * @param string $uid  用户UID
@@ -184,7 +194,11 @@ class Category extends Abs {
         $uid || $uid = \Yaf_Registry::get('current_uid');
     
         $where = array(static::$_primary_key => $ids, 'uid' => $uid);
-        return self::db()->wAnd($where)->delete(true);
+        $result = self::db()->wAnd($where)->delete(true);
+        
+        Publish::categoryMain(true);
+        
+        return $result;
     }
  
 } 

@@ -4,7 +4,7 @@
  * 参数接收类
  *
  * @package Comm
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Comm;
 abstract class Arg {

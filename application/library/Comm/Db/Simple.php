@@ -366,16 +366,20 @@ class Simple {
      * 获取全部数据
      * 
      * @example
-     * $obj = Comm_Db::simple('db_alias', 'table');
+     * $obj = \Comm\Db::simple('db_alias', 'table');
      * $obj->wAnd(['category_id'=>1])->order('id', SORT_DESC)->limit(0,20)->fetchAll();
      * 
-     * @param string $field 要获取的字段，默认是*
+     * @param string  $field      要获取的字段，默认是*
+     * @param boolean $use_master 是否强制使用主库
      * 
      * @return \array
      */
-    public function fetchAll($field = '*') {
+    public function fetchAll($field = '*', $use_master = false) {
+        $use_master && $this->_db->setWrite();
         $sql = self::fetchSql("SELECT {$field}");
-        return $this->_db->fetchAll($sql, $this->_params);
+        $result = $this->_db->fetchAll($sql, $this->_params);
+        $use_master && $this->_db->setAuto();
+        return $result;
     }
     
     /**

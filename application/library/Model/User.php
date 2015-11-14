@@ -25,7 +25,10 @@ class User extends Abs {
      */
     static public function show($id = false) {
         $id || $id = \Yaf_Registry::get('current_uid');
-        return parent::show($id);
+        $sdata_key = sprintf('user_%s', $id);
+        return \Comm\Sdata::getValue($sdata_key, function() use ($id) {
+            return parent::show($id);
+        });
     }
     
     /**
