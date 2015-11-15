@@ -30,7 +30,7 @@ class Main extends \Model\Abs {
      * @return \array
      */
     static public function userTpls($uid = false, $show_default = true) {
-        $uid || $uid = \Model\User::validateAuth($uid);
+        $uid || $uid = \Model\User::validateLogin();
         $where_uid = $show_default ? [$uid, 0] : $uid;
         $db = self::db()->wAnd(['user_id'=>$where_uid])->order(['user_id' => SORT_ASC, 'id' => SORT_DESC]);
         return $db->fetchAll();

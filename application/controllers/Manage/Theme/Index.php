@@ -5,12 +5,14 @@
  * @package Controller
  * @author  chengxuan <i@chengxuan.li>
  */
-class Theme_Tpl_IndexController extends AbsController {
+class Manage_Theme_IndexController extends AbsController {
     
     
     public function indexAction() {
-        $tpls = Model\Tpl\Main::userTpls();
-        print_r($tpls);exit;
+        $themes = Model\Theme\Main::userTpls();
+        $this->viewDisplay(array(
+            'themes' => $themes,
+        ));
     }
     
 }

@@ -13,6 +13,6 @@ a {
 	text-decoration: none;
 }
 
-.container-fluid {
-	padding:0;
+.container-body {
+	margin-top:65px;
 }

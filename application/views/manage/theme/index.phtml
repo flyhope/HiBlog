@@ -1,0 +1,31 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+
+<?php if(!empty($themes)) : ?>
+<div class="row">
+	<?php foreach($themes as $value) : ?>
+	<div class="col-sm-6 col-md-4">
+		<div class="thumbnail">
+			<img src="<?= $value['pic'] ? $value['pic'] : $this->path('static/img/basic/empty.jpg') ?>" alt="" />
+			<div class="caption">
+				<h3 class="text-center"><?= $value['name'] ?></h3>
+				<p class="text-center">
+					<a href="javascript:void(0)" action-type="use" class="btn btn-info" role="button"><?= _('使用'); ?></a>
+					<a href="javascript:void(0)" action-type="copy" class="btn btn-info" role="button"><?= _('复制'); ?></a>
+					<?php if($value['user_id']) : ?>
+					<a href="javascript:void(0)" action-type="edit" class="btn btn-info" role="button"><?= _('编辑'); ?></a>
+					<a href="javascript:void(0)" action-type="destroy" class="btn btn-danger" role="button"><?= _('删除'); ?></a>
+					<?php endif; ?>
+				</p>
+			</div>
+		</div>
+	</div>
+	<?php endforeach; ?>
+</div>
+<?php endif; ?>
+
+<?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->js('manage/article/index.js'); ?>
+<?php $this->_blockEnd()?>
+<?php $this->_blockLoad('_block/manage', ['nav'=>'theme']) ?>
