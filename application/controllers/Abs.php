@@ -32,8 +32,6 @@ abstract class AbsController extends Yaf_Controller_Abstract {
         if($this->_need_login && !$uid) {
             throw new \Exception\Nologin('no login');
         }
-
-
     }
     
     /**

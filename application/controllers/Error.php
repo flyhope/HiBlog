@@ -4,7 +4,14 @@
  * 
  * @author chengxuan
  */
-class ErrorController extends Yaf_Controller_Abstract {
+class ErrorController extends AbsController {
+    
+    /**
+     * 是否需要登录（默认需要）
+     *
+     * @var Boolean
+     */
+    protected $_need_login = false;
 
     /**
      * 错误控制入口
@@ -38,10 +45,14 @@ class ErrorController extends Yaf_Controller_Abstract {
             header('Location:' . Comm\View::path('user/github/login'));
         } elseif($exception instanceof \Exception\Program) {
             //程序错误
-            var_dump($exception);
+            $this->viewDisplay(array(
+                'exception' => $exception,
+            ), 'error/error');
         } else {
             //其它异常
-            var_dump($exception);
+            $this->viewDisplay(array(
+                'exception' => $exception,
+            ), 'error/error');
         }
     }
     

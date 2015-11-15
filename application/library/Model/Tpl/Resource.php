@@ -79,7 +79,4 @@ class Resource extends \Model\Abs {
         $validate_uid = isset($tpl_main['user_id']) ? $tpl_main['user_id'] : 0;
         \Model\User::validateAuth($validate_uid, $uid);
     }
-    
-    
-
 }
