@@ -5,11 +5,12 @@
  * @package Controller
  * @author  chengxuan <i@chengxuan.li>
  */
-class Tpl_IndexController extends AbsController {
+class Theme_Tpl_IndexController extends AbsController {
     
     
     public function indexAction() {
-        
+        $tpls = Model\Tpl\Main::userTpls();
+        print_r($tpls);exit;
     }
     
 }

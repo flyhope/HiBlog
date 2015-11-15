@@ -4,7 +4,7 @@
  *
  * @author chengxuan <i@chengxuan.li>
  */
-namespace Model\Tpl;
+namespace Model\Theme;
 class Resource extends \Model\Abs {
 
     /**
@@ -12,7 +12,7 @@ class Resource extends \Model\Abs {
      *
      * @var string
      */
-    protected static $_table = 'tpl_resource';
+    protected static $_table = 'theme_resource';
 
     /**
      * 通过模板ID和名称获取资源

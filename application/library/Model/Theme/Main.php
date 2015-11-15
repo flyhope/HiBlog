@@ -4,7 +4,7 @@
  *
  * @author chengxuan <i@chengxuan.li>
  */
-namespace Model\Tpl;
+namespace Model\Theme;
 class Main extends \Model\Abs {
     
     /**
@@ -12,7 +12,7 @@ class Main extends \Model\Abs {
      *
      * @var string
      */
-    protected static $_table = 'tpl_main';
+    protected static $_table = 'theme_main';
     
     /**
      * 每个人最多多少个模板
@@ -29,7 +29,7 @@ class Main extends \Model\Abs {
      * 
      * @return \array
      */
-    public function userTpls($uid = false, $show_default = true) {
+    static public function userTpls($uid = false, $show_default = true) {
         $uid || $uid = \Model\User::validateAuth($uid);
         $where_uid = $show_default ? [$uid, 0] : $uid;
         $db = self::db()->wAnd(['user_id'=>$where_uid])->order(['user_id' => SORT_ASC, 'id' => SORT_DESC]);
@@ -43,7 +43,7 @@ class Main extends \Model\Abs {
      * 
      * @return \mixed
      */
-    public function countUserTpl($uid = false) {
+    static public function countUserTpl($uid = false) {
         $uid || $uid = \Model\User::validateAuth($uid);
         return self::db()->wAnd(['user_id'=>$uid])->fetchOne('COUNT(*)');
     }
@@ -60,7 +60,7 @@ class Main extends \Model\Abs {
      * 
      * @return int
      */
-    public function create($alias_id, $name, $user_id, $pic = '') {
+    static public function create($alias_id, $name, $user_id, $pic = '') {
         $uid = \Model\User::validateAuth($uid);
         $total_number = self::countUserTpl($uid);
         if($total_number >= self::TOTAL_LIMIT) {
@@ -91,7 +91,7 @@ class Main extends \Model\Abs {
      * 
      * @return \int
      */
-    public function delete($id, $uid = false) {
+    static public function delete($id, $uid = false) {
         $uid || $uid = \Model\User::validateAuth($uid);
         return self::db()->wAnd(['id' => $id, 'user_id' => $uid])->delete(true);
     }
