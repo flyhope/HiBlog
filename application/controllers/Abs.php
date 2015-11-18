@@ -20,16 +20,8 @@ abstract class AbsController extends Yaf_Controller_Abstract {
      * @see Yaf_Controller_Abstract::init()
      */
     public function init() {
-        //开启SESSION
-        session_name('GITHUBLOG_SID');
-        session_start();
-        
-        //获取用户UID
-        $uid = \Comm\Arg::session('uid', FILTER_VALIDATE_INT);
-        Yaf_Registry::set('current_uid', $uid);
-        
         //判断用户是否登录
-        if($this->_need_login && !$uid) {
+        if($this->_need_login && !Yaf_Registry::get('current_uid')) {
             throw new \Exception\Nologin('no login');
         }
     }

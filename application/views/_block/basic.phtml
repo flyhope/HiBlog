@@ -18,6 +18,11 @@
 <body>
     <?php $this->_blockConfig('body'); ?>
 
+    <script type="text/javascript">
+    $CONFIG = <?= \Comm\Json::encode(array(
+        'path' => $this->path(''),
+    )); ?>;
+    </script>
     <?php $this->jsLib('jquery')?>
     <?php $this->jsLib('bootstrap_js')?>
     <?php $this->jsLib('jquery_ui')?>

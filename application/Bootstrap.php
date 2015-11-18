@@ -35,13 +35,29 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
     }
     
     /**
-     * 兼容 Windows
+     * 初始化SESSION
      * 
      * @param Yaf_Dispatcher $dispatcher
      */
+    public function _initSession(Yaf_Dispatcher $dispatcher) {
+        //开启SESSION
+        session_name('GITHUBLOG_SID');
+        session_start();
+        
+        //获取用户UID
+        $uid = \Comm\Arg::session('uid', FILTER_VALIDATE_INT);
+        Yaf_Registry::set('current_uid', $uid);
+    }
+    
+
+    /**
+     * 兼容 Windows
+     *
+     * @param Yaf_Dispatcher $dispatcher
+     */
     public function _initWindows(Yaf_Dispatcher $dispatcher) {
-    	if(stripos(\Comm\Arg::server('SERVER_SOFTWARE'), 'IIS') !== false) {
-    		$dispatcher->registerPlugin(new \IisPlugin());
-    	}
+        if(stripos(\Comm\Arg::server('SERVER_SOFTWARE'), 'IIS') !== false) {
+            $dispatcher->registerPlugin(new \IisPlugin());
+        }
     }
 }

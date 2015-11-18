@@ -21,7 +21,9 @@ return array(
 	'manage/basic.js'      => ['core/form', 'manage/basic'],	//管理首页
 	'manage/category.js'   => ['core/form', 'manage/category'],	//分类管理页
 	'manage/article/update.js'   => ['core/form', 'core/editor', 'manage/article/update'],	//分类管理页
-	'manage/article/index.js'    => ['core/pager']
+	'manage/article/index.js'    => ['core/pager'],    //文章列表页
+    
+    'manage/theme/index.js'      => ['core/form', 'manage/theme/index'],   //模板列表页
     
     
 );

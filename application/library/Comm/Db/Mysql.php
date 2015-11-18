@@ -286,12 +286,15 @@ class Mysql {
 			$error = $statement->errorInfo();
 			if (is_array($error)) {
 				$error = implode(',', $error);
+				$code = (isset($error[2]) && is_numeric($error[2])) ? $error[2] : 0;
+				
 			} else {
 				$error = strval($error);
 			}
-			throw new \Exception\Database($error, $statement->errorCode(), [
-			    'SQL' => $sql,
+			throw new \Exception\Database($error, $code, [
+			    'SQL'  => $statement->queryString,
 			    'data' => $data,
+			    'statement_error_code' => $statement->errorCode(),
 			]);
 		}
 
