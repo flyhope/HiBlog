@@ -63,11 +63,22 @@ class Main extends \Model\Abs {
     static public function create($alias_id, $name, $uid = '', $pic = '') {
         $uid || $uid = \Model\User::validateLogin();
         
+        //判断名称是否为空
+        if(!$name) {
+            throw new \Exception\Msg('请输入新模板名称');
+        }
+        
         //获取旧模板数据
         if($alias_id) {
             $data = self::show($alias_id);
             if(empty($data)) {
                 throw new \Exception\Msg('源主题不存在');
+            }
+            
+            //已经有alias_id的，并且当前模板没数据，使用原来的，避免产生过多的链
+            if($data['alias_id']) {
+                $resource = Resource::showByTpl($data['id']);
+                $resource || $alias_id = $data['alias_id'];
             }
         }
         

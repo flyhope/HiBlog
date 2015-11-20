@@ -9,9 +9,10 @@
 class Aj_Manage_Theme_CopyController extends Aj_AbsController {
     
     //控制器入口
-    public function actionIndex() {
-        
-        Model\Theme\Main::a;
+    public function indexAction() {
+        $alias_id = Comm\Arg::post('alias_id', FILTER_VALIDATE_INT);
+        $name = Comm\Arg::post('name');
+        $id = Model\Theme\Main::create($alias_id, $name);
         Comm\Response::json(100000, '操作成功', ['id' => $id], false);
     }
     

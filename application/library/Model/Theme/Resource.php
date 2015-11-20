@@ -15,6 +15,18 @@ class Resource extends \Model\Abs {
     protected static $_table = 'theme_resource';
 
     /**
+     * 通过TPL_ID获取模板资源
+     * 
+     * @param int    $tpl_id 模板ID
+     * 
+     * @return array
+     */
+    static public function showByTpl($tpl_id) {
+        $where = ['tpl_id' => $tpl_id];
+        return self::db()->wAnd($where)->fetchRow();
+    }
+    
+    /**
      * 通过模板ID和名称获取资源
      * 
      * @param int    $tpl_id 模板ID

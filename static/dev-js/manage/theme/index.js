@@ -1,14 +1,21 @@
 $(function() {
-	/*
-	$("#theme-container").delegate("[action-type=copy]", "click", function() {
+	
+	//复制模板弹层事件
+	$("#modal-theme-copy").on("show.bs.modal", function(event) {
 		//复制模板
-		var theme_id = $(this).parents("[node-type=theme-node]").attr("id");
-		var href = $CONFIG.path + "aj/theme/copy";
-		$.post(href, {"id" : theme_id}, $.ajaxCallbackDefault);
+		var button = $(event.relatedTarget);
+		var theme_node = button.parents("[node-type=theme-node]");
+		var theme_id = theme_node.data("theme-id");
 		
-		
-	}).delegate("[action-type=use]", "click", function() {
+		$(this).find("[name=alias_id]").val(theme_id);
+	});
+	
+	//复制模板表单提交事件
+	$("#form-theme-copy").ajaxSubmit();
+	
+	
+	$("#theme-container").delegate("[action-type=use]", "click", function() {
 		
 	});
-	*/
+	
 });
