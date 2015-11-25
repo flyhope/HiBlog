@@ -13,6 +13,7 @@
 
 return array(
     //CSS
+    'index.css'        => ['core/basic', 'index'],  //首页
     'core/basic.css'   => ['core/basic'],	//基础数据
     'manage/index.css' => ['core/basic', 'manage/index'], //管理首页
 		
