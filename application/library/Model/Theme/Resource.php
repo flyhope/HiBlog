@@ -23,7 +23,29 @@ class Resource extends \Model\Abs {
      */
     static public function showByTpl($tpl_id) {
         $where = ['tpl_id' => $tpl_id];
-        return self::db()->wAnd($where)->fetchRow();
+        return self::db()->wAnd($where)->fetchAll();
+    }
+    
+    /**
+     * 根据模板展示资源内容
+     * 
+     * @param \array $theme
+     * 
+     * @return \array
+     */
+    static public function showByTheme(array $theme) {
+        $result = self::showByTpl($theme['id']);
+        if($result) {
+            $locked = false;
+        } else {
+            $result = self::showByTpl($theme['alias_id']);
+            $locked = true;
+        }
+        $response = array(
+            'resource' => \Comm\Arr::hashmap($result, 'resource_name'),
+            'locked'   => $locked,
+        );
+        return $response;
     }
     
     /**

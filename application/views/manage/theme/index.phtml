@@ -10,9 +10,11 @@
 			<div class="caption">
 				<h3 class="text-center"><?= $value['name'] ?></h3>
 				<p class="text-center">
-					<a href="javascript:void(0)" action-type="use" class="btn btn-info" role="button"><?= _('使用'); ?></a> <a href="javascript:void(0)" action-type="copy" class="btn btn-info" role="button" data-toggle="modal" data-target="#modal-theme-copy"><?= _('复制'); ?></a>
+					<a href="javascript:void(0)" action-type="use" class="btn btn-info" role="button"><?= _('使用'); ?></a>
+					<a href="javascript:void(0)" action-type="copy" class="btn btn-info" role="button" data-toggle="modal" data-target="#modal-theme-copy"><?= _('复制'); ?></a>
 					<?php if($value['user_id']) : ?>
-					<a href="javascript:void(0)" action-type="edit" class="btn btn-info" role="button"><?= _('编辑'); ?></a> <a href="javascript:void(0)" action-type="destroy" class="btn btn-danger" role="button"><?= _('删除'); ?></a>
+					<a href="<?= $this->path("manage/theme/edit?id={$value['id']}") ?>" action-type="edit" class="btn btn-info" role="button"><?= _('编辑'); ?></a>
+					<a href="javascript:void(0)" action-type="destroy" class="btn btn-danger" role="button"><?= _('删除'); ?></a>
 					<?php endif; ?>
 				</p>
 			</div>
