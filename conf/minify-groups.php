@@ -13,9 +13,10 @@
 
 return array(
     //CSS
-    'index.css'        => ['core/basic', 'index'],  //首页
+    'index.css'        => ['index'],  //首页
     'core/basic.css'   => ['core/basic'],	//基础数据
-    'manage/index.css' => ['core/basic', 'manage/index'], //管理首页
+    'manage/theme/edit.css' => ['manage/theme/edit'], //管理首页
+    
 		
 	//JS
 	'core/basic.js' => ['core/basic'],	//基础数据

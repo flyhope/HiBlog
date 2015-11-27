@@ -1,4 +1,7 @@
 <?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('header') ?>
+<?php $this->css('manage/theme/edit.css'); ?>
+<?php $this->_blockEnd() ?>
 <?php $this->_block('content'); ?>
 
 <h2><?= _('编辑主题') ?> : <?= $theme['name'] ?></h2>
@@ -13,7 +16,7 @@
 <?php endif; ?>
 
 <?php if($resource['resource']) : ?>
-<div class="panel panel-default">
+<div class="panel panel-default" id="resource-result">
 	<table class="table table-hover table-bordered">
 		<thead>
 			<tr>
@@ -26,11 +29,11 @@
 		<tbody>
 			<?php foreach($resource['resource'] as $value) : ?>
 			<tr>
-				<td class="text-center"><?= $value['id'] ?></td>
-				<td><?= $value['resource_name'] ?></td>
+				<td class="text-center" node-type="id"><?= $value['id'] ?></td>
+				<td node-type="resource_name"><?= $value['resource_name'] ?></td>
 				<td class="text-center"><?= $value['update_time'] ?></td>
 				<td class="text-center">
-				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">查看</a>
+				    <a href="javascript:void(0)" class="btn btn-xs btn-default" role="button" action-type="show-resource">查看</a>
 				    <?php if(!$resource['locked'] && !\Model\Theme\Resource::isProtected($value['resource_name'])) : ?>
 				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">删除</a>
 				    <?php endif; ?>
@@ -40,10 +43,28 @@
 		</tbody>
 	</table>
 </div>
+<div class="modal fade" id="modal-show-resource" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" node-type="title"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="theme-resource-content xml" id="theme-content"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?= _('关闭') ?></button>
+        <button type="button" class="btn btn-primary"><?= _('保存') ?></button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php endif; ?>
-
 <?php $this->_blockEnd(); ?>
 <?php $this->_block('body_end')?>
+<?php $this->jsLib('ace'); ?>
 <?php $this->js('manage/theme/edit.js'); ?>
+
 <?php $this->_blockEnd()?>
 <?php $this->_blockLoad('_block/manage', ['nav'=>'theme']) ?>

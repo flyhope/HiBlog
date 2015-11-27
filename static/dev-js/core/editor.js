@@ -22,7 +22,10 @@
 				            ['CSS', 'css'],
 				            ['PHP', 'php'],
 				            ['JS', 'javascript']
-			            ]
+			            ],
+			            
+			            //ACE使用国内七牛CDN公共库加速
+			            "js" : "http://libs.cncdn.cn/ace/1.2.2/"
 					},
 					
 					"font_defaultLabel" : "Simsun",

@@ -346,28 +346,32 @@ class View implements \Yaf_View_Interface {
     /**
      * 加载CDN上的JS库
      *
-     * @param string $lib_name
+     * @param string  $lib_name
      * @param boolean $return
+     * @param string  $url_append URL路径后追加内容
      *
      * @return \mixed
      */
-    static public function jsLib($lib_name, $return = false) {
+    static public function jsLib($lib_name, $return = false, $url_append = '') {
         $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
         $url = $conf->lib[$lib_name];
+        $url && $url_append && $url .= $url_append;
         return $url ? self::js($url, false, $return, true) : '';
     }
     
     /**
      * 加载CDN上的CSS库
      *
-     * @param string $lib_name
+     * @param string  $lib_name
      * @param boolean $return
+     * @param string  $url_append URL路径后追加内容
      *
      * @return \mixed
      */
-    static public function cssLib($lib_name, $return = false) {
+    static public function cssLib($lib_name, $return = false, $url_append = '') {
         $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
         $url = $conf->lib[$lib_name];
+        $url && $url_append && $url .= $url_append;
         return $url ? self::css($url, false, $return, true) : '';
     }
     
