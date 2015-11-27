@@ -22,6 +22,13 @@ class Resource extends \Model\Abs {
     protected static $_protected_resource = ',article,category,home,article-list,';
 
     /**
+     * 每个主题下最多的模板数
+     * 
+     * @var int
+     */
+    const RESOURCE_COUNT_MAX = 100;
+    
+    /**
      * 通过TPL_ID获取模板资源
      * 
      * @param int    $tpl_id 模板ID
@@ -90,19 +97,47 @@ class Resource extends \Model\Abs {
      * 更新一条模板资源数据
      * 
      * @param int    $tpl_id        模板ID
-     * @param string $resource_name 资源名称
      * @param string $content       模板内容
+     * @param int    $uid           当前登录用户UID
      * 
      * @param string $uid
      */
-    static public function update($tpl_id, $resource_name, $content, $uid = false) {
-        self::validateAuth($tpl_id);
+    static public function update($id, $content, $uid = false) {
+        $resource = self::show($id);
+        if(!$resource) {
+            throw new \Exception\Msg('指定模板不存在');
+        }
+        self::validateAuth($resource['tpl_id'], $uid);
+        $data = array(
+            'content'       => $content,
+        );
+        return self::db()->wAnd(['id'=>$id])->upadte($data);
+    }
+    
+    /**
+     * 增加一个主题的模板资源
+     * 
+     * @param int    $tpl_id        模板ID
+     * @param string $resource_name 模板资源名称
+     * 
+     * @throws \Exception\Msg
+     * 
+     * @return \boolean
+     */
+    static public function addResource($tpl_id, $resource_name) {
+        $theme_main = self::validateAuth($tpl_id);
+        
+        $resources = self::showByTpl($tpl_id);
+        if(count($resources) > self::RESOURCE_COUNT_MAX) {
+            throw new \Exception\Msg(sprintf(_('每个主题下最多允许模板%u个'), self::RESOURCE_COUNT_MAX));
+        }
+        
         $data = array(
             'tpl_id'        => $tpl_id,
             'resource_name' => $resource_name,
-            'content'       => $content,
+            'content'       => '',
         );
-        return self::db()->iodu($data, true);
+        return self::db()->insert($data);
     }
     
     /**

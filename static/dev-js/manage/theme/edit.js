@@ -17,7 +17,9 @@ $(function() {
 		});
 	});
 	
-	//代理显示源代码事件
+	/**
+	 * 代理显示源代码事件
+	 */
 	$("#resource-result").delegate("[action-type=show-resource]", "click", function() {
 		var $tr = $(this).parents("tr:first");
 		var href = $CONFIG.path + "aj/manage/theme/showresource";
@@ -27,7 +29,6 @@ $(function() {
 				var $modal = $("#modal-show-resource");
 				var resource_name = $tr.find("[node-type=resource_name]").html();
 				$modal.find("[node-type=title]").html(resource_name);
-//				$("#theme-content").html(o.data.content);
 				try {
 					theme_editor.setValue(o.data.content);
 					theme_editor.setReadOnly(o.data.readonly);
@@ -40,6 +41,10 @@ $(function() {
 			});
 		});
 	});
+	
+	/**
+	 * 保存源代码
+	 */
 	
 	
 });
