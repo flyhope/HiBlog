@@ -1,0 +1,49 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+
+<h2><?= _('编辑主题') ?> : <?= $theme['name'] ?></h2>
+<?php if($resource['locked']) : ?>
+<div class="panel panel-danger">
+	<div class="panel-heading"><?= _('模板锁定') ?></div>
+	<div class="panel-body">
+		<?= _('模板已锁定，与复制时模板相关联，解锁后解除关联，可自行编辑。') ?>
+		<a id="theme-unlock" data-id="<?= $theme['id'] ?>" role="button" class="btn btn-danger" href="javascript:void(0)"><?= _('解锁') ?></a>
+	</div>
+</div>
+<?php endif; ?>
+
+<?php if($resource['resource']) : ?>
+<div class="panel panel-default">
+	<table class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th width="100" class="text-center">ID</th>
+				<th class="text-center"><?= _('名称') ?></th>
+				<th width="150" class="text-center"><?= _('更新时间') ?></th>
+				<th width="100" class="text-center"><?= _('操作') ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach($resource['resource'] as $value) : ?>
+			<tr>
+				<td class="text-center"><?= $value['id'] ?></td>
+				<td><?= $value['resource_name'] ?></td>
+				<td class="text-center"><?= $value['update_time'] ?></td>
+				<td class="text-center">
+				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">查看</a>
+				    <?php if(!$resource['locked'] && !\Model\Theme\Resource::isProtected($value['resource_name'])) : ?>
+				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">删除</a>
+				    <?php endif; ?>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+<?php endif; ?>
+
+<?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->js('manage/theme/edit.js'); ?>
+<?php $this->_blockEnd()?>
+<?php $this->_blockLoad('_block/manage', ['nav'=>'theme']) ?>

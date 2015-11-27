@@ -25,6 +25,6 @@ return array(
 	'manage/article/index.js'    => ['core/pager'],    //文章列表页
     
     'manage/theme/index.js'      => ['core/form', 'manage/theme/index'],   //模板列表页
-    
-    
+    'manage/theme/edit.js'       => ['core/form', 'manage/theme/edit'],		//模板编辑页
+
 );
