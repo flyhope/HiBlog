@@ -103,8 +103,12 @@ class Smarty implements \Yaf_View_Interface {
      * @return bool
      */
     public function display($tpl, $tpl_vars = null) {
+    	$error_reporting = error_reporting();
+    	error_reporting($error_reporting & ~E_NOTICE);
         $tpl_vars && $this->_smarty->assign($tpl_vars);
-        return $this->_smarty->display($tpl);
+        $result = $this->_smarty->display($tpl);
+        error_reporting($error_reporting);
+        return $result;
     }
     
     /**
@@ -116,8 +120,13 @@ class Smarty implements \Yaf_View_Interface {
      * @return string
      */
     public function render($tpl, $tpl_vars = null) {
+    	$error_reporting = error_reporting();
+    	error_reporting($error_reporting & ~E_NOTICE);
         $tpl_vars && $this->_smarty->assign($tpl_vars);
-        return $this->_smarty->fetch($tpl);
+        $result = $this->_smarty->fetch($tpl);
+        error_reporting($error_reporting);
+        return $result;
     }
+    
     
 }

@@ -23,7 +23,7 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
         //设置模板ID
         if(Yaf_Registry::get('tpl_id')) {
             $tpl_id = Yaf_Registry::get('tpl_id');
-            if(Model\Tpl\Main::show($tpl_id)) {
+            if(Model\Theme\Main::show($tpl_id)) {
                 $this->_tpl_id = $tpl_id;
             }
         }
@@ -38,7 +38,7 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
      * @return void
      */
     protected function fetch($name, &$source, &$mtime) {
-        $result = Model\Tpl\Resource::showByName($this->_tpl_id, $name);
+        $result = Model\Theme\Resource::showByName($this->_tpl_id, $name);
         
         if($result) {
             $source = $result['content'];
@@ -57,7 +57,7 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
      * @return integer timestamp (epoch) the template was modified
      */
     protected function fetchTimestamp($name) {
-        $result = Model\Tpl\Resource::showByName($this->_tpl_id, $name);
+        $result = Model\Theme\Resource::showByName($this->_tpl_id, $name);
         if($result) {
             $mtime = strtotime($result['update_time']);
         } else {

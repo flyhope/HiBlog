@@ -52,7 +52,7 @@ class Article extends Abs {
         if(!$uid) {
             throw new \Exception\Nologin();
         }
-        if(!$category || ($categoru['uid'] && $category['uid'] != $uid)) {
+        if(!$category || ($category['uid'] && $category['uid'] != $uid)) {
             throw new \Exception\Msg('指定分类不存在');
         }
         if(!$title || !$content) {
