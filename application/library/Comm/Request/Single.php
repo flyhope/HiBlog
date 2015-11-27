@@ -44,10 +44,10 @@ class Single {
         
         //跳过证书验证
         if(defined('CURLOPT_SSL_VERIFYPEER')) {
-            $this->_option[CURLOPT_SSL_VERIFYPEER] = true;
+            $this->_option[CURLOPT_SSL_VERIFYPEER] = false;
         }
         if(defined('CURLOPT_SSL_VERIFYPEER')) {
-            $this->_option[CURLOPT_SSL_VERIFYPEER] = true;
+            $this->_option[CURLOPT_SSL_VERIFYPEER] = false;
         }
         
         
