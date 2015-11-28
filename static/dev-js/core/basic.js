@@ -52,7 +52,10 @@
 		 * 确认弹层
 		 */
 		"confirm" : function(msg, title, callback, btn_string, btn_string_cancel) {
-			showAlertDialog(msg, title, callback, btn_string, btn_string_cancel);
+			showAlertDialog(msg, title, function(){
+				$(this).dialog("close");
+				callback();
+			}, btn_string, btn_string_cancel);
 		},
 		
 

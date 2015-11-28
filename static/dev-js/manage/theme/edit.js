@@ -6,6 +6,8 @@ $(function() {
 	var theme_editor = ace.edit("theme-content");
 	theme_editor.getSession().setMode("ace/mode/html");
 	
+	var $modal_resource = $("#modal-show-resource");
+	
 	/**
 	 * 绑定主题解锁点击事件
 	 */
@@ -26,9 +28,8 @@ $(function() {
 		var theme_id = $tr.find("[node-type=id]").html();
 		$.get(href, {"id":theme_id}, function(o) {
 			$.ajaxCallback(o, function(o) {
-				var $modal = $("#modal-show-resource");
 				var resource_name = $tr.find("[node-type=resource_name]").html();
-				$modal.find("[node-type=title]").html(resource_name);
+				$modal_resource.find("[node-type=title]").html(resource_name);
 				try {
 					theme_editor.setValue(o.data.content);
 					theme_editor.setReadOnly(o.data.readonly);
@@ -36,7 +37,14 @@ $(function() {
 					console.log(e);
 				}
 				
-				$modal.modal();
+				//将相关数据写入模态框
+				$modal_resource.data("id", theme_id);
+				
+				//显示源代码模态框
+				$modal_resource.modal({
+					"keyboard" : false,
+					"backdrop" : 'static'
+				});
 				
 			});
 		});
@@ -45,6 +53,26 @@ $(function() {
 	/**
 	 * 保存源代码
 	 */
+	$modal_resource.delegate("[action-type=save]", "click", function() {
+		var data = {
+			"id" : $modal_resource.data("id"),
+			"content" : theme_editor.getValue()
+		};
+		$.post($CONFIG.path + "aj/manage/theme/save", data, function(o) {
+			$.ajaxCallback(o, function(o) {
+				$.alert(o.msg);
+			});
+		});
+	});
+	
+	/**
+	 * 显示源代码，关闭模态框
+	 */
+	$modal_resource.delegate("[action-type=close]", "click", function() {
+		$.confirm("确定要关闭吗？", "确认", function(){
+			$modal_resource.modal("hide");
+		})
+	});
 	
 	
 });
