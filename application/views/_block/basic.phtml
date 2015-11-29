@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php $this->_blockConfig('title', _('极博客')) ?></title>
     <?php $this->cssLib('bootstrap')?>
-    <?php $this->css($this->path('static/lib/jquery-ui-bootstrap/jquery-ui-1.10.0.custom.css'), false, false, true) ?>
     <?php $this->css('core/basic.css') ?>
     <!--[if lt IE 9]>
       <?php $this->jsLib('html5shiv')?>
@@ -25,7 +24,6 @@
     </script>
     <?php $this->jsLib('jquery')?>
     <?php $this->jsLib('bootstrap_js')?>
-    <?php $this->jsLib('jquery_ui')?>
     <?php $this->js('core/basic.js')?>
     <?php $this->_blockConfig('body_end')?>
   </body>

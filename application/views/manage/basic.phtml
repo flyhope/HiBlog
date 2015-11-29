@@ -22,9 +22,13 @@
 			<div class="form-group">
 				<label class="col-sm-1 control-label"><?= _('分页设置'); ?></label>
 				<div class="col-sm-5" id="input-page_count-radioset">
-    			<?php foreach([10, 20, 50, 100] as $value) : ?>
-                <input type="radio" id="input-page_count-<?= $value ?>" name="page_count" value="<?= $value ?>" <?php if($basic['page_count'] == $value) : ?> checked="checkekd" <?php endif; ?> /><label for="input-page_count-<?= $value ?>"><?= $value ?></label>
-                <?php endforeach; ?>
+				<div class="btn-group" data-toggle="buttons">
+        			<?php foreach([10, 20, 50, 100] as $value) : ?>
+        			<label class="btn btn-default<?php if($basic['page_count'] == $value) : ?> active<?php endif; ?>" for="input-page_count-<?= $value ?>">
+                    	<input type="radio" autocomplete="off" id="input-page_count-<?= $value ?>" name="page_count" value="<?= $value ?>"<?php if($basic['page_count'] == $value) : ?> checked="checkekd"<?php endif; ?> /><?= $value ?>
+                    </label>
+                    <?php endforeach; ?>
+                </div>
 				</div>
 			</div>
 
