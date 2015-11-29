@@ -15,6 +15,22 @@
 </div>
 <?php endif; ?>
 
+<form id="form-theme-resource-create" action="<?= $this->path('aj/manage/theme/resource/create') ?>" class="form-inline" method="post" onsubmit="return false">
+<input type="hidden" name="tpl_id" value="<?= $theme['id'] ?>" />
+<div class="panel panel-info">
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="sr-only" for="form-input-name"></label>
+			<div class="input-group">
+				<div class="input-group-addon"><?= _('名称') ?></div>
+				<input type="text" class="form-control" id="form-input-name" name="resource_name" />
+			</div>
+		</div>
+		<input type="submit" class="btn btn-info" value="<?= _('创建模板资源') ?>" />
+	</div>
+</div>
+</form>
+
 <?php if($resource['resource']) : ?>
 <div class="panel panel-default" id="resource-result">
 	<table class="table table-hover table-bordered">
@@ -30,12 +46,12 @@
 			<?php foreach($resource['resource'] as $value) : ?>
 			<tr>
 				<td class="text-center" node-type="id"><?= $value['id'] ?></td>
-				<td node-type="resource_name"><?= $value['resource_name'] ?></td>
+				<td node-type="resource-name"><?= $value['resource_name'] ?></td>
 				<td class="text-center"><?= $value['update_time'] ?></td>
 				<td class="text-center">
 				    <a href="javascript:void(0)" class="btn btn-xs btn-default" role="button" action-type="show-resource">查看</a>
 				    <?php if(!$resource['locked'] && !\Model\Theme\Resource::isProtected($value['resource_name'])) : ?>
-				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">删除</a>
+				    <a href="javascript:void(0)" class="btn btn-xs btn-default" role="button" action-type="destroy">删除</a>
 				    <?php endif; ?>
 				</td>
 			</tr>

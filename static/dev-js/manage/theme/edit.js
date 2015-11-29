@@ -24,11 +24,11 @@ $(function() {
 	 */
 	$("#resource-result").delegate("[action-type=show-resource]", "click", function() {
 		var $tr = $(this).parents("tr:first");
-		var href = $CONFIG.path + "aj/manage/theme/showresource";
+		var href = $CONFIG.path + "aj/manage/theme/resource/show";
 		var theme_id = $tr.find("[node-type=id]").html();
 		$.get(href, {"id":theme_id}, function(o) {
 			$.ajaxCallback(o, function(o) {
-				var resource_name = $tr.find("[node-type=resource_name]").html();
+				var resource_name = $tr.find("[node-type=resource-name]").html();
 				$modal_resource.find("[node-type=title]").html(resource_name);
 				try {
 					theme_editor.setValue(o.data.content);
@@ -47,6 +47,15 @@ $(function() {
 				});
 				
 			});
+		});
+	}).delegate("[action-type=destroy]", "click", function(o) {
+		//代理删除事件
+		var $tr = $(this).parents("tr:first");
+		var resource_name = $tr.find("[node-type=resource-name]").html();
+		$.confirm("确定要删除" + resource_name + "吗?", "确认", function() {
+			var resource_id = $tr.find("[node-type=id]").html();
+			var href = $CONFIG.path + "aj/manage/theme/resource/destroy";
+			$.post(href, {"id":resource_id}, $.ajaxCallbackDefault);
 		});
 	});
 	
@@ -74,5 +83,6 @@ $(function() {
 		})
 	});
 	
-	
+	//创建模板资源表单
+	$("#form-theme-resource-create").ajaxSubmit();
 });

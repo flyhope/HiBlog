@@ -127,6 +127,10 @@ class Resource extends \Model\Abs {
     static public function addResource($tpl_id, $resource_name) {
         $theme_main = self::validateAuth($tpl_id);
         
+        if(!$resource_name) {
+            throw new \Exception\Msg(_('模板资源名称不能为空'));
+        }
+        
         $resources = self::showByTpl($tpl_id);
         if(count($resources) > self::RESOURCE_COUNT_MAX) {
             throw new \Exception\Msg(sprintf(_('每个主题下最多允许模板%u个'), self::RESOURCE_COUNT_MAX));
@@ -165,6 +169,25 @@ class Resource extends \Model\Abs {
      */
     static public function isProtected($resource_name) {
         return strpos(self::$_protected_resource, ",{$resource_name},") !== false;
+    }
+    
+    /**
+     * 删除一个模板资源
+     * 
+     * @param int $id
+     * @throws \Exception\Msg
+     * 
+     * @return \boolean
+     */
+    static public function destroy($id) {
+        $uid = \Model\User::validateLogin();
+        $resource = self::show($id);
+        if(!$resource) {
+            throw new \Exception\Msg('指定模板不存在');
+        }
+        self::validateAuth($resource['tpl_id'], $uid);
+        
+        return parent::destory($id);
     }
     
     

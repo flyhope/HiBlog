@@ -5,7 +5,7 @@
  * @package Controller
  * @author chengxuan <i@chengxuan.li>
  */
-class Aj_Manage_Theme_ShowresourceController extends Aj_AbsController {
+class Aj_Manage_Theme_Resource_ShowController extends Aj_AbsController {
     
     //控制器入口
     public function indexAction() {
