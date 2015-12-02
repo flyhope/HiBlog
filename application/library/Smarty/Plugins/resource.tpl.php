@@ -23,10 +23,14 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
         //设置模板ID
         if(Yaf_Registry::get('tpl_id')) {
             $tpl_id = Yaf_Registry::get('tpl_id');
-            if(Model\Theme\Main::show($tpl_id)) {
-                $this->_tpl_id = $tpl_id;
+        } else {
+            $blog = Model\Blog::show();
+            if(!empty($blog['data']['theme_id'])) {
+                $tpl_id = $blog['data']['theme_id'];
             }
         }
+        
+        empty($tpl_id) || $this->tpl_id = $tpl_id;
     }
     
     /**
