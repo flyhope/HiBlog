@@ -98,6 +98,21 @@ class Publish extends Abs {
     }
     
     /**
+     * 发布一个分类下的文章列表
+     * @param unknown $category_id
+     */
+    static public function articleListByCategory($category_id) {
+        
+    }
+    
+    /**
+     * 发布首页内容
+     */
+    static public function home() {
+        
+    }
+    
+    /**
      * 直接向当前用户的博客源发布一个数据
      * 
      * @param sting $path    路径
