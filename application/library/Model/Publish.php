@@ -8,7 +8,7 @@ namespace Model;
 class Publish extends Abs {
 
     /**
-     * 发布文章
+     * 发布一篇文章
      * 
      * @param array $article
      * @param array $user
@@ -35,7 +35,7 @@ class Publish extends Abs {
     }
     
     /**
-     * 发布域名，并写入数据库
+     * 发布域名，并更新数据库
      * 
      * @param string $domain
      * 
@@ -129,5 +129,7 @@ class Publish extends Abs {
         $respositories = new \Api\Github\Respositories();
         return $respositories->replace($login, $repo, $path, $content, $message);
     }
+    
+
 
 }

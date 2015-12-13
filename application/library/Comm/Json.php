@@ -12,7 +12,7 @@ class Json {
      *
      * @param mixed $data 编码内容
      *
-     * @return string
+     * @return \string
      */
     static public function encode($data) {
         return json_encode($data, JSON_UNESCAPED_UNICODE);

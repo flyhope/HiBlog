@@ -216,7 +216,7 @@ class Simple {
      * @param boolean $ignore         是否为忽略写入（默认否）
      * @param string  $show_row_count 是否需要返回行数（默认不返回）
      * 
-     * @return mixed 若$show_row_count为true，则返加行数，否则无异常返回true
+     * @return \mixed 若$show_row_count为true，则返加行数，否则无异常返回true
      */
     public function insert(array $data, $ignore = false, $show_row_count = false) {
         $action = 'INSERT';
