@@ -22,27 +22,20 @@ class Task extends \Model\Abs {
      * @var string
      */
     protected static $_primary_key = 'uid';
-    
-    /**
-     * 全部列表发布
-     *
-     * @var integer
-     */
-    const TYPE_ALL_LIST = 1;
 
     /**
      * 发布首页
      *
      * @var integer
      */
-    const TYPE_HOME = 2;
+    const TYPE_HOME = 1;
 
     /**
      * 发布分类下的文章列表
      *
      * @var integer
      */
-    const TYPE_CATEGORY_ARTILE_LIST = 3;
+    const TYPE_CATEGORY_ARTILE_LIST = 2;
     
     /**
      * 创建发布任务
@@ -52,39 +45,76 @@ class Task extends \Model\Abs {
      * 
      * @return \mixed
      */
-    static public function create($type, array $metadata = array()) {
+    static public function create($type, $connection_id, array $metadata = array()) {
         $uid = \Model\User::validateLogin();
         $data = array(
-            'uid'      => $uid,
-            'typpe'    => $type,
+            'uid'           => $uid,
+            'type'         => $type,
+            'connection_id' => $connection_id,
             'metadata' => \Comm\Json::encode($metadata),
         );
         return self::db()->insert($data);
     }
     
     /**
-     * 获取解码后的任务数据
+     * 批量创建发布任务
      * 
-     * @param int $uid 用户UID
+     * @param array $datas
      * 
-     * @return \array
+     * @throws \Exception\Msg
+     * 
+     * @return \boolean
      */
-    static public function showDecoded($uid) {
-        $result = self::show($uid);
-        if(!empty($result['metadata'])) {
-            $result['metadata'] = json_decode($result['metadata'], true);
+    static public function createBatch(array $datas) {
+        $uid = \Model\User::validateLogin();
+        $fields = array('uid', 'type', 'connection_id', 'metadata');
+        
+        $bath_datas = array();
+        foreach($datas as $value) {
+            if(empty($value['type'])) {
+                throw new \Exception\Msg('类型错误');
+            }
+            $connection_id = isset($value['connection_id']) ? $value['connection_id'] : 0;
+            $metadata = isset($value['metadata']) ? $value['metadata'] : '';
+            $bath_datas[] = array(
+                $uid, $value['type'], $connection_id, $metadata,
+            );
+        }
+        
+        return self::db()->insertBatch($fields, $bath_datas, true);
+    }
+    
+    /**
+     * 根据用户获取一堆数据
+     * 
+     * @param int $uid   用户UID
+     * @param int $limit 限制获取多少条
+     */
+    static public function showListByUser($uid, $limit) {
+        $db = self::db()->wAnd(['uid' => $uid])->order('id', SORT_ASC);
+        $result = $db->limit($limit)->fetchAll();
+        foreach($result as $key => $value) {
+            $metadata = new \Entity\Tarr(json_decode($value['metadata']));
+            $result[$key]['metadata'] = $metadata;
         }
         return $result;
     }
     
-    
-    //执行发布任务
+    /**
+     * 执行发布任务
+     * 
+     * @throws \Exception\Msg
+     * 
+     * @return \mixed true执行完成，array需要继续执行
+     */
     static public function execute() {
         $uid = \Model\User::validateLogin();
-        $task = self::show($uid);
-        if(empty($task)) {
+        $tasks = self::showListByUser($uid, 1);
+        if(empty($tasks)) {
             throw new \Exception\Msg(_('发布任务为空'));
         }
+        $task = reset($tasks);
+        unset($tasks);
         
         switch($task) {
             //全部列表
@@ -126,17 +156,26 @@ class Task extends \Model\Abs {
     }
     
     /**
+     * 执行分类下文章列表发布任务
      * 
-     * @param unknown $task
+     * @param array $task
+     * 
+     * @return \mixed true执行完成，array需要继续执行
      */
-    static protected function _executeAllList(array $task) {
-        
-    }
-    
     static protected function _executeCategoryArticleList(array $task) {
+        $category_id = $task['connection_id'];
+        $since_id = $task['metadata']['since_id'];
         
+        \Model\Article::Show();
     }
     
+    /**
+     * 执行首页发布任务
+     *
+     * @param array $task
+     *
+     * @return \mixed true执行完成，array需要继续执行
+     */
     static protected function _executeHome(array $task) {
         
     }

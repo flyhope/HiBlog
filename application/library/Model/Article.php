@@ -212,6 +212,21 @@ class Article extends Abs {
     }
     
     /**
+     * 通过Since_id下翻页获取某一分类的数据
+     * 
+     * @param int $category_id
+     * @param int $since_id
+     * 
+     * @return \array
+     */
+    static public function showByCategorySince($category_id, $since_id) {
+        $db = self::db()->wAnd(['category_id' => $category_id]);
+        $db->wAnd(['id' => $since_id], '<');
+        $result = $db->order('id', SORT_DESC)->fetchAll();
+        return $result;
+    }
+    
+    /**
      * 获取状态别名
      * 
      * @param int $state 状态码
