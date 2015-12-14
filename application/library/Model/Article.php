@@ -216,13 +216,15 @@ class Article extends Abs {
      * 
      * @param int $category_id
      * @param int $since_id
+     * @param int $limit
      * 
      * @return \array
      */
-    static public function showByCategorySince($category_id, $since_id) {
+    static public function showByCategorySince($category_id, $since_id, $limit) {
+        $limit = (int)$limit;
         $db = self::db()->wAnd(['category_id' => $category_id]);
         $db->wAnd(['id' => $since_id], '<');
-        $result = $db->order('id', SORT_DESC)->fetchAll();
+        $result = $db->order('id', SORT_DESC)->limit($limit)->fetchAll();
         return $result;
     }
     

@@ -38,6 +38,13 @@ class Task extends \Model\Abs {
     const TYPE_CATEGORY_ARTILE_LIST = 2;
     
     /**
+     * 最多发布页数
+     * 
+     * @var int
+     */
+    const PUBLISH_PAGE_MAX = 20;
+    
+    /**
      * 创建发布任务
      * 
      * @param int   $type     类别
@@ -94,7 +101,7 @@ class Task extends \Model\Abs {
         $db = self::db()->wAnd(['uid' => $uid])->order('id', SORT_ASC);
         $result = $db->limit($limit)->fetchAll();
         foreach($result as $key => $value) {
-            $metadata = new \Entity\Tarr(json_decode($value['metadata']));
+            $metadata = $value['metadata'] ? json_decode($value['metadata'], true) : array();
             $result[$key]['metadata'] = $metadata;
         }
         return $result;
@@ -163,10 +170,43 @@ class Task extends \Model\Abs {
      * @return \mixed true执行完成，array需要继续执行
      */
     static protected function _executeCategoryArticleList(array $task) {
+        $blog = \Model\Blog::show($task['uid']);
+        $limit = isset($blog['data']['page_count']) ? $blog['data']['page_count'] : 50;
+     
         $category_id = $task['connection_id'];
-        $since_id = $task['metadata']['since_id'];
+        $metadata = $task['metadata'];
+        $since_id = empty($metadata['since_id']) ? PHP_INT_MAX : $metadata['since_id'];
+        $p = empty($metadata['p']) ? 0 : $metadata['p'];
+        ++$p;
         
-        \Model\Article::Show();
+        //超过了最大发布页数
+        if($p > self::PUBLISH_PAGE_MAX) {
+            return true;
+        }
+        
+        $articles = \Model\Article::showByCategorySince($category_id, $since_id, $limit);
+        if($articles) {
+       
+            //渲染模板，发布至GITHUB
+            $smarty = \Comm\Smarty::init();
+            $content = $smarty->render('tpl:article', array(
+                'blog'     => $blog,
+                'articles' => $articles,
+            ));
+            
+            $message = sprintf('update category %u(%u) [%s]', $category_id, $p, date('Y-m-d H:i:s'));
+            \Model\Publish::publishUserRespos("/category/{$category_id}-{$p}.html", $content, $message);
+
+            //更新元数据
+            $end = end($articles);
+            $metadata['since_id'] = $end['id'];
+            $metadata['p'] = $p;
+            $result = array('metadata' => $metadata);
+        } else {
+            $result = true;
+        }
+        
+        return $result;
     }
     
     /**
@@ -177,8 +217,48 @@ class Task extends \Model\Abs {
      * @return \mixed true执行完成，array需要继续执行
      */
     static protected function _executeHome(array $task) {
+        $blog = \Model\Blog::show($task['uid']);
+        $limit = isset($blog['data']['page_count']) ? $blog['data']['page_count'] : 50;
         
+        $metadata = $task['metadata'];
+        $p = empty($metadata['p']) ? 0 : $metadata['p'];
+        ++$p;
+        
+        //超过了最大发布页数
+        if($p > self::PUBLISH_PAGE_MAX) {
+            return true;
+        }
+        
+        //获取总数
+        $total = \Model\Counter\Article::get(0);
+        
+        $pager = new \Comm\Pager($total, $limit, $p);
+        $articles = \Model\Article::showUserList($pager);
+        if($articles) {
+             
+            //渲染模板，发布至GITHUB
+            $smarty = \Comm\Smarty::init();
+            $content = $smarty->render('tpl:article', array(
+                'blog'     => $blog,
+                'articles' => $articles,
+                'total'    => $total,
+            ));
+        
+            if($p == 1) {
+                $path = '/index.html';
+            } else {
+                $path = "/index/{$p}.html";
+            }
+            $message = sprintf('update home (%u) [%s]', $p, date('Y-m-d H:i:s'));
+            \Model\Publish::publishUserRespos($path, $content, $message);
+        
+            //更新元数据
+            $metadata['p'] = $p;
+            $result = array('metadata' => $metadata);
+        } else {
+            $result = true;
+        }
+        
+        return $result;
     }
-    
-    
 }
