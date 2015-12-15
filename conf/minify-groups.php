@@ -27,5 +27,8 @@ return array(
     
     'manage/theme/index.js'      => ['core/form', 'manage/theme/index'],   //模板列表页
     'manage/theme/edit.js'       => ['core/form', 'manage/theme/edit'],		//模板编辑页
+    
+    //发布管理
+    'manage/publish.js'    => ['core/form', 'manage/publish']
 
 );

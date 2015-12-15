@@ -1,0 +1,37 @@
+<?php $this; /* @var $this \Comm\View */  ?>
+<?php $this->_block('content'); ?>
+
+
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><?= _('发布内容至Github') ?></h3>
+  </div>
+	<div class="panel-body">
+		<form id="form-manage-publish" method="post" action="<?= $this->path('aj/publish/create') ?>">
+		<div class="checkbox">
+			<label> <input type="checkbox" name="publish[]" value="1-0" /> <?= _('首页') ?>
+			</label>
+		</div>
+		
+		<div node-type="publish-category">
+    		<div class="checkbox">
+    			<label> <input type="checkbox" id="publish-all" name="publish-all" value=""> <?= _('分类文章列表') ?></label>
+    		</div>
+    		<ul>
+    			<?php foreach($categorys as $value) : ?>
+    			<li class="checkbox"><label><input type="checkbox" name="publish[]" value="2-<?= $value['id'] ?>"> <?= $value['name'] ?></label></li>
+    			<?php endforeach; ?>
+    		</ul>
+		</div>
+		</form>
+	</div>
+</div>
+
+
+
+<?php $this->_blockEnd(); ?>
+<?php $this->_block('body_end')?>
+<?php $this->js('manage/publish.js'); ?>
+<?php $this->_blockEnd()?>
+<?php $this->_blockLoad('_block/manage', ['nav'=>'publish']) ?>

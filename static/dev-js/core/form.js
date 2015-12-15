@@ -95,7 +95,7 @@
 				child_obj.prop("checked", $(this).prop("checked"));
 			});
 			box.delegate(child_nodes, "click", function(){
-				var child_all_size = $(child_nodes).size();
+				var child_all_size = box.find(child_nodes).size();
 				var child_checked_size = $(child_nodes).filter(":checked").size();
 				if(child_all_size === child_checked_size) {
 					control_obj.prop("checked", true);
