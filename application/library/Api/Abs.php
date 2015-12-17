@@ -4,7 +4,7 @@
  * API抽象类
  *
  * @package Api
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Api;
 abstract class Abs {

@@ -4,7 +4,7 @@
  * 未登录异常
  *
  * @package Exception
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Exception;
 class Nologin extends Abs {

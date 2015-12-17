@@ -4,7 +4,7 @@
  * OAuth回调
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 class User_Github_OAuthController extends AbsController {
     

@@ -4,7 +4,7 @@
  * 未归类函数
  *
  * @package Comm
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Comm;
 abstract class Misc {

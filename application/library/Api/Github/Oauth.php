@@ -4,7 +4,7 @@
  * Github Oauth接口
  *
  * @package Api
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Api\Github;
 class Oauth extends \Api\Abs{

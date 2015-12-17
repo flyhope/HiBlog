@@ -4,7 +4,7 @@
  * Github认证抽象类
  *
  * @package Github
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Api\Github;
 abstract class Abs extends \Api\Abs {

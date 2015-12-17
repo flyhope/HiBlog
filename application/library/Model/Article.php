@@ -4,7 +4,7 @@
  * 文章模型
  *
  * @package Model
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Model;
 class Article extends Abs {

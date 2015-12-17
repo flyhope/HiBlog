@@ -4,7 +4,7 @@
  * 分类管理
  *
  * @package Model
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Model;
 class Category extends Abs {

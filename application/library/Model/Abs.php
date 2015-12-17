@@ -1,10 +1,10 @@
 <?php
 
 /**
- * 
+ * Model抽象类
  *
- * @package 
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @package Model
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Model;
 abstract class Abs {

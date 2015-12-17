@@ -4,7 +4,7 @@
  * 数据库简化操作
  *
  * @package Comm
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Comm\Db;
 class Simple {

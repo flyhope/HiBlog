@@ -4,7 +4,7 @@
  * 数据配置读取类
  *
  * @package Model
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Model;
 class Config extends Abs {

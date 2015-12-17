@@ -4,7 +4,7 @@
  * 数据库测试类
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 class Test_DbController extends \Yaf_Controller_Abstract {
     

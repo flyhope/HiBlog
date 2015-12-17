@@ -4,7 +4,7 @@
  * 用户Model
  *
  * @package Model
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Model;
 class User extends Abs {

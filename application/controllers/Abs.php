@@ -4,7 +4,7 @@
  * 控制器抽象类
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 abstract class AbsController extends Yaf_Controller_Abstract {
     

@@ -4,7 +4,7 @@
  * 首页入口
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.weibo.com>
+ * @author  chengxuan <i@chengxuan.li>
  */
 class IndexController extends AbsController {
     
