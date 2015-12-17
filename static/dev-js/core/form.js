@@ -70,14 +70,18 @@
 				var action = form_jq.attr("action");
 				var data = form_jq.serialize();
 				
-				$.ajax(action, {
-					"cache" : false,
-					"data" : data,
-					"type" : method,
-					"success" : function(o) {
-						$.ajaxCallback(o, success_cb, fail_cb);
-					}
-				});
+				if(!data) {
+					$.alert("提交内容为空");
+				} else {
+					$.ajax(action, {
+						"cache" : false,
+						"data" : data,
+						"type" : method,
+						"success" : function(o) {
+							$.ajaxCallback(o, success_cb, fail_cb);
+						}
+					});
+				}
 			});
 		},
 		

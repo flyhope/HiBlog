@@ -1,14 +1,12 @@
 <?php $this; /* @var $this \Comm\View */  ?>
 <?php $this->_block('content'); ?>
-
-
-
+<form id="form-manage-publish" method="post" action="<?= $this->path('aj/manage/publish/create') ?>" onsubmit="return false">
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title"><?= _('发布内容至Github') ?></h3>
   </div>
 	<div class="panel-body">
-		<form id="form-manage-publish" method="post" action="<?= $this->path('aj/publish/create') ?>">
+		
 		<div class="checkbox">
 			<label> <input type="checkbox" name="publish[]" value="1-0" /> <?= _('首页') ?>
 			</label>
@@ -24,11 +22,16 @@
     			<?php endforeach; ?>
     		</ul>
 		</div>
-		</form>
+		
 	</div>
+	
+	<div class="panel-footer">
+		<input type="submit" class="btn btn-default" value="<?= ('发布') ?>" />
+	</div>
+	
+	
 </div>
-
-
+</form>
 
 <?php $this->_blockEnd(); ?>
 <?php $this->_block('body_end')?>

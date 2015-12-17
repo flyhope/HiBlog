@@ -35,7 +35,7 @@ class Task extends \Model\Abs {
      *
      * @var integer
      */
-    const TYPE_CATEGORY_ARTILE_LIST = 2;
+    const TYPE_CATEGORY_ARTICLE_LIST = 2;
     
     /**
      * 最多发布页数
@@ -82,7 +82,7 @@ class Task extends \Model\Abs {
                 throw new \Exception\Msg('类型错误');
             }
             $connection_id = isset($value['connection_id']) ? $value['connection_id'] : 0;
-            $metadata = isset($value['metadata']) ? $value['metadata'] : '';
+            $metadata = isset($value['metadata']) ? \Comm\Json::encode($value['metadata']) : '{}';
             $bath_datas[] = array(
                 $uid, $value['type'], $connection_id, $metadata,
             );
@@ -123,12 +123,7 @@ class Task extends \Model\Abs {
         $task = reset($tasks);
         unset($tasks);
         
-        switch($task) {
-            //全部列表
-            case self::TYPE_ALL_LIST :
-                $execute_result = self::_executeAllList($task);
-                break;
-                
+        switch($task['type']) {
             //分类文章列表
             case self::TYPE_CATEGORY_ARTICLE_LIST :
                 $execute_result = self::_executeCategoryArticleList($task);
