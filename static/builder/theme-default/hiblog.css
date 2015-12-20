@@ -1,0 +1,64 @@
+/* 通用样式*/
+body {
+	background-color:#f1f1f1;
+}
+a{
+	color:rgba(51, 51, 51, 0.7);
+}
+a:hover {
+	color:#333
+}
+
+body.md::before {
+    background-color: #fff;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    min-height: 100%;
+    position: fixed;
+    margin-left:75%;
+    top: 0;
+    width: 25%;
+    z-index: 0;
+}
+.container-fluid {
+	padding:0;
+}
+
+/* 主体内容 */
+#content {
+	margin-top:20px;
+}
+
+/* 侧导栏 */
+#sidebar {
+	padding:5px 25px;
+}
+#sidebar aside{
+	border-top:1px solid #ddd;
+}
+
+#sidebar .collapsed-sides {
+	float:right;
+	clear:right;
+	padding:auto auto;
+	text-align:center;
+	padding-top:4px;
+	margin-top:10px;
+	font-size:24px;
+	width:40px;
+	height:40px;
+	border:1px solid #ddd;
+}
+
+/* 索引文章 */
+.panel-index-article {
+	border-radius:0;
+}
+
+.panel-index-article .comment {
+	display:inline-block;
+	float:right;
+}
