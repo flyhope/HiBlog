@@ -19,7 +19,7 @@ class Resource extends \Model\Abs {
      * 
      * @var string
      */
-    protected static $_protected_resource = ',article,category,home,article-list,';
+    protected static $_protected_resource = ',article,sidebar,home,article-list,';
 
     /**
      * 每个主题下最多的模板数
