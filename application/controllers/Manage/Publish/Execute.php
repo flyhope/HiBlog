@@ -9,6 +9,8 @@ class Manage_Publish_ExecuteController extends AbsController {
     
     public function indexAction() {
         $result = Model\Publish\Task::execute();
-        var_dump($result);
+        $this->viewDisplay(array(
+            'result' => $result,
+        ));
     }
 }

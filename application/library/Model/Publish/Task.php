@@ -21,7 +21,7 @@ class Task extends \Model\Abs {
      *
      * @var string
      */
-    protected static $_primary_key = 'uid';
+    protected static $_primary_key = 'id';
 
     /**
      * 发布首页
@@ -116,7 +116,8 @@ class Task extends \Model\Abs {
      */
     static public function execute() {
         $uid = \Model\User::validateLogin();
-        $tasks = self::showListByUser($uid, 1);
+        $tasks = self::showListByUser($uid, 2);
+        $tasks_count = count($tasks);
         if(empty($tasks)) {
             throw new \Exception\Msg(_('发布任务为空'));
         }
@@ -124,36 +125,40 @@ class Task extends \Model\Abs {
         unset($tasks);
         
         switch($task['type']) {
+            //首页
+            case self::TYPE_HOME:
+                $execute_result = self::_executeHome($task);
+                break;
+            
             //分类文章列表
             case self::TYPE_CATEGORY_ARTICLE_LIST :
                 $execute_result = self::_executeCategoryArticleList($task);
                 break;
                 
-            //首页
-            case self::TYPE_HOME:
-                $execute_result = self::_executeHome($task);
-                break;
             //其它情况，异常
             default :
-                self::destory($uid);
+                self::destory($task['id']);
                 throw new \Exception\Msg(_('发布任务异常')); 
         }
         
         
         if($execute_result === true) {
             //彻底完成了
-            self::destory($uid);
+            self::destory($task['id']);
         } elseif (is_array($execute_result)) {
             //还需要继续执行
             $update_data = array(
                 'metadata' => \Comm\Json::encode($execute_result['metadata']),
             );
-            self::db()->wAnd([self::$_primary_key => $uid])->upadte($update_data);
+            self::db()->wAnd([self::$_primary_key => $task['id']])->upadte($update_data);
         } else {
             //异常
             throw new \Exception\Msg(_('执行任务异常'));
         }
-        $result = $execute_result;
+        
+        $result['finished'] = $tasks_count <=1 && $execute_result === true;
+        $result['response'] = $execute_result;
+        $result['task'] = $task;
         return $result;
     }
     
@@ -190,7 +195,7 @@ class Task extends \Model\Abs {
             ));
             
             $message = sprintf('update category %u(%u) [%s]', $category_id, $p, date('Y-m-d H:i:s'));
-            \Model\Publish::publishUserRespos("/category/{$category_id}-{$p}.html", $content, $message);
+            \Model\Publish::publishUserRespos("category/{$category_id}-{$p}.html", $content, $message);
 
             //更新元数据
             $end = end($articles);
@@ -216,7 +221,7 @@ class Task extends \Model\Abs {
         $limit = isset($blog['data']['page_count']) ? $blog['data']['page_count'] : 50;
         
         $metadata = $task['metadata'];
-        $p = empty($metadata['p']) ? 0 : $metadata['p'];
+        $p = empty($metadata['p']) ? 1 : $metadata['p'];
         ++$p;
         
         //超过了最大发布页数
@@ -229,8 +234,8 @@ class Task extends \Model\Abs {
         
         $pager = new \Comm\Pager($total, $limit, $p);
         $articles = \Model\Article::showUserList($pager);
-        if($articles) {
-             
+            
+        if(!empty($articles['result'])) {
             //渲染模板，发布至GITHUB
             $smarty = \Comm\Smarty::init();
             $content = $smarty->render('tpl:article', array(
@@ -240,9 +245,9 @@ class Task extends \Model\Abs {
             ));
         
             if($p == 1) {
-                $path = '/index.html';
+                $path = 'index.html';
             } else {
-                $path = "/index/{$p}.html";
+                $path = "index/{$p}.html";
             }
             $message = sprintf('update home (%u) [%s]', $p, date('Y-m-d H:i:s'));
             \Model\Publish::publishUserRespos($path, $content, $message);
