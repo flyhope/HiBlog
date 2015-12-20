@@ -14,7 +14,11 @@ $(function() {
 	$(window).bind("resize", resizeSides);
 	
 	//加载右侧栏
-	$("#sidebar").load("/block/sidebar.html", resizeSides);
+	var src_sidebar = $CONFIG.src_sidebar;
+	if(!src_sidebar) {
+		src_sidebar = "/block/sidebar.html";
+	}
+	$("#sidebar").load(src_sidebar, resizeSides);
 	
 
 	
