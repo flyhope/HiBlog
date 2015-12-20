@@ -10,7 +10,9 @@
 			<div class="caption">
 				<h3 class="text-center"><?= $value['name'] ?></h3>
 				<p class="text-center">
+					<?php if($use_theme_id != $value['id']) : ?>
 					<a href="javascript:void(0)" action-type="use" class="btn btn-info" role="button"><?= _('使用'); ?></a>
+					<?php endif; ?>
 					<a href="javascript:void(0)" action-type="copy" class="btn btn-info" role="button" data-toggle="modal" data-target="#modal-theme-copy"><?= _('复制'); ?></a>
 					<?php if($value['user_id']) : ?>
 					<a href="<?= $this->path("manage/theme/edit?id={$value['id']}") ?>" action-type="edit" class="btn btn-info" role="button"><?= _('编辑'); ?></a>

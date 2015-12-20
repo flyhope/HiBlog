@@ -29,8 +29,7 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
                 $tpl_id = $blog['data']['theme_id'];
             }
         }
-        
-        empty($tpl_id) || $this->tpl_id = $tpl_id;
+        empty($tpl_id) || $this->_tpl_id = $tpl_id;
     }
     
     /**
@@ -43,7 +42,6 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
      */
     protected function fetch($name, &$source, &$mtime) {
         $result = Model\Theme\Resource::showByName($this->_tpl_id, $name);
-        
         if($result) {
             $source = $result['content'];
             $mtime = strtotime($result['update_time']);
@@ -61,6 +59,7 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
      * @return integer timestamp (epoch) the template was modified
      */
     protected function fetchTimestamp($name) {
+        return time();
         $result = Model\Theme\Resource::showByName($this->_tpl_id, $name);
         if($result) {
             $mtime = strtotime($result['update_time']);

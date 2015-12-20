@@ -11,19 +11,22 @@ class Publish extends Abs {
      * 发布一篇文章
      * 
      * @param array $article
-     * @param array $user
      * 
      * @return array
      */
-    static public function article(array $article, array $user) {
+    static public function article(array $article) {
         $path = sprintf('article/%u.html', $article['id']);
         $message = sprintf('update article %u [%s]', $article['id'], date('Y-m-d H:i:s'));
 
+        $blog = Blog::show();
+        $category = Category::show($article['category_id']);
+        
         $smarty = \Comm\Smarty::init();
         $content = $smarty->render('tpl:article', array(
-            'article' => $article,
+            'blog'     => $blog,
+            'category' => $category,
+            'article'  => $article,
         ));
-        
         $result = self::publishUserRespos($path, $content, $message);
         
         //发布成功，更新发布时间与发布状态
@@ -84,16 +87,21 @@ class Publish extends Abs {
      * 
      * @return \stdClass
      */
-    static public function categoryMain($use_master = false) {
+    static public function sidebar($use_master = false) {
+        $user = User::show();
+        $blog = Blog::show();
         $categorys = Category::showUserAll(false, true, true);
         
+        
         $smarty = \Comm\Smarty::init();
-        $content = $smarty->render('tpl:category', array(
+        $content = $smarty->render('tpl:sidebar', array(
+            'user'      => $user,
+            'blog'      => $blog,
             'categorys' => $categorys,
         ));
         
-        $path = 'block/category.html';
-        $message = sprintf('update category [%s]', date('Y-m-d H:i:s'));
+        $path = 'block/sidebar.html';
+        $message = sprintf('update sidebar [%s]', date('Y-m-d H:i:s'));
         return self::publishUserRespos($path, $content, $message);
     }
     

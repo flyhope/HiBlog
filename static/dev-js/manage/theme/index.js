@@ -26,9 +26,8 @@ $(function() {
 		});
 	}).delegate("[action-type=use]", "click", function() {
 		//使用主题
-		
 		var href = $CONFIG.path + "aj/manage/theme/use";
-		var $theme_node = button.parents("[node-type=theme-node]");
+		var $theme_node = $(this).parents("[node-type=theme-node]");
 		var theme_id = $theme_node.data("theme-id");
 		//使用主题
 		$.post(href, {"theme_id":theme_id}, $.ajaxCallbackDefault);

@@ -5,7 +5,7 @@
  * @package Controller
  * @author chengxuan <i@chengxuan.li>
  */
-class Aj_Manage_Theme_UserController extends Aj_AbsController {
+class Aj_Manage_Theme_UseController extends Aj_AbsController {
     
     public function indexAction() {
         $theme_id = Comm\Arg::post('theme_id');

@@ -79,8 +79,7 @@ class Article extends Abs {
         
         //发布至Github中
         $data['id'] = $id;
-        $user = User::show($uid);
-        Publish::article($data, $user);
+        Publish::article($data);
         
         return $id;
     }

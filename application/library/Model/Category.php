@@ -129,7 +129,7 @@ class Category extends Abs {
             throw new \Exception\Msg('创建分类失败');
         }
         
-        Publish::categoryMain(true);
+        Publish::sidebar(true);
         
         return $id;
     }
@@ -150,7 +150,7 @@ class Category extends Abs {
         }
         $validate_auth && User::validateAuth($data['uid']);
         $result = self::db()->wAnd(['id'=>$data['id']])->upadte($new_data, true);
-        Publish::categoryMain(true);
+        Publish::sidebar(true);
         return $result;
     }
 
@@ -176,7 +176,7 @@ class Category extends Abs {
         }
         
         //发布至Github
-        Publish::categoryMain(true);
+        Publish::sidebar(true);
         
         return $sort;
     }
@@ -196,7 +196,7 @@ class Category extends Abs {
         $where = array(static::$_primary_key => $ids, 'uid' => $uid);
         $result = self::db()->wAnd($where)->delete(true);
         
-        Publish::categoryMain(true);
+        Publish::sidebar(true);
         
         return $result;
     }
