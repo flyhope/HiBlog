@@ -60,6 +60,7 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
      */
     protected function fetchTimestamp($name) {
         return time();
+        /*
         $result = Model\Theme\Resource::showByName($this->_tpl_id, $name);
         if($result) {
             $mtime = strtotime($result['update_time']);
@@ -67,5 +68,6 @@ class Smarty_Resource_Tpl extends Smarty_Resource_Custom {
             $mtime = 0;
         }
         return $mtime;
+        */
     }
 }

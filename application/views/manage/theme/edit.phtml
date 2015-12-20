@@ -50,8 +50,11 @@
 				<td class="text-center"><?= $value['update_time'] ?></td>
 				<td class="text-center">
 				    <a href="javascript:void(0)" class="btn btn-xs btn-default" role="button" action-type="show-resource">查看</a>
-				    <?php if(!$resource['locked'] && !\Model\Theme\Resource::isProtected($value['resource_name'])) : ?>
-				    <a href="javascript:void(0)" class="btn btn-xs btn-default" role="button" action-type="destroy">删除</a>
+				    
+				    <?php if(\Model\Theme\Resource::isProtected($value['resource_name'])) : ?>
+					<a target="_blank" href="<?= $this->path('manage/theme/demo?' . http_build_query(['theme' => $value['tpl_id'], 'resource' => $value['resource_name']])) ?>" class="btn btn-xs btn-default" role="button">预览</a>
+				    <?php elseif(!$resource['locked']) : ?>
+				    <a href="javascript:void(0)" class="btn btn-xs btn-danger" role="button" action-type="destroy">删除</a>
 				    <?php endif; ?>
 				</td>
 			</tr>

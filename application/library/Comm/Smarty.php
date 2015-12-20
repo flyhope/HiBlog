@@ -47,6 +47,7 @@ class Smarty implements \Yaf_View_Interface {
     protected function __construct() {
         \Yaf_Loader::import(APP_PATH . 'library/Thirdpart/Smarty/libs/Smarty.class.php');
         
+        
         $this->_smarty = new \Smarty();
         $this->_smarty->setTemplateDir('');
         $this->_smarty->setCompileDir(TMP_PATH . 'smarty-compile/');
@@ -54,6 +55,7 @@ class Smarty implements \Yaf_View_Interface {
         $this->_smarty->setPluginsDir(APP_PATH . 'library/Smarty/Plugins/');
         $this->_smarty->left_delimiter = '<!--{';
         $this->_smarty->right_delimiter = '}-->';
+        $this->_smarty->enableSecurity('Comm\Smarty_Security_Policy');
         
     }
     
@@ -127,6 +129,32 @@ class Smarty implements \Yaf_View_Interface {
         error_reporting($error_reporting);
         return $result;
     }
+}
+
+/**
+ * Smarty安全设置
+ * 
+ * @author chengxuan
+ */
+class Smarty_Security_Policy extends \Smarty_Security {
     
+    // 仅允许安全的PHP函数
+    public $php_functions = array(
+        'isset', 'empty',
+        'count', 'sizeof',
+        'in_array', 'is_array',
+        'time'
+    );
     
+    /**
+     * 设置允许的PHP修饰器
+     *
+     * @var array
+     */
+    public $php_modifiers = array(
+        'escape', 'count', 'nl2br', 'json_encode'
+    );
+    
+    //删除php标签
+    public $php_handling = \Smarty::PHP_REMOVE;
 }

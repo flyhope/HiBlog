@@ -10,28 +10,37 @@ class Publish extends Abs {
     /**
      * 发布一篇文章
      * 
-     * @param array $article
+     * @param array $article 文件内容
+     * @param int   $publish 是否真正发布（如果为否，则仅为预览，输出至Buffer中）
      * 
      * @return array
      */
-    static public function article(array $article) {
+    static public function article(array $article, $publish = true) {
         $path = sprintf('article/%u.html', $article['id']);
         $message = sprintf('update article %u [%s]', $article['id'], date('Y-m-d H:i:s'));
 
         $blog = Blog::show();
         $category = Category::show($article['category_id']);
         
-        $smarty = \Comm\Smarty::init();
-        $content = $smarty->render('tpl:article', array(
+        $tpl_vars = array(
             'blog'     => $blog,
             'category' => $category,
             'article'  => $article,
-        ));
-        $result = self::publishUserRespos($path, $content, $message);
+            'publish'  => $publish,
+        );
         
-        //发布成功，更新发布时间与发布状态
-        if(!empty($result->content) && !empty($result->commit)) {
-            Article::update($article, ['state' => 1, 'publish_time' => date('Y-m-d H:i:s')]);
+        $smarty = \Comm\Smarty::init();
+        
+        if($publish) {
+            $content = $smarty->render('tpl:article', $tpl_vars);
+            $result = self::publishUserRespos($path, $content, $message);
+            
+            //发布成功，更新发布时间与发布状态
+            if(!empty($result->content) && !empty($result->commit)) {
+                Article::update($article, ['state' => 1, 'publish_time' => date('Y-m-d H:i:s')]);
+            }
+        } else {
+            $result = $smarty->display('tpl:article', $tpl_vars);
         }
 
         return $result;
@@ -84,25 +93,35 @@ class Publish extends Abs {
      * 发布主分类数据
      * 
      * @param boolean $use_master 是否使用主库
+     * @param boolean $publish    是否是真的发布，如果不是，内容输出至Buffer
      * 
      * @return \stdClass
      */
-    static public function sidebar($use_master = false) {
+    static public function sidebar($use_master = false, $publish = false) {
         $user = User::show();
         $blog = Blog::show();
         $categorys = Category::showUserAll(false, true, true);
         
-        
-        $smarty = \Comm\Smarty::init();
-        $content = $smarty->render('tpl:sidebar', array(
+        $tpl_vars = array(
             'user'      => $user,
             'blog'      => $blog,
             'categorys' => $categorys,
-        ));
+        );
         
-        $path = 'block/sidebar.html';
-        $message = sprintf('update sidebar [%s]', date('Y-m-d H:i:s'));
-        return self::publishUserRespos($path, $content, $message);
+        $smarty = \Comm\Smarty::init();
+        
+        if($publish) {
+            $content = $smarty->render('tpl:sidebar', $tpl_vars);
+            
+            $path = 'block/sidebar.html';
+            $message = sprintf('update sidebar [%s]', date('Y-m-d H:i:s'));
+            $result = self::publishUserRespos($path, $content, $message);
+        } else {
+            $result = $smarty->display('tpl:sidebar', $tpl_vars);
+        }
+
+        
+        return $result;
     }
     
     /**
