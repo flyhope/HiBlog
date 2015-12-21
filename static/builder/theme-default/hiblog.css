@@ -77,13 +77,20 @@ a:hover, .pagination li a:hover {
 }
 
 /* 索引文章、评论 */
-.panel-index-article, .comment-content {
+.panel-article, .comment-content {
 	border-radius:0;
 }
 
-.panel-index-article .comment {
+.panel-article .comment {
 	display:inline-block;
 	float:right;
+}
+
+.panel-article .ds-share {
+	float:right;
+}
+.panel-article .ds-share li {
+	padding-top:3px !important;
 }
 
 /* 评论 */

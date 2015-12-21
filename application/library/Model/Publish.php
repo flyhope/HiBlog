@@ -24,11 +24,15 @@ class Publish extends Abs {
         $blog = Blog::show();
         $category = Category::show($article['category_id']);
         
+        $now = time();
+        $publish_time = date('Y-m-d H:i:s', $now);
+        
         $tpl_vars = array(
-            'blog'     => $blog,
-            'category' => $category,
-            'article'  => $article,
-            'publish'  => $publish,
+            'blog'         => $blog,
+            'category'     => $category,
+            'article'      => $article,
+            'publish'      => $publish,
+            'publish_date' => date('Y-m-d', $now),
         );
         
         $smarty = \Comm\Smarty::init();
@@ -39,7 +43,7 @@ class Publish extends Abs {
             
             //发布成功，更新发布时间与发布状态
             try {
-                Article::update($article, ['state' => 1, 'publish_time' => date('Y-m-d H:i:s')]);
+                Article::update($article, ['state' => 1, 'publish_time' => $publish_time]);
             } catch(\Exception $e) {}
             
         } else {

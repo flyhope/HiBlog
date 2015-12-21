@@ -30,7 +30,7 @@
 					</li>
 				</ol>
 
-				<article class="panel panel-default panel-index-article">
+				<article class="panel panel-default panel-article">
 					<div class="panel-body">
 						<h1>PHP7新特性</h1>
 						欢迎使用Hi-Blog。这是您的第一篇文章。编辑或删除它，然后开始写作吧！
@@ -39,8 +39,11 @@
 						<time datetime="2015-12-20T11:30:06+00:00" class="glyphicon glyphicon-calendar">
 							2015年12月20日
 						</time>
+						
+						<div class="ds-share flat" data-thread-key="此处请替换为当前文章的thread-key" data-title="此处请替换为分享时显示的标题" data-images="此处请替换为分享时显示的图片的链接地址" data-content="此处请替换为分享时显示的内容" data-url="此处请替换为分享时显示的链接地址"></div>
 					</div>
 				</article>
+
 
 				<div class="comment-content panel panel-default">
 					<div class="panel-heading">评论</div>
@@ -48,6 +51,8 @@
 						<div class="ds-thread" data-thread-key="1" data-title="DEMO" data-url="http://githublog.lo/article/1.html"></div>
 					</div>
 				</div>
+				
+				
 			</div>
 
 		</div>
@@ -65,7 +70,7 @@
 				var ds = document.createElement('script');
 				ds.type = 'text/javascript';
 				ds.async = true;
-				ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+				ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.unstable.js';
 				ds.charset = 'UTF-8';
 				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
 			})();
