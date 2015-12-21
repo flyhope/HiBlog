@@ -205,21 +205,16 @@ class Single {
      */
     public function exec(& $response_header = null) {
         $numargs = func_num_args();
-        $numargs = 1;
         if($numargs) {
             curl_setopt($this->_ch, CURLOPT_HEADER, true);
         }
         
         $this->fetchCurl($this->_ch);
-        $result = curl_exec($this->_ch);
-        
-        $curl_info = curl_getinfo($this->_ch);
-        if($numargs && !empty($curl_info['http_code'])) {
-            list($response_header, $result) = explode("\r\n\r\n", $result);
-        }
+        $response = curl_exec($this->_ch);
         
         //执行失败抛出异常
-        if($result === false) {
+        $curl_info = curl_getinfo($this->_ch);
+        if($response === false) {
             $code = curl_errno($this->_ch);
             $message = curl_error($this->_ch);
             $metadata = array(
@@ -228,6 +223,14 @@ class Single {
             );
             throw new \Exception\Request($message, $code, $metadata);
         }
+        
+        
+        if($numargs && !empty($curl_info['http_code'])) {
+            list($response_header, $result) = explode("\r\n\r\n", $response);
+        } else {
+            $result = $response;
+        }
+        unset($response);
         
         //关闭CURL句柄
         curl_close($this->_ch);

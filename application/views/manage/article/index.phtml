@@ -19,12 +19,12 @@
 				<th width="100" class="text-center"><?= _('状态') ?></th>
 				<th width="150" class="text-center"><?= _('发表时间') ?></th>
 				<th width="150" class="text-center"><?= _('发布时间') ?></th>
-				<th width="100" class="text-center"><?= _('操作') ?></th>
+				<th width="140" class="text-center"><?= _('操作') ?></th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($articles['result'] as $value) : ?>
-			<tr>
+			<tr data-id="<?= $value['id'] ?>">
 				<td class="text-center"><?= $value['id'] ?></td>
 				<td class="text-center"><?= $categorys[$value['category_id']]['name'] ?></td>
 				<td><?= $value['title'] ?></td>
@@ -32,8 +32,9 @@
 				<td class="text-center"><?= $value['create_time'] ?></td>
 				<td class="text-center"><a target="_blank" href="<?= $blog_url ?>/article/<?= $value['id'] ?>"><?= $value['publish_time'] ?></a></td>
 				<td class="text-center">
+					<a href="javascript:void(0);" action-type="publish" class="btn btn-xs btn-default" role="button">发布</a>
 				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">编辑</a>
-				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">删除</a>
+				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-danger" role="button">删除</a>
 				</td>
 			</tr>
 			<?php endforeach; ?>

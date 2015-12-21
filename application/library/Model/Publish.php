@@ -16,6 +16,8 @@ class Publish extends Abs {
      * @return array
      */
     static public function article(array $article, $publish = true) {
+        \Model\User::validateAuth($article['uid']);
+        
         $path = sprintf('article/%u.html', $article['id']);
         $message = sprintf('update article %u [%s]', $article['id'], date('Y-m-d H:i:s'));
 
@@ -36,9 +38,10 @@ class Publish extends Abs {
             $result = self::publishUserRespos($path, $content, $message);
             
             //发布成功，更新发布时间与发布状态
-            if(!empty($result->content) && !empty($result->commit)) {
+            try {
                 Article::update($article, ['state' => 1, 'publish_time' => date('Y-m-d H:i:s')]);
-            }
+            } catch(\Exception $e) {}
+            
         } else {
             $result = $smarty->display('tpl:article', $tpl_vars);
         }
