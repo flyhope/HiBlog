@@ -24,7 +24,9 @@ $(function() {
 	if($("pre[class*=brush]").size()) {
 		var script_load_total = 0;
 		var scriptload_callback = function() {
+			console.log(script_load_total);
 			if(++script_load_total > 1) {
+				console.log("execute");
 				SyntaxHighlighter.autoloader.apply(null, SyntaxHighlighterPath(
 					'applescript            @shBrushAppleScript.js',
 					'actionscript3 as3      @shBrushAS3.js', 
