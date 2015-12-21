@@ -32,6 +32,10 @@ a:hover, .pagination li a:hover {
 /* 主体内容 */
 #content {
 	margin-top:20px;
+	overflow:hidden;
+}
+#content img {
+	max-width:100%;
 }
 
 /* 侧导栏 */
