@@ -21,7 +21,7 @@ $(function() {
 	$("#sidebar").load(src_sidebar, resizeSides);
 	
 	//加载高亮组件
-	if($("pre.brush").size()) {
+	if($("pre[class*=brush]").size()) {
 		var script_load_total = 0;
 		var scriptload_callback = function() {
 			if(++script_load_total > 1) {
