@@ -90,3 +90,6 @@ a:hover, .pagination li a:hover {
 .comment-content {
 
 }
+
+/* 第三方样式 */
+.syntaxhighlighter td.code .container::before, .syntaxhighlighter td.code .container::after {display: none;}
