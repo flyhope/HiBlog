@@ -32,6 +32,10 @@ a:hover, .pagination li a:hover {
 /* 主体内容 */
 #content {
 	margin-top:20px;
+	overflow:hidden;
+}
+#content img {
+	max-width:100%;
 }
 
 /* 侧导栏 */
@@ -86,3 +90,6 @@ a:hover, .pagination li a:hover {
 .comment-content {
 
 }
+
+/* 第三方样式 */
+.syntaxhighlighter td.code .container::before, .syntaxhighlighter td.code .container::after {display: none;}
