@@ -22,39 +22,7 @@ $(function() {
 	
 	//加载高亮组件
 	if($("pre[class*=brush]").size()) {
-		var script_load_total = 0;
-		var scriptload_callback = function() {
-			if(++script_load_total > 1) {
-				SyntaxHighlighter.autoloader.apply(null, SyntaxHighlighterPath(
-					'applescript			@shBrushAppleScript.js',
-					'actionscript3 as3	  @shBrushAS3.js', 
-					'bash shell			 @shBrushBash.js', 
-					'coldfusion cf		  @shBrushColdFusion.js',
-					'cpp c				  @shBrushCpp.js',
-					'c# c-sharp csharp	  @shBrushCSharp.js', 
-					'css					@shBrushCss.js', 
-					'delphi pascal		  @shBrushDelphi.js', 
-					'diff patch pas		 @shBrushDiff.js', 
-					'erl erlang			 @shBrushErlang.js',
-					'groovy				 @shBrushGroovy.js', 
-					'java				   @shBrushJava.js',
-					'jfx javafx			 @shBrushJavaFX.js', 
-					'js jscript javascript  @shBrushJScript.js',
-					'perl pl				@shBrushPerl.js',
-					'php					@shBrushPhp.js', 
-					'text plain			 @shBrushPlain.js', 
-					'py python			  @shBrushPython.js',
-					'ruby rails ror rb	  @shBrushRuby.js',
-					'sass scss			  @shBrushSass.js',
-					'scala				  @shBrushScala.js',
-					'sql					@shBrushSql.js', 
-					'vb vbnet			   @shBrushVb.js',
-					'xml xhtml xslt html	@shBrushXml.js'
-				));
-				SyntaxHighlighter.all();
-			}
-		};
-		
+		//替换加载器路径占位
 		function SyntaxHighlighterPath() {
 			var args = arguments,
 			result = [];
@@ -65,8 +33,38 @@ $(function() {
 		};
 		
 		$("head").append('<link type="text/css" rel="stylesheet" href="http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/styles/shCore.css" /><link type="text/css" rel="stylesheet" href="http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.css" />');
-		$.getScript('http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js', scriptload_callback);
-		$.getScript('http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/scripts/shAutoloader.js', scriptload_callback);
+		$.getScript('http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js', function() {
+			$.getScript('http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/scripts/shAutoloader.js', function() {
+				SyntaxHighlighter.autoloader.apply(null, SyntaxHighlighterPath(
+					'applescript            @shBrushAppleScript.js',
+					'actionscript3 as3      @shBrushAS3.js', 
+					'bash shell             @shBrushBash.js', 
+					'coldfusion cf          @shBrushColdFusion.js',
+					'cpp c                  @shBrushCpp.js',
+					'c# c-sharp csharp      @shBrushCSharp.js', 
+					'css                    @shBrushCss.js', 
+					'delphi pascal          @shBrushDelphi.js', 
+					'diff patch pas         @shBrushDiff.js', 
+					'erl erlang             @shBrushErlang.js',
+					'groovy                 @shBrushGroovy.js', 
+					'java                   @shBrushJava.js',
+					'jfx javafx             @shBrushJavaFX.js', 
+					'js jscript javascript  @shBrushJScript.js',
+					'perl pl                @shBrushPerl.js',
+					'php                    @shBrushPhp.js', 
+					'text plain             @shBrushPlain.js', 
+					'py python              @shBrushPython.js',
+					'ruby rails ror rb      @shBrushRuby.js',
+					'sass scss              @shBrushSass.js',
+					'scala                  @shBrushScala.js',
+					'sql                    @shBrushSql.js', 
+					'vb vbnet               @shBrushVb.js',
+					'xml xhtml xslt html    @shBrushXml.js'
+				));
+				SyntaxHighlighter.all();
+			});
+		});
+		
 	}
 	
 });

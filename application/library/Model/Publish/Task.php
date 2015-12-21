@@ -231,26 +231,12 @@ class Task extends \Model\Abs {
         
         //获取总数
         $total = \Model\Counter\Article::get(0);
-        
         $pager = new \Comm\Pager($total, $limit, $p);
         $articles = \Model\Article::showUserList($pager);
             
         if(!empty($articles['result'])) {
             //渲染模板，发布至GITHUB
-            $smarty = \Comm\Smarty::init();
-            $content = $smarty->render('tpl:article', array(
-                'blog'     => $blog,
-                'articles' => $articles,
-                'total'    => $total,
-            ));
-        
-            if($p == 1) {
-                $path = 'index.html';
-            } else {
-                $path = "index/{$p}.html";
-            }
-            $message = sprintf('update home (%u) [%s]', $p, date('Y-m-d H:i:s'));
-            \Model\Publish::publishUserRespos($path, $content, $message);
+            \Model\Publish::home($articles, $blog, $pager);
         
             //更新元数据
             $metadata['p'] = $p;

@@ -137,9 +137,37 @@ class Publish extends Abs {
     
     /**
      * 发布首页内容
+     * 
+     * @param array       $articles 文章列表
+     * @param \Comm\Pager $pager    分页器
+     * @param array       $blog     博客配置
+     * @param string      $publish  是否真正发布
+     * 
+     * @return mixed
      */
-    static public function home() {
+    static public function home(array $articles, \Comm\Pager $pager, array $blog = null, $publish = true) {
+        $blog || Blog::show();
+        $smarty = \Comm\Smarty::init();
+        $tpl_vars = array(
+            'blog'     => $blog,
+            'articles' => $articles,
+            'total'    => $pager->total,
+        );
         
+        if($publish) {
+            if($pager->page == 1) {
+                $path = 'index.html';
+            } else {
+                $path = "index/{$pager->page}.html";
+            }
+            $message = sprintf('update home (%u) [%s]', $pager->page, date('Y-m-d H:i:s'));
+            $content = $smarty->render('tpl:home', $tpl_vars);
+            $result = \Model\Publish::publishUserRespos($path, $content, $message);
+        } else {
+            $result = $smarty->display('tpl:home', $tpl_vars);
+        }
+        
+        return $result;
     }
     
     /**

@@ -13,8 +13,13 @@ class Manage_Theme_DemoController extends AbsController {
         
         Yaf_Registry::set('tpl_id', $theme);
         switch($resource) {
+            //预览首页
             case 'home' :
+                $pager = new Comm\Pager(100, 20, 1);
+                $articles = Model\Article::showUserList($pager);
+                Model\Publish::home($articles, $pager, null, false);
                 break;
+                
             case 'article-list' :
                 break;
             

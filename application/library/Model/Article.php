@@ -65,6 +65,7 @@ class Article extends Abs {
             'content'     => $content,
             'state'       => 0,
             'uid'         => $uid,
+            'create_time' => date('Y-m-d H:i:s'),
         );
         $db = self::db();
         $db->insert($data);
