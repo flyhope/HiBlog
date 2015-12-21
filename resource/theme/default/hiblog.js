@@ -31,7 +31,7 @@ $(function() {
 		    result = [];
 		    for(var i = 0; i < args.length; i++)
 		        result.push(args[i].replace('@', 'http://apps.bdimg.com/libs/SyntaxHighlighter/3.0.83/scripts/'));
-		    return result
+		    return result;
 		};
 		SyntaxHighlighter.autoloader.apply(null, SyntaxHighlighterPath(
 		    'applescript            @shBrushAppleScript.js',
@@ -58,10 +58,8 @@ $(function() {
 		    'sql                    @shBrushSql.js', 
 		    'vb vbnet               @shBrushVb.js',
 		    'xml xhtml xslt html    @shBrushXml.js'
-		    ));
-		    SyntaxHighlighter.all();	
-		});
-		
+		));
+		SyntaxHighlighter.all();
 	}
 	
 });
