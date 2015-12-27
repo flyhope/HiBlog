@@ -152,10 +152,11 @@ class Publish extends Abs {
     static public function home(array $articles, \Comm\Pager $pager, array $blog = null, $publish = true) {
         $blog || Blog::show();
         $smarty = \Comm\Smarty::init();
+        
         $tpl_vars = array(
             'blog'     => $blog,
             'articles' => $articles,
-            'total'    => $pager->total,
+            'pager'    => $pager,
         );
         
         if($publish) {

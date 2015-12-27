@@ -181,7 +181,7 @@ class Article extends Abs {
         }
         
         $db->order('id', SORT_DESC)->limit($offset, $limit);
-        $result = $db->fetchAll('id,category_id,title,state,create_time,publish_time');
+        $result = $db->fetchAll();
         
         return self::_formatResult($result);
     }

@@ -98,20 +98,49 @@ class Pager {
      * @return string
      */
     public function showBaseHref() {
-        $result = $_GET;
-        if(isset($result['last_page'])) {
-            unset($result['last_page']);
+        static $response = null;
+        if($response === null) {
+            $result = $_GET;
+            if(isset($result['last_page'])) {
+                unset($result['last_page']);
+            }
+            if(isset($result['next_since_id'])) {
+                unset($result['next_since_id']);
+            }
+            if(isset($result['prev_since_id'])) {
+                unset($result['prev_since_id']);
+            }
+            if(isset($result['p'])) {
+                unset($result['p']);
+            }
+            $response = '?' . http_build_query($result);
         }
-        if(isset($result['next_since_id'])) {
-            unset($result['next_since_id']);
-        }
-        if(isset($result['prev_since_id'])) {
-            unset($result['prev_since_id']);
-        }
-        if(isset($result['p'])) {
-            unset($result['p']);
-        }
-        return '?' . http_build_query($result);
+        
+        return $response;
     }
+    
+    /**
+     * 获取链接
+     * 
+     * @param int $page 第几页
+     * 
+     * @return string
+     */
+    public function showHref($page) {
+        $page = (int)$page;
+        $base_href = $this->showBaseHref();
+        $this->showBaseHref() !== '?' && $base_href .= '&';
+        $base_href .= "p={$page}";
+        return $base_href;
+    }
+    
+    public function isShowFirst() {
+        
+    }
+    
+    public function isShowEnd() {
+        
+    }
+    
     
 }

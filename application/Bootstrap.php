@@ -60,4 +60,13 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
             $dispatcher->registerPlugin(new \IisPlugin());
         }
     }
+    
+    /**
+     * 初始化环境
+     * 
+     * @param Yaf_Dispatcher $dispatcher
+     */
+    public function _initEnv(Yaf_Dispatcher $dispatcher) {
+        mb_internal_encoding('UTF-8');
+    }
 }
