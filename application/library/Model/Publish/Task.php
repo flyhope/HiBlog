@@ -170,9 +170,7 @@ class Task extends \Model\Abs {
      * @return \mixed true执行完成，array需要继续执行
      */
     static protected function _executeCategoryArticleList(array $task) {
-        $blog = \Model\Blog::show($task['uid']);
-        $limit = isset($blog['data']['page_count']) ? $blog['data']['page_count'] : 50;
-     
+
         $category_id = $task['connection_id'];
         $metadata = $task['metadata'];
         $since_id = empty($metadata['since_id']) ? PHP_INT_MAX : $metadata['since_id'];
@@ -184,19 +182,18 @@ class Task extends \Model\Abs {
             return true;
         }
         
+        //处理分页
+        $blog = \Model\Blog::show();
+        $limit = isset($blog['data']['page_count']) ? $blog['data']['page_count'] : 50;
+        $total = \Model\Counter\Article::get($category_id);
+        $pager = new \Comm\Pager($total, $limit, $p);
+        
+        $category = \Model\Category::show($category_id);
         $articles = \Model\Article::showByCategorySince($category_id, $since_id, $limit);
         if($articles) {
-       
-            //渲染模板，发布至GITHUB
-            $smarty = \Comm\Smarty::init();
-            $content = $smarty->render('tpl:article', array(
-                'blog'     => $blog,
-                'articles' => $articles,
-            ));
+            //发布内容
+            \Model\Publish::categoryArticleList($category, $articles, $pager, $blog);
             
-            $message = sprintf('update category %u(%u) [%s]', $category_id, $p, date('Y-m-d H:i:s'));
-            \Model\Publish::publishUserRespos("category/{$category_id}-{$p}.html", $content, $message);
-
             //更新元数据
             $end = end($articles);
             $metadata['since_id'] = $end['id'];
@@ -222,7 +219,7 @@ class Task extends \Model\Abs {
         
         $metadata = $task['metadata'];
         $p = empty($metadata['p']) ? 1 : $metadata['p'];
-        ++$p;
+        
         
         //超过了最大发布页数
         if($p > self::PUBLISH_PAGE_MAX) {
@@ -233,13 +230,13 @@ class Task extends \Model\Abs {
         $total = \Model\Counter\Article::get(0);
         $pager = new \Comm\Pager($total, $limit, $p);
         $articles = \Model\Article::showUserList($pager);
-            
+        
         if(!empty($articles['result'])) {
             //渲染模板，发布至GITHUB
-            \Model\Publish::home($articles, $blog, $pager);
+            \Model\Publish::home($articles, $pager, $blog);
         
             //更新元数据
-            $metadata['p'] = $p;
+            $metadata['p'] = ++$p;
             $result = array('metadata' => $metadata);
         } else {
             $result = true;

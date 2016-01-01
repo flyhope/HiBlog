@@ -157,6 +157,7 @@ class Publish extends Abs {
             'blog'     => $blog,
             'articles' => $articles,
             'pager'    => $pager,
+            'publish'  => $publish,
         );
         
         if($publish) {
@@ -173,6 +174,40 @@ class Publish extends Abs {
         }
         
         return $result;
+    }
+    
+    /**
+     * 发布一个分类下的文章列表
+     * 
+     * @param array       $category 分类信息
+     * @param array       $articles 文章列表
+     * @param \Comm\Pager $pager    分页
+     * @param array       $blog     博客数据（可选）
+     * @param boolean     $publish   是否正式发布，如果为否则仅是预览
+     * 
+     * @return mixed
+     */
+    static public function categoryArticleList(array $category, array $articles, \Comm\Pager $pager, array $blog = null, $publish = true) {
+        $blog || $blog = \Model\Blog::show();
+        
+        //渲染模板，发布或预览 
+        $smarty = \Comm\Smarty::init();
+        $tpl_vars = array(
+            'blog'     => $blog,
+            'articles' => $articles,
+            'pager'    => $pager,
+            'publish'  => $publish,
+        );
+        if($publish) {
+            $content = $smarty->render('tpl:article', $tpl_vars);
+            
+            $message = sprintf('update category %u(%u) [%s]', $category['id'], $pager->page, date('Y-m-d H:i:s'));
+            $reslt = self::publishUserRespos("category/{$category['id']}-{$pager->page}.html", $content, $message);
+        } else {
+            $result = $smarty->display('tpl:article', $tpl_vars);
+        }
+
+        return $reslt;
     }
     
     /**
