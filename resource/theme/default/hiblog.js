@@ -34,9 +34,9 @@ $(function() {
 				var params = {"short_name" : duoshuoQuery.short_name, "threads" :  thread_ids.join(",")};
 				$.getJSON("https://api.duoshuo.com/threads/counts.jsonp?short_name=lcx165&threads=1,2&callback=a", function (o) {
 					if(o && o.response) {
-						$.each(o.response, function(k, v)) {
+						$.each(o.response, function(k, v) {
 							$node_comment.find("[thread-id=" + v.thread_key +"]").html(v.comments);
-						}
+						});
 					}
 				});
 			}
