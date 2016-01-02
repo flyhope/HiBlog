@@ -28,14 +28,14 @@ $(function() {
 			var thread_ids = new Array();
 			var $node_comment = $("[node-type=comment-number]");
 			$node_comment.each(function() {
-				thread_ids.push($(this).attr("thread-id"));
+				thread_ids.push($(this).parents("article:first").data("id"));
 			});
 			if(thread_ids.length > 0) {
 				var params = {"short_name" : duoshuoQuery.short_name, "threads" :  thread_ids.join(",")};
 				$.getJSON("//api.duoshuo.com/threads/counts.jsonp?callback=?", function (o) {
 					if(o && o.response) {
 						$.each(o.response, function(k, v) {
-							$node_comment.find("[thread-id=" + v.thread_key +"]").html(v.comments);
+							$("article[data-id="+ v.thread_key +"] [node-type=comment-number]").html(v.comments);
 						});
 					}
 				});
