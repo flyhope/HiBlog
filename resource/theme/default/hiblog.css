@@ -89,6 +89,10 @@ a:hover, .pagination li a:hover {
 .panel-article .comment, .panel-article .time {
 	display:inline-block;
 	float:right;
+	margin-left:20px;
+}
+.panel-article .panel-footer .glyphicon {
+	font-size:13px;
 }
 
 
