@@ -35,7 +35,7 @@ $(function() {
 				$.getJSON("//api.duoshuo.com/threads/counts.jsonp?callback=?", params, function (o) {
 					if(o && o.response) {
 						$.each(o.response, function(k, v) {
-							$("article[data-id="+ v.thread_key +"] [node-type=comment-number]").html(v.comments);
+							$("article[data-id="+ v.thread_key +"] [node-type=comment-number]").append(v.comments);
 						});
 					}
 				});
