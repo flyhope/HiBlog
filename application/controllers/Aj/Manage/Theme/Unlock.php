@@ -11,7 +11,7 @@ class Aj_Manage_Theme_UnlockController extends Aj_AbsController {
 	public function indexAction() {
 		$id = Comm\Arg::post('id', FILTER_VALIDATE_INT);
 		$result = Model\Theme\Resource::unlock($id);
-		Comm\Response::json(100000, 'succ', ['result' => $result], true);
+		Comm\Response::json(100000, 'succ', null, false);
 	}
 
 }

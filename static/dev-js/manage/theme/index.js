@@ -18,12 +18,15 @@ $(function() {
 		//删除主题
 		var $theme_node = $(this).parents("[node-type=theme-node]");
 		var theme_id = $theme_node.data("theme-id");
-		var href = $CONFIG + "aj/manage/theme/destroy";
-		$.post(href, {"id" : theme_id}, function (o) {
-			$.ajaxCallback(o, function() {
-				$theme_node.fadeOut();
+		var href = $CONFIG.path + "aj/manage/theme/destroy";
+		
+		if($.confirm("确定要删除吗?", "确认", function() {
+			$.post(href, {"id" : theme_id}, function (o) {
+				$.ajaxCallback(o, function() {
+					$theme_node.fadeOut();
+				});
 			});
-		});
+		}));
 	}).delegate("[action-type=use]", "click", function() {
 		//使用主题
 		var href = $CONFIG.path + "aj/manage/theme/use";
