@@ -31,7 +31,7 @@ a:hover, .pagination li a:hover {
 }
 
 /* 分页 */
-.pager {
+.pagination-nav {
 	text-align:center;
 }
 
