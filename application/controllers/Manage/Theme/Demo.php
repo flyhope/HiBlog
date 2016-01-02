@@ -30,6 +30,7 @@ class Manage_Theme_DemoController extends AbsController {
                 $article = reset($articles['result']);
                 $category = Model\Category::show($article['category_id']);
                 $articles = Model\Article::showUserList($pager, false, $category['id']);
+                $articles = isset($articles['result']) ? $articles['result'] : array();
                 Model\Publish::categoryArticleList($category, $articles, $pager, null, false);
                 break;
             

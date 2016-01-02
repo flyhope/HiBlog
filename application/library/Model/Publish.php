@@ -150,12 +150,12 @@ class Publish extends Abs {
      * @return mixed
      */
     static public function home(array $articles, \Comm\Pager $pager, array $blog = null, $publish = true) {
-        $blog || Blog::show();
+        $blog || $blog = Blog::show();
         $smarty = \Comm\Smarty::init();
         
         $tpl_vars = array(
             'blog'     => $blog,
-            'articles' => $articles,
+            'articles' => isset($articles['result']) ? $articles['result'] : array(),
             'pager'    => $pager,
             'publish'  => $publish,
         );
@@ -203,7 +203,7 @@ class Publish extends Abs {
             $content = $smarty->render('tpl:article-list', $tpl_vars);
             
             $message = sprintf('update category %u(%u) [%s]', $category['id'], $pager->page, date('Y-m-d H:i:s'));
-            $result = self::publishUserRespos("category/{$category['id']}-{$pager->page}.html", $content, $message);
+            $result = self::publishUserRespos("category/{$category['alias']}-{$pager->page}.html", $content, $message);
         } else {
             $result = $smarty->display('tpl:article-list', $tpl_vars);
         }

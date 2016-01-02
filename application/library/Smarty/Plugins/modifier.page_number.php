@@ -14,7 +14,7 @@ function smarty_modifier_page_number($pager) {
         return '';
     }
     
-    $result = '<nav class="pager">';
+    $result = '<nav class="pagination-nav">';
     $result .= '<ul class="pagination">';
     
     //确定起始页页码

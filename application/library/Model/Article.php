@@ -175,6 +175,8 @@ class Article extends Abs {
         
         $db->order('id', SORT_DESC)->limit($offset, $limit);
         $result = $db->fetchAll();
+        $result = self::appendCategory($result);
+        
         
         return self::_formatResult($result);
     }
@@ -204,22 +206,26 @@ class Article extends Abs {
 //         return self::_formatResult($result);
 //     }
     
-//     /**
-//      * 通过Since_id下翻页获取某一分类的数据
-//      * 
-//      * @param int $category_id
-//      * @param int $since_id
-//      * @param int $limit
-//      * 
-//      * @return \array
-//      */
-//     static public function showByCategorySince($category_id, $since_id, $limit) {
-//         $limit = (int)$limit;
-//         $db = self::db()->wAnd(['category_id' => $category_id]);
-//         $db->wAnd(['id' => $since_id], '<');
-//         $result = $db->order('id', SORT_DESC)->limit($limit)->fetchAll();
-//         return $result;
-//     }
+    /**
+     * 通过Since_id下翻页获取某一分类的数据
+     * 
+     * @param int $category_id
+     * @param int $since_id
+     * @param int $limit
+     * @param int $uid
+     * 
+     * @return \array
+     */
+    static public function showByCategorySince($category_id, $since_id, $limit, $uid = false) {
+        $limit = (int)$limit;
+        $uid || $uid = \Yaf_Registry::get('current_uid');
+        
+        $db = self::db()->wAnd(['category_id' => $category_id]);
+        $db->wAnd(['id' => $since_id], '<')->wAnd(['uid' => $uid]);
+        $result = $db->order('id', SORT_DESC)->limit($limit)->fetchAll();
+        $result = self::appendCategory($result);
+        return $result;
+    }
     
     /**
      * 获取状态别名
@@ -235,6 +241,26 @@ class Article extends Abs {
             $result = '';
         }
         return $result;
+    }
+    
+    /**
+     * 文章列表追加分类信息
+     * 
+     * @param array $articles
+     * 
+     * @return array
+     */
+    static public function appendCategory(array $articles) {
+        $categorys = Category::showUserAll();
+        $categorys = \Comm\Arr::hashmap($categorys, 'id');
+        foreach($articles as $key => $article) {
+            if(isset($categorys[$article['category_id']])) {
+                $articles[$key]['category'] = $categorys[$article['category_id']];
+            } else {
+                $articles[$key]['category'] = array();
+            }
+        }
+        return $articles;
     }
     
     /**
