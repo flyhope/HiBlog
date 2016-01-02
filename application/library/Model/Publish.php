@@ -153,6 +153,21 @@ class Publish extends Abs {
         $blog || $blog = Blog::show();
         $smarty = \Comm\Smarty::init();
         
+        //设置分页回调
+        $pager->link_callback = function($page) use ($publish) {
+            if($page <= 1) {
+                $result = '/';
+            } else {
+                $result = "/index/{$page}.html";
+            }
+            
+            if(!$publish) {
+                $result = '#' . $result;
+            }
+            
+            return $result;
+        };
+        
         $tpl_vars = array(
             'blog'     => $blog,
             'articles' => isset($articles['result']) ? $articles['result'] : array(),
@@ -189,6 +204,18 @@ class Publish extends Abs {
      */
     static public function categoryArticleList(array $category, array $articles, \Comm\Pager $pager, array $blog = null, $publish = true) {
         $blog || $blog = \Model\Blog::show();
+        
+        
+        //设置分页回调
+        $pager->link_callback = function($page) use ($category, $publish) {
+            $result = "/category/{$category['alias']}-{$page}.html";
+        
+            if(!$publish) {
+                $result = '#' . $result;
+            }
+        
+            return $result;
+        };
         
         //渲染模板，发布或预览 
         $smarty = \Comm\Smarty::init();

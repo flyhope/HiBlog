@@ -59,6 +59,13 @@ class Pager {
     public $page_total = 1;
     
     /**
+     * 链接回调
+     * 
+     * @var closure
+     */
+    public $link_callback = null;
+    
+    /**
      * 构造方法
      * 
      * @param int $total         总数
@@ -127,20 +134,15 @@ class Pager {
      * @return string
      */
     public function showHref($page) {
-        $page = (int)$page;
-        $base_href = $this->showBaseHref();
-        $this->showBaseHref() !== '?' && $base_href .= '&';
-        $base_href .= "p={$page}";
-        return $base_href;
+        if(is_callable($this->link_callback)) {
+            $result = call_user_func($this->link_callback, $page);
+        } else {
+            $page = (int)$page;
+            $base_href = $this->showBaseHref();
+            $this->showBaseHref() !== '?' && $base_href .= '&';
+            $result .= "p={$page}";
+        }
+
+        return $result;
     }
-    
-    public function isShowFirst() {
-        
-    }
-    
-    public function isShowEnd() {
-        
-    }
-    
-    
 }
