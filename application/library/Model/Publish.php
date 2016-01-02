@@ -104,7 +104,7 @@ class Publish extends Abs {
      * 
      * @return \stdClass
      */
-    static public function sidebar($use_master = false, $publish = false) {
+    static public function sidebar($use_master = false, $publish = true) {
         $user = User::show();
         $blog = Blog::show();
         $categorys = Category::showUserAll(false, true, true);
@@ -194,20 +194,21 @@ class Publish extends Abs {
         $smarty = \Comm\Smarty::init();
         $tpl_vars = array(
             'blog'     => $blog,
+            'category' => $category,
             'articles' => $articles,
             'pager'    => $pager,
             'publish'  => $publish,
         );
         if($publish) {
-            $content = $smarty->render('tpl:article', $tpl_vars);
+            $content = $smarty->render('tpl:article-list', $tpl_vars);
             
             $message = sprintf('update category %u(%u) [%s]', $category['id'], $pager->page, date('Y-m-d H:i:s'));
-            $reslt = self::publishUserRespos("category/{$category['id']}-{$pager->page}.html", $content, $message);
+            $result = self::publishUserRespos("category/{$category['id']}-{$pager->page}.html", $content, $message);
         } else {
-            $result = $smarty->display('tpl:article', $tpl_vars);
+            $result = $smarty->display('tpl:article-list', $tpl_vars);
         }
 
-        return $reslt;
+        return $result;
     }
     
     /**

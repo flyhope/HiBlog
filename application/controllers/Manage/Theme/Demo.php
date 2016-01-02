@@ -19,8 +19,18 @@ class Manage_Theme_DemoController extends AbsController {
                 $articles = Model\Article::showUserList($pager);
                 Model\Publish::home($articles, $pager, null, false);
                 break;
-                
+            
+            //预览分类下的文章列表
             case 'article-list' :
+                $pager = new Comm\Pager(1000, 20, 1);
+                $articles = Model\Article::showUserList(new Comm\Pager(1, 1, 1));
+                if(!$articles) {
+                    throw new Exception\Msg(_('至少发表一篇文章才可预览'));
+                }
+                $article = reset($articles['result']);
+                $category = Model\Category::show($article['category_id']);
+                $articles = Model\Article::showUserList($pager, false, $category['id']);
+                Model\Publish::categoryArticleList($category, $articles, $pager, null, false);
                 break;
             
             //预览文章
@@ -28,8 +38,6 @@ class Manage_Theme_DemoController extends AbsController {
                 $articles = Model\Article::showUserList(new Comm\Pager(1, 1, 1));
                 $article = reset($articles['result']);
                 Model\Publish::article($article, false);
-                break;
-            case 'home' :
                 break;
                 
             //预览导航

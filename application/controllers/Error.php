@@ -20,6 +20,7 @@ class ErrorController extends AbsController {
      * @return boolean
      */
     public function errorAction(Exception $exception) {
+        
         //判断当前请求是否是AJAX
         $request = Yaf_Dispatcher::getInstance()->getRequest();
         $is_ajsx = $request->isXmlHttpRequest();
@@ -94,7 +95,7 @@ class ErrorController extends AbsController {
             $result['_debug']['message'] = $exception->getMessage();
             $result['_debug']['file'] = $exception->getFile();
             $result['_debug']['line'] = $exception->getLine();
-            $result['_debug']['trace'] = $exception->getTrace();
+            $result['_debug']['trace'] = $exception->getTraceAsString();
             if (method_exists($exception, 'getMetadata')) {
                 $result['_debug']['metadata'] = $exception->getMetadata();
             }

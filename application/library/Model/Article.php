@@ -129,10 +129,11 @@ class Article extends Abs {
      * 
      * @param \Comm\Pager $pager        分页对对象
      * @param int         $uid          当前用户UID
+     * @param mixed       $category_id  分类ID
      * 
      * @return \array
      */
-    static public function showUserList(\Comm\Pager $pager, $uid = false) {
+    static public function showUserList(\Comm\Pager $pager, $uid = false, $category_id = false) {
         $last_page = $pager->last_page;
         /**
          * 本期不考虑since_id翻页
@@ -141,22 +142,9 @@ class Article extends Abs {
         $prev_since_id = 0;
         $page = $pager->page;
         $limit = $pager->count;
-        if(!$last_page || !$next_since_id || !$prev_since_id || $page == 1) {
-            //没有偏移翻页参数，或者前往第一页直接按PAGE、COUNT取
-            $offset = ($page - 1) * $limit;
-            $result = self::showUserListNext($offset, $limit, false, $uid);
-        } elseif($page == $last_page) {
-            //刷新当页
-            $result = self::showUserListNext(0, $limit, $prev_since_id, $uid);
-        } elseif($page < $last_page) {
-            //前翻
-            $offset = ($last_page - $page - 1) * $limit;
-            $result = self::showUserListPrev($offset, $limit, $prev_since_id, $uid);
-        } else {
-            //后翻
-            $offset = ($page - $last_page - 1) * $limit;
-            $result = self::showUserListNext($offset, $limit, $next_since_id, $uid);
-        }
+        
+        $offset = ($page - 1) * $limit;
+        $result = self::showUserListNext($offset, $limit, false, $uid, $category_id);
         
 
         return $result;        
@@ -165,19 +153,24 @@ class Article extends Abs {
     /**
      * 获取用户发表的文章（下翻）
      * 
-     * @param int $offset   从第几条开始获取数据
-     * @param int $limit    获取多少条数据
-     * @param int $since_id 上一页最后一条数据
-     * @param int $uid      UID
+     * @param int   $offset      从第几条开始获取数据
+     * @param int   $limit       获取多少条数据
+     * @param int   $since_id    上一页最后一条数据
+     * @param int   $uid         UID
+     * @param mixed $category_id 分类ID
      * 
      * @return \array
      */
-    static public function showUserListNext($offset, $limit, $since_id = false, $uid = false) {
+    static public function showUserListNext($offset, $limit, $since_id = false, $uid = false, $category_id = false) {
         !$uid && $uid = \Yaf_Registry::get('current_uid');
         $db = self::db();
         $db->wAnd(array('uid' => $uid));
         if($since_id) {
-            $db->wAnd(['since_id' => $since_id], '<');
+            $db->wAnd(['id' => $since_id], '<');
+        }
+        
+        if(ctype_digit($category_id)) {
+            $db->wAnd(['category_id' => $category_id]);
         }
         
         $db->order('id', SORT_DESC)->limit($offset, $limit);
@@ -186,47 +179,47 @@ class Article extends Abs {
         return self::_formatResult($result);
     }
     
-    /**
-     * 获取用户发表的文章（上翻）
-     *
-     * @param int $offset   从第几条开始获取数据
-     * @param int $limit    获取多少条数据
-     * @param int $since_id 上一页第一条数据
-     * @param int $uid      UID
-     *
-     * @return array
-     */
-    static public function showUserListPrev($offset, $limit, $since_id = false, $uid = false) {
-        !$uid && $uid = \Yaf_Registry::get('current_uid');
-        $db = self::db();
-        $db->wAnd(array('uid' => $uid));
-        if($since_id) {
-            $db->wAnd(['since_id' => $since_id], '>');
-        }
+//     /**
+//      * 获取用户发表的文章（上翻）
+//      *
+//      * @param int $offset   从第几条开始获取数据
+//      * @param int $limit    获取多少条数据
+//      * @param int $since_id 上一页第一条数据
+//      * @param int $uid      UID
+//      *
+//      * @return array
+//      */
+//     static public function showUserListPrev($offset, $limit, $since_id = false, $uid = false) {
+//         !$uid && $uid = \Yaf_Registry::get('current_uid');
+//         $db = self::db();
+//         $db->wAnd(array('uid' => $uid));
+//         if($since_id) {
+//             $db->wAnd(['since_id' => $since_id], '>');
+//         }
         
-        $db->order('id', SORT_ASC)->limit($offset, $limit);
-        $result = $db->fetchAll();
-        \Comm\Arr::sortByCol($result, 'id', SORT_DESC);
+//         $db->order('id', SORT_ASC)->limit($offset, $limit);
+//         $result = $db->fetchAll();
+//         \Comm\Arr::sortByCol($result, 'id', SORT_DESC);
         
-        return self::_formatResult($result);
-    }
+//         return self::_formatResult($result);
+//     }
     
-    /**
-     * 通过Since_id下翻页获取某一分类的数据
-     * 
-     * @param int $category_id
-     * @param int $since_id
-     * @param int $limit
-     * 
-     * @return \array
-     */
-    static public function showByCategorySince($category_id, $since_id, $limit) {
-        $limit = (int)$limit;
-        $db = self::db()->wAnd(['category_id' => $category_id]);
-        $db->wAnd(['id' => $since_id], '<');
-        $result = $db->order('id', SORT_DESC)->limit($limit)->fetchAll();
-        return $result;
-    }
+//     /**
+//      * 通过Since_id下翻页获取某一分类的数据
+//      * 
+//      * @param int $category_id
+//      * @param int $since_id
+//      * @param int $limit
+//      * 
+//      * @return \array
+//      */
+//     static public function showByCategorySince($category_id, $since_id, $limit) {
+//         $limit = (int)$limit;
+//         $db = self::db()->wAnd(['category_id' => $category_id]);
+//         $db->wAnd(['id' => $since_id], '<');
+//         $result = $db->order('id', SORT_DESC)->limit($limit)->fetchAll();
+//         return $result;
+//     }
     
     /**
      * 获取状态别名
