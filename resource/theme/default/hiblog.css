@@ -82,20 +82,17 @@ a:hover, .pagination li a:hover {
 	border:1px solid #ddd;
 }
 
-/* 索引文章、评论 */
-.panel-index-article, .comment-content {
+/* 索引文章 */
+.panel-article, .comment-content {
 	border-radius:0;
 }
-
-.panel-index-article .comment {
+.panel-article .comment, .panel-article .time {
 	display:inline-block;
 	float:right;
 }
 
-/* 评论 */
-.comment-content {
 
-}
+
 
 /* 第三方样式 */
 .syntaxhighlighter td.code .container::before, .syntaxhighlighter td.code .container::after {display: none;}
