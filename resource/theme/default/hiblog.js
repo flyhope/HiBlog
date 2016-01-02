@@ -32,7 +32,7 @@ $(function() {
 			});
 			if(thread_ids.length > 0) {
 				var params = {"short_name" : duoshuoQuery.short_name, "threads" :  thread_ids.join(",")};
-				$.getJSON("//api.duoshuo.com/threads/counts.jsonp?callback=?", function (o) {
+				$.getJSON("//api.duoshuo.com/threads/counts.jsonp?callback=?", params, function (o) {
 					if(o && o.response) {
 						$.each(o.response, function(k, v) {
 							$("article[data-id="+ v.thread_key +"] [node-type=comment-number]").html(v.comments);
