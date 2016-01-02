@@ -20,6 +20,30 @@ $(function() {
 	}
 	$("#sidebar").load(src_sidebar, resizeSides);
 	
+	//加载多说评论组件
+	if(duoshuoQuery && duoshuoQuery.short_name) {
+		$.getScript("//static.duoshuo.com/embed.js", function() {
+			
+			//读取评论数据
+			var thread_ids = new Array();
+			var $node_comment = $("[node-type=comment-number]");
+			$node_comment.each(function() {
+				thread_ids.push($(this).attr("thread-id"));
+			});
+			if(thread_ids.length > 0) {
+				var params = {"short_name" : duoshuoQuery.short_name, "threads" :  thread_ids.join(",")};
+				$.getJSON("https://api.duoshuo.com/threads/counts.jsonp?short_name=lcx165&threads=1,2&callback=a", function (o) {
+					if(o && o.response) {
+						$.each(o.response, function(k, v)) {
+							$node_comment.find("[thread-id=" + v.thread_key +"]").html(v.comments);
+						}
+					}
+				});
+			}
+		});
+		
+	}
+	
 	//加载高亮组件
 	if($("pre[class*=brush]").size()) {
 		//替换加载器路径占位
