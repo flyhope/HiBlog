@@ -22,26 +22,7 @@ $(function() {
 	
 	//加载多说评论组件
 	if(duoshuoQuery && duoshuoQuery.short_name) {
-		$.getScript("//static.duoshuo.com/embed.js", function() {
-			
-			//读取评论数据
-			var thread_ids = new Array();
-			var $node_comment = $("[node-type=comment-number]");
-			$node_comment.each(function() {
-				thread_ids.push($(this).parents("article:first").data("id"));
-			});
-			if(thread_ids.length > 0) {
-				var params = {"short_name" : duoshuoQuery.short_name, "threads" :  thread_ids.join(",")};
-				$.getJSON("//api.duoshuo.com/threads/counts.jsonp?callback=?", params, function (o) {
-					if(o && o.response) {
-						$.each(o.response, function(k, v) {
-							$("article[data-id="+ v.thread_key +"] [node-type=comment-number]").append(v.comments);
-						});
-					}
-				});
-			}
-		});
-		
+		$.getScript("//static.duoshuo.com/embed.js");
 	}
 	
 	//加载高亮组件
