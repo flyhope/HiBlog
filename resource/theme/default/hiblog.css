@@ -86,10 +86,13 @@ a:hover, .pagination li a:hover {
 .panel-article, .comment-content {
 	border-radius:0;
 }
-.panel-article .comment, .panel-article .time {
+.panel-article-list .comment, .panel-article-list .time {
 	display:inline-block;
 	float:right;
 	margin-left:20px;
+}
+.panel-article .panel-footer {
+	min-height:43px;
 }
 .panel-article .panel-footer .glyphicon {
 	font-size:13px;
