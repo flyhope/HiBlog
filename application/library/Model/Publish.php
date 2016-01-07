@@ -54,6 +54,20 @@ class Publish extends Abs {
     }
     
     /**
+     * 删除一篇文章
+     * 
+     * @param int $id
+     * 
+     * @return \stdClass
+     */
+    static public function articleDestroy($id) {
+        $path = sprintf('article/%u.html', $id);
+        $message = sprintf('delete article %u [%s]', $id, date('Y-m-d H:i:s'));
+        
+        return self::destroyUserRespos($path, $message);
+    }
+    
+    /**
      * 发布域名，并更新数据库
      * 
      * @param string $domain
@@ -256,6 +270,22 @@ class Publish extends Abs {
         return $respositories->replace($login, $repo, $path, $content, $message);
     }
     
+    /**
+     * 直接向当前用户的博客源删除一个数据
+     * 
+     * @param sting $path    路径
+     * @param sting $message 注释
+     * 
+     * @return \stdClass
+     */
+    static public function destroyUserRespos($path, $message) {
+        $user = User::show();
+        $login = $user['metadata']['login'];
+        $repo = Github::showDefaultBlogRepoName($user['metadata']['login']);
+        
+        $respositories = new \Api\Github\Respositories();
+        return $respositories->delete($login, $repo, $path, $message);
+    }
 
 
 }

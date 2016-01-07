@@ -54,6 +54,16 @@ class Single {
         $url !== null && $this->setUrl($url);
         $post_data !== null && $this->setPostData($post_data);
     }
+    
+    /**
+     * 析构方法
+     * 
+     * @return void
+     */
+    public function __destruct() {
+        //关闭CURL句柄
+        curl_close($this->_ch);
+    }
 
     /**
      * 设置请求的URL
@@ -231,9 +241,17 @@ class Single {
             $result = $response;
         }
         unset($response);
-        
-        //关闭CURL句柄
-        curl_close($this->_ch);
+
         return $result;
     }
+    
+    /**
+     * 获取信息
+     * 
+     * @return mixed
+     */
+    public function showInfo() {
+        return curl_getinfo($this->_ch);
+    }
+    
 }

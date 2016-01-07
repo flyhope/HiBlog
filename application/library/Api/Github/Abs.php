@@ -63,7 +63,12 @@ abstract class Abs extends \Api\Abs {
     protected function _process($result, \Comm\Request\Single $request) {
         $result = json_decode($result);
         if(!empty($result->message)) {
-            throw new \Exception\Api($result->message);
+            $request_info = $request->showInfo();
+            $code = isset($request_info['http_code']) ? $request_info['http_code'] : 0;
+            
+            $e = new \Exception\Api($result->message, $code);
+            $e->http_code = $code;
+            throw $e;
         }
         return $result;
     }

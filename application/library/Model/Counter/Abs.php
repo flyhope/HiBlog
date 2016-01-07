@@ -64,13 +64,14 @@ abstract class Abs extends \Model\Abs {
         
         $sql_params = $key;
         $sql_params['offset'] = $offset;
-        $sql = "INSERT INTO {$table} SET total_number = 0, ";
-        foreach(static::$_field_keys as $field) {
-            $sql .= "{$field} = 0,";
-        }
-        $sql = rtrim($sql, ',');
-        $sql .= " ON DUPLICATE KEY UPDATE SET {$field_value} = {$field_value} - :offset";
+        $sql = "UPDATE {$table} SET {$field_value} = {$field_value} - :offset WHERE ";
         
+        $where = array();
+        foreach(static::$_field_keys as $field) {
+            $where[] = "{$field} = :{$field}";
+        }
+        $sql .= implode(' AND ', $where);
+
         $mysql = new \Comm\Db\Mysql();
         return $mysql->exec($sql, $sql_params);
     }

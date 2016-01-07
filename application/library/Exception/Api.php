@@ -9,4 +9,11 @@
 namespace Exception;
 class Api extends Abs {
     
+    /**
+     * HTTP代码
+     * 
+     * @var int
+     */
+    public $http_code = 0;
+    
 } 

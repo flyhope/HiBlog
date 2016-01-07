@@ -119,6 +119,34 @@ class Respositories extends Abs {
     }
     
     /**
+     * 删除一个文件内容（存在更新，不存在创建）
+     *
+     * @param string $owner     所有者
+     * @param string $repo      资源库
+     * @param string $path      路径
+     * @param string $message   注释
+     *
+     * @return \stdClass
+     */
+    public function delete($owner, $repo, $path, $message) {
+        $sha = '';
+        try {
+            $content_data = self::getContent($owner, $repo, $path);
+            empty($content_data->sha) || $sha = $content_data->sha;
+        } catch(\Exception $e) {
+        
+        }
+        
+        $url = sprintf('repos/%s/%s/contents/%s', $owner, $repo, $path);
+        $param = array(
+            'path'      => $path,
+            'message'   => $message,
+            'sha'       => $sha,
+        );
+        return $this->_post($url, $param, 'DELETE');
+    }
+    
+    /**
      * 初始化对象
      *
      * @return \Api\Github\Respositories

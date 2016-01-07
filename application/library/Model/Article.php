@@ -71,7 +71,7 @@ class Article extends Abs {
         $db->insert($data);
         $id = $db->lastId();
         if(!$id) {
-            throw new \Exception\Msg('文章发表失败');
+            throw new \Exception\Msg(_('文章发表失败'));
         }
         
         //计数器+1
@@ -83,6 +83,41 @@ class Article extends Abs {
         Publish::article($data);
         
         return $id;
+    }
+    
+    /**
+     * 删除一篇文章
+     * 
+     * @param int $id
+     * 
+     * @throws \Exception\Msg
+     * 
+     * @return int
+     */
+    static public function destory($id) {
+        $data = self::show($id);
+        if(empty($data)) {
+            throw new \Exception\Msg(_('文章不存在'));
+        }
+        User::validateAuth($data['uid']);
+        
+        //发布至Github中
+        try {
+            $publish_result = Publish::articleDestroy($id);
+        } catch(\Exception\Api $e) {
+            if($e->getCode() != 404) {
+                throw $e;
+            }
+        }
+        
+        $result = parent::destory($id);
+        if($result) {
+            //计数器-1
+            Counter\Article::decr($data['category_id']);
+            Counter\Article::decr(0);
+        }
+        
+        return $result;
     }
 
     /**
