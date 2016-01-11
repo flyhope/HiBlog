@@ -32,9 +32,9 @@
 				<td class="text-center"><?= $value['create_time'] ?></td>
 				<td class="text-center"><a target="_blank" href="<?= $blog_url ?>/article/<?= $value['id'] ?>.html"><?= $value['publish_time'] ?></a></td>
 				<td class="text-center">
-					<a href="javascript:void(0);" action-type="publish" class="btn btn-xs btn-default" role="button">发布</a>
-				    <a href="javascript:alert('开发中');" class="btn btn-xs btn-default" role="button">编辑</a>
-				    <a href="javascript:void(0);" action-type="delete" class="btn btn-xs btn-danger" role="button">删除</a>
+					<a href="javascript:void(0);" action-type="publish" class="btn btn-xs btn-default" role="button"><?= _('发布') ?></a>
+				    <a href="<?= $this->path("manage/article/edit?id={$value['id']}") ?>" class="btn btn-xs btn-default" role="button"><?= _('编辑') ?></a>
+				    <a href="javascript:void(0);" action-type="delete" class="btn btn-xs btn-danger" role="button"><?= _('删除') ?></a>
 				</td>
 			</tr>
 			<?php endforeach; ?>

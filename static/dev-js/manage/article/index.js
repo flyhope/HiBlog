@@ -1,5 +1,4 @@
 $(function() {
-	
 	var $form_result = $("#form-manage-category-result");
 	
 	$form_result.delegate("[action-type=publish]", "click", function() {

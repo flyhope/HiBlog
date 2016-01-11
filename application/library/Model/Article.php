@@ -45,20 +45,11 @@ class Article extends Abs {
         $uid = \Yaf_Registry::get('current_uid');
         $title = trim($title);
         $content = trim($content);
-
-        //获取分类信息
-        $category = Category::show($category_id);
         
         if(!$uid) {
             throw new \Exception\Nologin();
         }
-        if(!$category || ($category['uid'] && $category['uid'] != $uid)) {
-            throw new \Exception\Msg('指定分类不存在');
-        }
-        if(!$title || !$content) {
-            throw new \Exception\Msg('标题和内容不能为空');
-        }
-        
+
         $data = array(
             'category_id' => $category_id,
             'title'       => $title,
@@ -67,6 +58,8 @@ class Article extends Abs {
             'uid'         => $uid,
             'create_time' => date('Y-m-d H:i:s'),
         );
+        self::_validate($data);
+        
         $db = self::db();
         $db->insert($data);
         $id = $db->lastId();
@@ -83,6 +76,96 @@ class Article extends Abs {
         Publish::article($data);
         
         return $id;
+    }
+    
+    /**
+     * 修改数据
+     * 
+     * @param int    $id          主键ID
+     * @param int    $category_id 分类ID
+     * @param string $title       标题
+     * @param string $content     内容
+     * 
+     * @return int
+     */
+    static public function edit($id, $category_id, $title, $content) {
+        $uid = \Yaf_Registry::get('current_uid');
+        $title = trim($title);
+        $content = trim($content);
+        
+        //验证权限
+        $article = self::show($id);
+        if(!$article) {
+            throw new \Exception\Msg(_('文章不存在'));
+        }
+        User::validateAuth($article['uid']);
+        
+        $data = array(
+            'category_id' => $category_id,
+            'title'       => $title,
+            'content'     => $content,
+            'state'       => 0,
+        );
+        self::_validate($data);
+        
+        $db = self::db();
+        $result = $db->wAnd(['id' => $id])->upadte($data, true);
+        if($result) {
+            //操作分类计数器
+            if($category_id != $article['category_id']) {
+                Counter\Article::incr($category_id);
+                Counter\Article::decr($article['category_id']);
+            }
+        }
+        
+        //发布至Github中
+        $data = array_merge($article, $data);
+        Publish::article($data);
+        
+        return $result;
+    }
+    
+    /**
+     * 更新数据
+     *
+     * @param array  $data          原始数据
+     * @param array  $new_data      新数据
+     * @param string $validate_auth 是否验证权限
+     * @throws \Exception\Msg
+     *
+     * @return \void
+     */
+    static public function update(array $data, array $new_data, $validate_auth = true) {
+        if(!$data || empty($data['uid']) || empty($data['id'])) {
+            throw new \Exception\Msg('原始数据异常');
+        }
+        $validate_auth && User::validateAuth($data['uid']);
+    
+        //不是发布更新数据，更新状态为未发布
+        if(empty($new_data['publish_time'])) {
+            $new_data['state'] = -1;
+        }
+         
+        self::db()->wAnd(['id' => $data['id']])->upadte($new_data);
+    }
+    
+    /**
+     * 验证数据的合法性
+     * 
+     * @param array $data 数据
+     * 
+     * @throws \Exception\Msg
+     */
+    static protected function _validate(array $data) {
+        //获取分类信息
+        $category = Category::show($data['category_id']);        
+        
+        if(!$category || ($category['uid'] && $category['uid'] != $uid)) {
+            throw new \Exception\Msg('指定分类不存在');
+        }
+        if(!$data['title'] || !$data['content']) {
+            throw new \Exception\Msg('标题和内容不能为空');
+        }
     }
     
     /**
@@ -120,29 +203,6 @@ class Article extends Abs {
         return $result;
     }
 
-    /**
-     * 更新数据
-     * 
-     * @param array  $data          原始数据
-     * @param array  $new_data      新数据
-     * @param string $validate_auth 是否验证权限
-     * @throws \Exception\Msg
-     * 
-     * @return \void
-     */
-    static public function update(array $data, array $new_data, $validate_auth = true) {
-        if(!$data || empty($data['uid']) || empty($data['id'])) {
-            throw new \Exception\Msg('原始数据异常');
-        }
-        $validate_auth && User::validateAuth($data['uid']);
-        
-        //不是发布更新数据，更新状态为未发布
-        if(empty($new_data['publish_time'])) {
-            $new_data['state'] = -1;
-        }
-       
-        self::db()->wAnd(['id' => $data['id']])->upadte($new_data);
-    }
 
     /**
      * 根据主键ID删除用户的一篇或者多篇文章
