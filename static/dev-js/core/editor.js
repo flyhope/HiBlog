@@ -37,7 +37,15 @@
 				        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock', "-", 'NumberedList', 'BulletedList', '-', 'Link', "Unlink"],
 				        ["Image", "Flash", "Table", "HorizontalRule", "SpecialChar", "Iframe", "pbckcode"],
 				        ["Maximize", "-" ,"Source"]
-				    ]
+				    ],
+				    
+				    "filebrowserImageBrowseUrl" : $CONFIG.path + 'editor/browser?type=images',
+					"filebrowserFlashBrowseUrl" : $CONFIG.path + 'editor/browser?type=flash',
+					"filebrowserUploadUrl" : $CONFIG.path + 'editor/upload?type=files',
+					"filebrowserImageUploadUrl" : $CONFIG.path + 'editor/upload?type=images',
+					"filebrowserFlashUploadUrl" : $CONFIG.path + 'editor/upload?type=flash',
+					"filebrowserWindowWidth" : '800',
+					"filebrowserWindowHeight" : '500'
 				} );
 			})
 
