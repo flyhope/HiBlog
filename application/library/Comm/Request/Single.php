@@ -194,8 +194,11 @@ class Single {
             $result .= " -A \"{$user_agent}\"";
         }
         if(isset($this->_option[CURLOPT_POSTFIELDS])) {
-            $post = addslashes($this->_option[CURLOPT_POSTFIELDS]);
-            $result .= " -d \"{$post}\"";
+            if(!is_array($this->_option[CURLOPT_POSTFIELDS])) {
+                $post = addslashes($this->_option[CURLOPT_POSTFIELDS]);
+                $result .= " -d \"{$post}\"";
+            }
+
         }
         if(isset($this->_headers)) {
             foreach($this->_headers as $header) {
@@ -252,6 +255,22 @@ class Single {
      */
     public function showInfo() {
         return curl_getinfo($this->_ch);
+    }
+
+    /**
+     * 加载一个文件上传
+     * 
+     * @param string $file_path 文件路径
+     * 
+     * @return mixed
+     */
+    static public function file($file_path) {
+        if(class_exists('\CURLFile', false)) {
+            $result = new \CURLFile($file_path);
+        } else {
+            $result = '@$file_path';
+        }
+        return $result;
     }
     
 }
