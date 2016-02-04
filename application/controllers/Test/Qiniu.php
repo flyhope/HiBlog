@@ -12,7 +12,7 @@ class Test_QiniuController extends \Yaf_Controller_Abstract {
 
         $source_file = ROOT_PATH . '/static/img/manage/header-bg.jpg';
         $api = new \Api\Qiniu();
-        var_dump($api->upload('flyhope', '/debug.jpg', $source_file));
+        var_dump($api->upload('flyhope', 'debug/debug.jpg', $source_file));
         return false;
     }
 

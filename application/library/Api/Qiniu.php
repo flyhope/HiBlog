@@ -27,39 +27,42 @@ class Qiniu {
     /**
      * 构造方法
      * 
+     * @param string $ak
+     * @param string $sk
+     * 
      * @return void
      */
-    public function __construct() {
-        $conf = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
-        $this->_ak = $conf->qiniu->ak;
-        $this->_sk = $conf->qiniu->sk;
+    public function __construct($ak, $sk) {
+        $this->_ak = $ak;
+        $this->_sk = $sk;
     }
     
     /**
      * 上传一个文件到七牛
      * 
-     * @param string $bucket    存储内容
-     * @param string $path      路径
-     * @param string $file_path 源文件路径
+     * @param string $bucket      存储内容
+     * @param string $path        路径
+     * @param string $source_path 源文件路径
      * 
-     * @return string
+     * @return stdClass
      */
-    public function upload($bucket, $path, $file_path) {
+    public function upload($bucket, $path, $source_path) {
         $put_policy = array(
             'scope' => "{$bucket}:{$path}",
             'deadline' => time() + 3600,
-//             'returnBody' => array(
-//                 'name' => '$(fname)',
-//             ),
         );
         $data = array(
             'token' => $this->showToken($put_policy),
-            'file'  => \Comm\Request\Single::file($file_path),
+            'file'  => \Comm\Request\Single::file($source_path),
+            'key'   => "{$path}",
         );
         
         $request = new \Comm\Request\Single('http://upload.qiniu.com');
         $request->setPostData($data, false);
         $result = $request->exec();
+        
+        $result = $result ? json_decode($result) : new \stdClass();
+        
         return $result;
     }
     

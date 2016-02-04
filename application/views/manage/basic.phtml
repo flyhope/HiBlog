@@ -59,6 +59,51 @@
 	</div>
 </div>
 
+
+<div class="panel panel-info">
+	<div class="panel-heading"><?= _('图片上传设置（七牛免费CDN）') ?></div>
+	<div class="panel-body">
+		<form id="form-manage-qiniu" action="<?= $this->path('aj/manage/basic/saveqiniu') ?>" class="form-horizontal" method="post" onsubmit="return false">
+			<div class="form-group">
+				<label class="col-sm-1 control-label" for="input-qiniu-ak"><?= _('AK'); ?></label>
+				<div class="col-sm-11">
+					<input type="text" class="form-control" id="input-qiniu-ak" name="qiniu-ak" value="<?= $basic['qiniu-ak']; ?>" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-1 control-label" for="input-qiniu-sk"><?= _('SK'); ?></label>
+				<div class="col-sm-11">
+					<input type="text" class="form-control" id="input-qiniu-sk" name="qiniu-sk" value="<?= $basic['qiniu-sk']; ?>" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-1 control-label" for="input-qiniu-domain"><?= _('七牛域名'); ?></label>
+				<div class="col-sm-11">
+					<input type="text" class="form-control" id="input-qiniu-domain" name="qiniu-domain" value="<?= $basic['qiniu-domain']; ?>" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-1 control-label" for="input-qiniu-bucket"><?= _('Bucket'); ?></label>
+				<div class="col-sm-11">
+					<input type="text" class="form-control" id="input-qiniu-bucket" name="qiniu-bucket" value="<?= $basic['qiniu-bucket']; ?>" />
+				</div>
+			</div>
+
+
+
+			<div class="form-group">
+				<div class="col-sm-offset-1 col-sm-11">
+					<button type="submit" class="btn btn-info"><?= _('保存') ?></button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
 <form id="form-manage-domain" action="<?= $this->path('aj/manage/basic/savedomain') ?>" class="form-horizontal" method="post" onsubmit="return false">
 	<div class="panel panel-info">
 		<div class="panel-heading"><?= _('域名管理') ?></div>
