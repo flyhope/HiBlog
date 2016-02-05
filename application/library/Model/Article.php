@@ -160,9 +160,13 @@ class Article extends Abs {
         //获取分类信息
         $category = Category::show($data['category_id']);        
         
-        if(!$category || ($category['uid'] && $category['uid'] != $uid)) {
+        if(!$category) {
             throw new \Exception\Msg('指定分类不存在');
         }
+        
+        //验证分类是否是用户自己的
+        User::validateAuth($category['uid']);
+        
         if(!$data['title'] || !$data['content']) {
             throw new \Exception\Msg('标题和内容不能为空');
         }
