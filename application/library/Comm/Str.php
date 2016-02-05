@@ -19,7 +19,7 @@ abstract class Str {
      */
     static public function truncateSummary($string, $width, $dot = '…') {
         $dom = new \DOMDocument('1.0', 'utf-8');
-        $dom->loadHtml('<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>' . $string . '</body></html>');
+        $dom->loadHtml('<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>截取</title></head><body>' . $string . '</body></html>');
         $body = $dom->getElementsByTagName('body');
         $will_remove_nodes = self::_truncateSummaryDom($body->item(0)->childNodes, $width);
 
