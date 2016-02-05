@@ -18,7 +18,7 @@ abstract class Str {
      * @return string
      */
     static public function truncateSummary($string, $width, $dot = '…') {
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument('1.0', 'utf-8');
         $dom->loadHtml('<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>' . $string . '</body></html>');
         $body = $dom->getElementsByTagName('body');
         $will_remove_nodes = self::_truncateSummaryDom($body->item(0)->childNodes, $width);
