@@ -268,7 +268,7 @@ class Single {
         if(class_exists('\CURLFile', false)) {
             $result = new \CURLFile($file_path);
         } else {
-            $result = '@$file_path';
+            $result = "@{$file_path}";
         }
         return $result;
     }
