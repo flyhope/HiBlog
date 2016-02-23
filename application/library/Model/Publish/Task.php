@@ -146,6 +146,7 @@ class Task extends \Model\Abs {
             case self::TYPE_SIDEBAR :
                 \Model\Publish::sidebar();
                 $execute_result = true;
+                break;
                 
             //其它情况，异常
             default :
