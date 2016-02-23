@@ -38,6 +38,13 @@ class Task extends \Model\Abs {
     const TYPE_CATEGORY_ARTICLE_LIST = 2;
     
     /**
+     * 发布侧边栏
+     * 
+     * @var integer
+     */
+    const TYPE_SIDEBAR = 3;
+    
+    /**
      * 最多发布页数
      * 
      * @var int
@@ -134,6 +141,11 @@ class Task extends \Model\Abs {
             case self::TYPE_CATEGORY_ARTICLE_LIST :
                 $execute_result = self::_executeCategoryArticleList($task);
                 break;
+            
+            //发布侧边栏
+            case self::TYPE_SIDEBAR :
+                \Model\Publish::sidebar();
+                $execute_result = true;
                 
             //其它情况，异常
             default :
