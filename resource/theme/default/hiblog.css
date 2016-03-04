@@ -108,4 +108,8 @@ a:hover, .pagination li a:hover {
 #ds-recent-comments li.ds-comment {
 	border-top:1px dashed #dcdcdc;
 }
+
+.bsBox{
+	box-sizing:content-box;
+}
 	
