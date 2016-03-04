@@ -109,7 +109,7 @@ a:hover, .pagination li a:hover {
 	border-top:1px dashed #dcdcdc;
 }
 
-.bsBox{
+.bsBox, .bsBox *{
 	box-sizing:content-box;
 }
 	
