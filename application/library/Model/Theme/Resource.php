@@ -86,10 +86,11 @@ class Resource extends \Model\Abs {
     static public function unlock($to_tpl_id, $uid = false) {
         $to_tpl_id = (int)$to_tpl_id;
         $theme = self::validateAuth($to_tpl_id, $uid);
+        $update_time = date('Y-m-d H:i:s');
         
         $table = self::db()->showTable();
         $mysql = new \Comm\Db\Mysql();
-        $sql = "INSERT IGNORE INTO {$table} (tpl_id, resource_name, content) SELECT {$to_tpl_id}, resource_name, content FROM {$table} WHERE tpl_id = ?";
+        $sql = "INSERT IGNORE INTO {$table} (tpl_id, resource_name, content, update_time) SELECT {$to_tpl_id}, resource_name, content, {$update_time} FROM {$table} WHERE tpl_id = ?";
         return $mysql->executeSql($sql, [$theme['alias_id']]);
     }
     
@@ -110,6 +111,7 @@ class Resource extends \Model\Abs {
         self::validateAuth($resource['tpl_id'], $uid);
         $data = array(
             'content'       => $content,
+            'update_time'   => date('Y-m-d H:i:s'),
         );
         return self::db()->wAnd(['id'=>$id])->upadte($data);
     }
@@ -140,6 +142,7 @@ class Resource extends \Model\Abs {
             'tpl_id'        => $tpl_id,
             'resource_name' => $resource_name,
             'content'       => '',
+            'update_time'   => date('Y-m-d H:i:s'),
         );
         return self::db()->insert($data);
     }

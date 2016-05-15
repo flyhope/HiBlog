@@ -93,10 +93,11 @@ class Main extends \Model\Abs {
         }
         
         $db->insert(array(
-            'alias_id' => $alias_id,
-            'name'     => $name,
-            'user_id'  => $uid,
-            'pic'      => $pic, 
+            'alias_id'    => $alias_id,
+            'name'        => $name,
+            'user_id'     => $uid,
+            'pic'         => $pic, 
+            'create_time' => date('Y-m-d H:i:s'),
         ));
         $id = $db->lastId();
 

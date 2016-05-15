@@ -33,7 +33,7 @@ class Blog extends Abs {
      */
     static public function create($uid, array $data) {
         $data = self::encodeData($data);
-        return self::db()->insert(['uid' => $uid, 'data' => $data], true, true);
+        return self::db()->insert(['uid' => $uid, 'data' => $data, 'update_time' => date('Y-m-d H:i:s')], true, true);
     }
     
     
@@ -47,7 +47,7 @@ class Blog extends Abs {
      */
     static public function update($uid, array $data) {
         $data = self::encodeData($data);
-        return self::db()->wAnd(['uid' => $uid])->upadte(['data' => $data], true);
+        return self::db()->wAnd(['uid' => $uid])->upadte(['data' => $data, 'update_time' => date('Y-m-d H:i:s')], true);
     }
     
     /**

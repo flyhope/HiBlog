@@ -46,6 +46,7 @@ class User extends Abs {
             'id' => $id,
             'github_access_token' => $github_access_token,
             'metadata'            => \Comm\Json::encode($metadata),
+            'create_time'         => date('Y-m-d H:i:s'),
         );
         self::db()->insert($data, true);
         return $id;

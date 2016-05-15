@@ -66,6 +66,7 @@ class Task extends \Model\Abs {
             'type'         => $type,
             'connection_id' => $connection_id,
             'metadata' => \Comm\Json::encode($metadata),
+            'update_time' => date('Y-m-d H:i:s'),
         );
         return self::db()->insert($data);
     }
@@ -81,7 +82,8 @@ class Task extends \Model\Abs {
      */
     static public function createBatch(array $datas) {
         $uid = \Model\User::validateLogin();
-        $fields = array('uid', 'type', 'connection_id', 'metadata');
+        $update_time = date('Y-m-d H:i:s');
+        $fields = array('uid', 'type', 'connection_id', 'metadata', 'update_time');
         
         $bath_datas = array();
         foreach($datas as $value) {
@@ -91,7 +93,7 @@ class Task extends \Model\Abs {
             $connection_id = isset($value['connection_id']) ? $value['connection_id'] : 0;
             $metadata = isset($value['metadata']) ? \Comm\Json::encode($value['metadata']) : '{}';
             $bath_datas[] = array(
-                $uid, $value['type'], $connection_id, $metadata,
+                $uid, $value['type'], $connection_id, $metadata, $update_time,
             );
         }
         
@@ -161,7 +163,8 @@ class Task extends \Model\Abs {
         } elseif (is_array($execute_result)) {
             //还需要继续执行
             $update_data = array(
-                'metadata' => \Comm\Json::encode($execute_result['metadata']),
+                'metadata'    => \Comm\Json::encode($execute_result['metadata']),
+                'update_time' => date('Y-m-d H:i:s'),
             );
             self::db()->wAnd([self::$_primary_key => $task['id']])->upadte($update_data);
         } else {
