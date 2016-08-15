@@ -21,7 +21,7 @@ abstract class Abs {
      *
      * @var string
      */
-    protected static $_user_agent = 'Chengxuan-GithuBlog-App';
+    protected static $_user_agent = 'Chengxuan-Hiblog-App';
     
     /**
      * 是否是批量请求

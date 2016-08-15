@@ -15,8 +15,8 @@ class Respositories extends Abs {
      * @var array
      */
     protected $_default_committer = array(
-        'name'  => 'GithuBlog',
-        'email' => 'githublog@chengxuan.li',
+        'name'  => 'Hiblog',
+        'email' => 'hiblog@chengxuan.li',
     );
     
     /**

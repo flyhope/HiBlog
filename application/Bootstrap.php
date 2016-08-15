@@ -41,7 +41,7 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
      */
     public function _initSession(Yaf_Dispatcher $dispatcher) {
         //开启SESSION
-        session_name('GITHUBLOG_SID');
+        session_name('HIBLOG_SID');
         session_start();
         
         //获取用户UID
