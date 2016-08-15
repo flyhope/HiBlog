@@ -53,7 +53,9 @@ abstract class Abs extends \Api\Abs {
      * @return \mixed
      */
     static public function showAccessToken() {
-        return \Comm\Arg::session('github-access-token');
+        $access_token = \Yaf_Registry::get('github-access-token');
+        $access_token || $access_token = \Comm\Arg::session('github-access-token');
+        return $access_token;
     }
     
     /**
