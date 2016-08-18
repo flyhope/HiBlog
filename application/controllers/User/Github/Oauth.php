@@ -41,7 +41,7 @@ class User_Github_OAuthController extends AbsController {
             \Model\User::updateLogin($user->id, $access_token, $metadata);
             $_SESSION['uid'] = $user->id;
             
-            return $this->viewDisplay(['access_token' => $access_token]);
+            $this->viewDisplay(['access_token' => $access_token]);
         } else {
             throw new \Exception\Msg('请授权Github账号后再进行操作。');
         }

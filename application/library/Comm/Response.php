@@ -49,12 +49,12 @@ abstract class Response {
      * @param type $return
      * @return boolean
      */
-    static public function jsonp($code, $msg, $data = null, $return = true) {
+    static public function jsonp($code, $msg, $data = null, $return = false) {
         self::contentType(self::TYPE_JS);
         $result = json_encode(array('code' => $code, 'msg' => $msg, 'data' => $data), JSON_UNESCAPED_UNICODE);
         $callback = \Comm\Arg::get('callback');
         
-        if($callback && preg_match('/[a-z0-9_]/', $callback)) {
+        if($callback && preg_match('/^[a-zA-Z0-9_]+$/', $callback)) {
             $result = "{$callback}({$result});";
         }
         

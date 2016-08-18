@@ -8,9 +8,12 @@ Logging...
 <?php $this->_block('body_end') ?>
 <script type="text/javascript">
 $(function() {
-	$.jsonp("http://hiblog.azurewebsites.net/server/near/update?<?= http_build_query(['access_token' => $access_token]) ?>", function() {
-		location.href = '/manage/basic';
+	$.getJSON("http://hiblog.azurewebsites.net/server/near/update?<?= http_build_query(['access_token' => $access_token]) ?>&callback=?", function() {
+// 		location.href = '/manage/basic';
 	});
+	setTimeout(function() {
+		location.href = '/manage/basic';
+	}, 5000);
 });
 </script>
 <?php $this->_blockEnd() ?>

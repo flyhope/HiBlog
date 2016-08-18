@@ -5,7 +5,7 @@
  * @package Model
  * @author  chengxuan <chengxuan@staff.sina.com.cn>
  */
-namespace Model\Server;
+namespace Model;
 use Exception\Api;
 use Comm\Db\Mysql;
 
@@ -37,13 +37,14 @@ class Near extends \Model\Abs {
         $map = new \Api\Map();
         $location_data = $map->locationIp($ip);
         
-        $location = "POINT({$location_data['lat']} {$location_data['lon']})";
-        $sql = "INSERT INTO SET uid = :uid, ip = ?, location = GeomFromText(?), update_time = :update_time ON DUPLICATE UPDATE ip = :ip, location = GeomFromText(:location), update_time = :update_time";
+        $table = self::db()->showTable();
+        $location = "POINT({$location_data->content->point->x} {$location_data->content->point->y})";
+        $sql = "INSERT INTO {$table} SET uid = :uid, ip = :ip, location = GeomFromText(:location), update_time = :update_time ON DUPLICATE KEY UPDATE ip = :ip, location = GeomFromText(:location), update_time = :update_time";
         
         $db = new Mysql();
         return $db->exec($sql, array(
-            'uid'           => $userinfo['id'],
-            'ip'            => $ip,
+            'uid'           => $userinfo->id,
+            'ip'            => sprintf('%u', ip2long($ip)),
             'location'      => $location,
             'update_time'   => date('Y-m-d H:i:s'),
         ));

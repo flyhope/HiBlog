@@ -29,7 +29,7 @@ class Map {
      * 
      * @var string
      */
-    protected $_base = 'http://api.map.baidu.com/';
+    protected $_base = 'http://api.map.baidu.com';
     
     
     /**
@@ -40,9 +40,9 @@ class Map {
      * 
      * @return void
      */
-    public function __construct($ak, $sk) {
+    public function __construct($ak = null, $sk = null) {
         if(!$ak || !$sk) {
-            $config = new \Yaf_Config_Ini(CONF_PATH . 'app');
+            $config = new \Yaf_Config_Ini(CONF_PATH . 'env.ini');
             $ak = $config->baidu->map->ak;
             $sk = $config->baidu->map->sk;
         }
@@ -62,7 +62,7 @@ class Map {
             'ip'   => $ip,
             'coor' => $coor,
         );
-        return $this->_fetch('location/ip', $params);
+        return $this->_fetch('/location/ip', $params);
     }
     
     /**
@@ -74,6 +74,7 @@ class Map {
     protected function _fetch($api, array $params = array()) {
         
         //调用sn计算函数，默认get请求
+        $params['ak'] = $this->_ak;
         $sn = $this->_caculateAKSN($api, $params);
         $params['sn'] = $sn;
         
@@ -81,7 +82,8 @@ class Map {
         
         $request = new \Comm\Request\Single($url);
         $result = $request->setTimeout(5)->exec();
-        $result = json_decode($result, true);
+        $result = json_decode($result);
+        return $result;
     }
     
     /**
