@@ -50,4 +50,47 @@ class Near extends \Model\Abs {
         ));
     }
     
+    /**
+     * 获取附近的极客数据
+     * 
+     * @param int $page  第几页
+     * @param int $limit 每页多少项
+     * 
+     * @return array
+     */
+    static public function showNear($page, $limit = 100) {
+        $page = max(1, (int)$page);
+        $limit = max(1, (int)$limit);
+        $start = ($page - 1) * $limit;
+        
+        //获取客户端IP
+        $ip = $_SERVER['REMOTE_ADDR'];
+        
+        //获取位置
+        $map = new \Api\Map();
+        $location_data = $map->locationIp($ip);
+        
+        $mysql = new Mysql();
+        $location = "POINT({$location_data->content->point->x} {$location_data->content->point->y})";
+        $mysql->exec('SET @center = GeomFromText(?);', [$location]);
+        $mysql->exec('SET @radius = 50');
+        $mysql->exec("SET @bbox = CONCAT('POLYGON((',
+            X(@center) - @radius, ' ', Y(@center) - @radius, ',',
+            X(@center) + @radius, ' ', Y(@center) - @radius, ',',
+            X(@center) + @radius, ' ', Y(@center) + @radius, ',',
+            X(@center) - @radius, ' ', Y(@center) + @radius, ',',
+            X(@center) - @radius, ' ', Y(@center) - @radius, '))'
+        )");
+        $mysql->exec();
+        
+        $table = self::db()->showTable();
+        $sql = "SELECT *, AsText(location) location_str, SQRT(POW( ABS( X(location) - X(@center)), 2) + POW( ABS(Y(location) - Y(@center)), 2 )) AS distance
+            FROM {$table}
+            WHERE Intersects( location, GeomFromText(@bbox) )
+            AND SQRT(POW( ABS( X(location) - X(@center)), 2) + POW( ABS(Y(location) - Y(@center)), 2 )) < @radius
+            ORDER BY distance LIMIT {$start}, {$limit}";
+        $result = $mysql->fetchAll($sql);
+        return $result;
+    }
+    
 }
