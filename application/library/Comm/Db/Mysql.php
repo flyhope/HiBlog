@@ -87,6 +87,16 @@ class Mysql {
 		$this->_mode = self::MODE_WRITE;
 		return $this;
 	}
+	
+	/**
+	 * 强制使用写库
+	 *
+	 * @return Mysql
+	 */
+	public function setRead() {
+	    $this->_mode = self::MODE_READ;
+	    return $this;
+	}
 
 	/**
 	 * 根据sql语句自行判断
