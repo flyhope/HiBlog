@@ -6,7 +6,7 @@
  * @package Controller
  * @author  chengxuan <i@chengxuan.li>
  */
-class Manage_BasicController extends Server_AbsController {
+class Manage_BasicController extends AbsController {
 
     public function indexAction() {
         $blog = Model\Blog::show();

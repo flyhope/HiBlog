@@ -58,6 +58,11 @@ class Map {
      * @param string $coor
      */
     public function locationIp($ip = '', $coor = 'bd09ll') {
+        //内网IP直接按照北京处理
+        if($ip == '127.0.0.1') {
+            $ip = '202.106.0.20';
+        }
+        
         $params = array(
             'ip'   => $ip,
             'coor' => $coor,

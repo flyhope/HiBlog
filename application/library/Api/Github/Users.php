@@ -19,6 +19,18 @@ class Users extends Abs {
         return $this->_get('user');
     }
     
+    /**
+     * 获取用户信息
+     * 
+     * @param string $username
+     * 
+     * @return \mixed
+     */
+    public function show($username) {
+        $username = urlencode($username);
+        return $this->_get("users/{$username}");
+    }
+    
     
     
 } 

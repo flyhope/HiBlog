@@ -37,13 +37,15 @@ class Near extends \Model\Abs {
         $map = new \Api\Map();
         $location_data = $map->locationIp($ip);
         
+        
         $table = self::db()->showTable();
         $location = "POINT({$location_data->content->point->x} {$location_data->content->point->y})";
-        $sql = "INSERT INTO {$table} SET uid = :uid, ip = :ip, location = GeomFromText(:location), update_time = :update_time ON DUPLICATE KEY UPDATE ip = :ip, location = GeomFromText(:location), update_time = :update_time";
+        $sql = "INSERT INTO {$table} SET uid = :uid, login = :login, ip = :ip, location = GeomFromText(:location), update_time = :update_time ON DUPLICATE KEY UPDATE uid = :uid, ip = :ip, login = :login, location = GeomFromText(:location), update_time = :update_time";
         
         $db = new Mysql();
         return $db->exec($sql, array(
             'uid'           => $userinfo->id,
+            'login'         => $userinfo->login,
             'ip'            => sprintf('%u', ip2long($ip)),
             'location'      => $location,
             'update_time'   => date('Y-m-d H:i:s'),
@@ -65,12 +67,7 @@ class Near extends \Model\Abs {
         
         //获取客户端IP
         $ip = $_SERVER['REMOTE_ADDR'];
-        
-        //内网IP直接按照北京处理
-        if($ip == '127.0.0.1') {
-            $ip = '202.106.0.20';
-        }
-        
+       
         //获取位置
         $map = new \Api\Map();
         $location_data = $map->locationIp($ip);
@@ -99,8 +96,12 @@ class Near extends \Model\Abs {
         WHERE Intersects( location, GeomFromText(@bbox) )
         AND SQRT(POW( ABS( X(location) - X(@center)), 2) + POW( ABS(Y(location) - Y(@center)), 2 )) < @radius
         ORDER BY distance LIMIT {$start}, {$limit}";
-        $result = $mysql->fetchAll($sql);
+        $near = $mysql->fetchAll($sql);
         $mysql->setAuto();
+        
+        $result = new \stdClass();
+        $result->location = $location_data;
+        $result->near = $near;
         
         return $result;
     }
