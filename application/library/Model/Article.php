@@ -165,7 +165,7 @@ class Article extends Abs {
         }
         
         //验证分类是否是用户自己的
-        User::validateAuth($category['uid']);
+        $category['uid'] && User::validateAuth($category['uid']);
         
         if(!$data['title'] || !$data['content']) {
             throw new \Exception\Msg('标题和内容不能为空');
