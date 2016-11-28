@@ -90,7 +90,7 @@ class Resource extends \Model\Abs {
         
         $table = self::db()->showTable();
         $mysql = new \Comm\Db\Mysql();
-        $sql = "INSERT IGNORE INTO {$table} (tpl_id, resource_name, content, update_time) SELECT {$to_tpl_id}, resource_name, content, {$update_time} FROM {$table} WHERE tpl_id = ?";
+        $sql = "INSERT IGNORE INTO {$table} (tpl_id, resource_name, content, update_time) SELECT {$to_tpl_id}, resource_name, content, '{$update_time}' FROM {$table} WHERE tpl_id = ?";
         return $mysql->executeSql($sql, [$theme['alias_id']]);
     }
     
