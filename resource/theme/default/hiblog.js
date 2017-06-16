@@ -18,12 +18,15 @@ $(function() {
 	if(!src_sidebar) {
 		src_sidebar = "/block/sidebar.html";
 	}
-	$("#sidebar").load(src_sidebar, resizeSides);
+	$("#sidebar").load(src_sidebar, function() {
+		resizeSides();
+		//加载友言评论组件
+		if($("#uyan_*").size() && $CONFIG.comment_youyan) {
+			$.getScript("http://v2.uyan.cc/code/uyan.js?uid=" + $CONFIG.comment_youyan);
+		}
+	});
 	
-	//加载友言评论组件
-	if($("#uyan_*").size() && $CONFIG.comment_youyan) {
-		$.getScript("http://v2.uyan.cc/code/uyan.js?uid=" + $CONFIG.comment_youyan);
-	}
+
 	
 	//加载高亮组件
 	if($("pre[class*=brush]").size()) {
