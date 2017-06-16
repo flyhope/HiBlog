@@ -20,9 +20,9 @@ $(function() {
 	}
 	$("#sidebar").load(src_sidebar, resizeSides);
 	
-	//加载多说评论组件
-	if(duoshuoQuery && duoshuoQuery.short_name) {
-		$.getScript("//static.duoshuo.com/embed.js");
+	//加载友言评论组件
+	if($("#uyan_frame").size() && $CONFIG.comment_youyan) {
+		$.getScript("http://v2.uyan.cc/code/uyan.js?uid=" + $CONFIG.comment_youyan);
 	}
 	
 	//加载高亮组件
