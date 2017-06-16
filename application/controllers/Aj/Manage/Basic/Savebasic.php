@@ -10,14 +10,14 @@ class Aj_Manage_Basic_SavebasicController extends Aj_AbsController {
 		$name = Comm\Arg::post('name');
 		$desc = Comm\Arg::post('desc');
 		$page_count = Comm\Arg::post('page_count', FILTER_VALIDATE_INT);
-		$comment_duoshuo = Comm\Arg::post('comment_duoshuo');
+		$comment_youyan = Comm\Arg::post('comment_youyan');
 		$timezone = Comm\Arg::post('timezone');
 		
 		Model\Blog::save(array(
 			'name' => $name,
 			'desc' => $desc,
 			'page_count' => $page_count,
-			'comment_duoshuo' => $comment_duoshuo,
+			'comment_youyan' => $comment_youyan,
 			'timezone' => $timezone,
 		));
 		
