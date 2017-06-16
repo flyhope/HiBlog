@@ -21,7 +21,7 @@ $(function() {
 	$("#sidebar").load(src_sidebar, resizeSides);
 	
 	//加载友言评论组件
-	if($("#uyan_frame").size() && $CONFIG.comment_youyan) {
+	if($("#uyan_*").size() && $CONFIG.comment_youyan) {
 		$.getScript("http://v2.uyan.cc/code/uyan.js?uid=" + $CONFIG.comment_youyan);
 	}
 	
