@@ -3,7 +3,7 @@
  * 社区
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.sina.com.cn>
+ * @author  chengxuan <i@chengxuan.li>
  */
 class Server_Community_IndexController extends AbsController {
 

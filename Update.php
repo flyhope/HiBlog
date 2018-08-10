@@ -3,7 +3,7 @@
  * 更新附近的极客信息
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.sina.com.cn>
+ * @author  chengxuan <i@chengxuan.li>
  */
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');

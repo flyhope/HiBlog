@@ -3,7 +3,7 @@
  * 附近管理
  *
  * @package Model
- * @author  chengxuan <chengxuan@staff.sina.com.cn>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Model;
 use Exception\Api;

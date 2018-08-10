@@ -3,7 +3,7 @@
  * 附近的极客
  *
  * @package Controller
- * @author  chengxuan <chengxuan@staff.sina.com.cn>
+ * @author  chengxuan <i@chengxuan.li>
  */
 class Server_Community_NearController extends AbsController {
 

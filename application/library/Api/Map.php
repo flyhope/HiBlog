@@ -4,7 +4,7 @@
  * 百度地图API
  *
  * @package Api
- * @author  chengxuan <chengxuan@staff.sina.com.cn>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Api;
 

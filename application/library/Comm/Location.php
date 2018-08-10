@@ -3,7 +3,7 @@
  * 地理位置处理方法
  *
  * @package Comm
- * @author  chengxuan <chengxuan@staff.sina.com.cn>
+ * @author  chengxuan <i@chengxuan.li>
  */
 namespace Comm;
 class Location {
